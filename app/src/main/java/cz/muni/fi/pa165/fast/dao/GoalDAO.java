@@ -61,15 +61,15 @@ public interface GoalDAO
      * Find all goals scored by the specified Player.
      * 
      * @param player Player who scored the goals.
-     * @return Collection of Goals or empty collection if there are no Goals score by the Player.
+     * @return Collection of Goals or empty collection if there are no Goals scored by the Player.
      */
     public Collection<Goal> findByScorePlayer(Player player);
     
     /**
-     * Find all goals that the Player assisted.
+     * Find all goals that the Player assisted with.
      * 
      * @param player Assist player.
-     * @return Collection of Goals or empty collection if there are no Goals that the Player assisted.
+     * @return Collection of Goals or empty collection if there are no Goals that the Player assisted with.
      */
     public Collection<Goal> findByAssistPlayer(Player player);
     
