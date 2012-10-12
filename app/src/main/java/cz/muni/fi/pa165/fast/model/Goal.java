@@ -16,8 +16,12 @@ public class Goal
     private Long id;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date goalTime;
-    private Long scorePlayer;
-    private Long assistPlayer;
+    @OneToOne
+    private Player scorePlayer;
+    @OneToOne
+    private Player assistPlayer;
+    @ManyToOne
+    private Match match;
 
     public Long getId() {
         return id;
@@ -35,21 +39,31 @@ public class Goal
         this.goalTime = goalTime;
     }
 
-    public Long getScorePlayer() {
+    public Player getScorePlayer() {
         return scorePlayer;
     }
 
-    public void setScorePlayer(Long scorePlayer) {
+    public void setScorePlayer(Player scorePlayer) {
         this.scorePlayer = scorePlayer;
     }
 
-    public Long getAssistPlayer() {
+    public Player getAssistPlayer() {
         return assistPlayer;
     }
 
-    public void setAssistPlayer(Long assistPlayer) {
+    public void setAssistPlayer(Player assistPlayer) {
         this.assistPlayer = assistPlayer;
     }
+
+    public Match getMatch() {
+        return match;
+    }
+
+    public void setMatch(Match match) {
+        this.match = match;
+    }
+    
+    
 
     @Override
     public int hashCode() {
