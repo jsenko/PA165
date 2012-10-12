@@ -60,23 +60,26 @@ public interface GoalDAO
     /**
      * Find all goals scored by the specified Player.
      * 
-     * @param player Player who scored the goals.
+     * @param player Player who scored the goals, cannot be null.
      * @return Collection of Goals or empty collection if there are no Goals scored by the Player.
+     * @throws IllegalArgumentException if the argument is null.
      */
     public Collection<Goal> findByScorePlayer(Player player);
     
     /**
      * Find all goals that the Player assisted with.
      * 
-     * @param player Assist player.
+     * @param player Assist player, cannot be null.
      * @return Collection of Goals or empty collection if there are no Goals that the Player assisted with.
+     * @throws IllegalArgumentException if the argument is null.
      */
     public Collection<Goal> findByAssistPlayer(Player player);
     
     /**
      * Find all goals scored during the match.
-     * @param match The match.
+     * @param match The match, cannot be null.
      * @return Collection of Goals or empty collection if there were no Goals during the Match.
+     * @throws IllegalArgumentException if the argument is null.
      */
     public Collection<Goal> findByMatch(Match match);
     
