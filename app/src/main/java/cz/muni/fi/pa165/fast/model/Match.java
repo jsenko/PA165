@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 /**
  * Entity Match
  * 
- * @author Stefan
+ * @author Stefan Uhercik
  */
 @Entity
 public class Match
