@@ -3,7 +3,12 @@ package cz.muni.fi.pa165.fast.model;
 import javax.persistence.*;
 
 
-
+/**
+ * Player JPA entity
+ * 
+ * @author Jakub Senko
+ * @version 1.0
+ */
 @Entity
 public class Player
 {
