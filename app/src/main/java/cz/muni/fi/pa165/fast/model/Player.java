@@ -26,6 +26,8 @@ public class Player
     
     private int weight;
     
+    @ManyToOne
+    private Team team;  
     
     
     public Long getId() { return id; }
@@ -52,7 +54,13 @@ public class Player
 
     public void setWeight(int weight) { this.weight = weight; }
 
-    
+    public Team getTeam() {
+        return team;
+    }
+
+    public void setTeam(Team team) {
+        this.team = team;
+    }
     
     @Override
     public int hashCode()

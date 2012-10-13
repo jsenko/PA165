@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.fast.dao;
 import cz.muni.fi.pa165.fast.model.Goal;
 import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Player;
+import cz.muni.fi.pa165.fast.model.Team;
 import java.util.List;
 
 /**
@@ -71,16 +72,9 @@ public interface PlayerDAO
     public List<Player> findAllPlayers();
     
     /**
-     * Retrieves home Players from given match
+     * Retrieves Players from given team
      * 
-     * @return List of home Players from match or empty List if match not found
+     * @return List of Players from team or empty List if player doesn't belong to any team
      */
-    public List<Player> findHomePlayersByMatch(Match match);
-    
-    /**
-     * Retrieves away Players from given match
-     * 
-     * @return List of away Players from match or empty List if match not found
-     */
-    public List<Player> findAwayPlayersByMatch(Match match);
+    public List<Player> findPlayersByTeam(Team team);
 }

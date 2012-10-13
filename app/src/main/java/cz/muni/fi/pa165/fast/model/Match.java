@@ -29,7 +29,7 @@ public class Match
     private Team homeTeam;
     @OneToOne
     private Team awayTeam;
-    @OneToMany
+    @OneToMany(mappedBy = "match")
     private Collection<Goal> goals;
 
     public Long getId() {
@@ -63,6 +63,14 @@ public class Match
 
     public void setAwayTeam(Team awayTeam) {
         this.awayTeam = awayTeam;
+    }
+    
+    public Collection<Goal> getGoals() {
+        return goals;
+    }
+
+    public void setGoals(Collection<Goal> goals) {
+        this.goals = goals;
     }
 
     @Override
