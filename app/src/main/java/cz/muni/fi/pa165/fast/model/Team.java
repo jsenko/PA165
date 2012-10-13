@@ -16,7 +16,7 @@ import javax.persistence.OneToMany;
  */
 @Entity
 
-/* TODO: Errors!!!
+/*
 @NamedQueries({
 @NamedQuery(name="Team.findAll",
             query="SELECT t FROM Team t"),
@@ -25,11 +25,7 @@ import javax.persistence.OneToMany;
 @NamedQuery(name="Team.findHomeTeamByMatch",
             query="SELECT t FROM Team t JOIN :match m WHERE m.homeTeam = t"),
 @NamedQuery(name="Team.findAwayTeamByMatch",
-            query="SELECT t FROM Team t JOIN :match m WHERE m.awayTeam = t"),
-@NamedQuery(name="Team.findScoringTeamByGoal",
-            query="SELECT t FROM Team t WHERE t.name = :name"),
-@NamedQuery(name="Team.findTeamIncassingByGoal",
-            query="SELECT t FROM Team t WHERE t.name = :name")
+            query="SELECT t FROM Team t JOIN :match m WHERE m.awayTeam = t")
 })
 */
 public class Team

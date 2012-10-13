@@ -8,7 +8,6 @@ import cz.muni.fi.pa165.fast.model.Team;
 import java.util.Collection;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.NoResultException;
 
 /**
  * Implementation of the TeamDAO interface.
@@ -90,6 +89,8 @@ public class TeamDAOImpl implements TeamDAO {
             throw new IllegalArgumentException("team not in DB");
         }
 
+        em.close();
+        
         return manTeam;
     }
 
@@ -112,8 +113,7 @@ public class TeamDAOImpl implements TeamDAO {
 
         EntityManager em = emf.createEntityManager();
 
-        Team team = null;
-        team = (Team) em.createNamedQuery("Team.findTeamByPlayer").setParameter("player", player).getSingleResult();
+        Team team = (Team) em.createNamedQuery("Team.findTeamByPlayer").setParameter("player", player).getSingleResult();
 
         em.close();
 
@@ -128,8 +128,7 @@ public class TeamDAOImpl implements TeamDAO {
 
         EntityManager em = emf.createEntityManager();
 
-        Team team = null;
-        team = (Team) em.createNamedQuery("Team.findHomeTeamByMatch").setParameter("match", match).getSingleResult();
+        Team team = (Team) em.createNamedQuery("Team.findHomeTeamByMatch").setParameter("match", match).getSingleResult();
 
         em.close();
 
@@ -144,8 +143,7 @@ public class TeamDAOImpl implements TeamDAO {
 
         EntityManager em = emf.createEntityManager();
 
-        Team team = null;
-        team = (Team) em.createNamedQuery("Team.findAwayTeamByMatch").setParameter("match", match).getSingleResult();
+        Team team = (Team) em.createNamedQuery("Team.findAwayTeamByMatch").setParameter("match", match).getSingleResult();
 
         em.close();
 
