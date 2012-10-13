@@ -2,7 +2,7 @@ package cz.muni.fi.pa165.fast.model;
 
 import java.util.Collection;
 import java.util.Date;
-import javax.persistence.Embedded;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
