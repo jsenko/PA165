@@ -1,51 +1,18 @@
 package cz.muni.fi.pa165.fast.dao;
 
+import java.util.List;
+
 import cz.muni.fi.pa165.fast.model.Goal;
-import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Player;
 import cz.muni.fi.pa165.fast.model.Team;
-import java.util.List;
 
 /**
  *Interface of DAO object of entity Player
  * 
  * @author Michal Kimle
  */
-public interface PlayerDAO
-{
-    /**
-     * Creates new Player in the database.
-     * 
-     * @param player
-     * @throws IllegalArgumentException if argument is null
-     */
-    public void createPlayer(Player player);
-    
-    /**
-     * Updates a Player in the database.
-     * 
-     * @param player
-     * @throws IllegalArgumentException if argument is null
-     */
-    public void updatePlayer(Player player);
-    
-    /**
-     * Removes a Player in the database.
-     * 
-     * @param player
-     * @throws IllegalArgumentException if argument is null
-     */
-    public void removePlayer(Player player);
-    
-    /**
-     * Retrieves a Player with given id from database.
-     * 
-     * @param id Id of Player. Cannot be null.
-     * @return Player with the specified id or null if it does not exist.
-     * @throws IllegalArgumentException if the argument is null.
-     */
-    public Player getPlayerById(Long id);
-    
+public interface PlayerDAO extends DAO<Player>
+{    
     /**
      * Retrieves a Player who scored given goal.
      * 
@@ -63,13 +30,6 @@ public interface PlayerDAO
      * @throws IllegalArgumentException if the argument is null.
      */
     public Player getPlayerByAssistedGoal(Goal goal);
-    
-    /**
-     * Retrieves all Players
-     * 
-     * @return List of all Players in database or empty List if database is empty
-     */
-    public List<Player> findAllPlayers();
     
     /**
      * Retrieves Players from given team

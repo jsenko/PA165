@@ -14,48 +14,8 @@ import cz.muni.fi.pa165.fast.model.Player;
  * @author Jakub Senko
  * @version 1.0
  */
-public interface GoalDAO
+public interface GoalDAO extends DAO<Goal>
 {
-    /**
-     * Creates new Goal in the database.
-     * 
-     * @param goal Goal to be added to the database. Cannot be null.
-     * @throws IllegalArgumentException if argument is null
-     */
-    public void create(Goal goal);
-    
-    /**
-     * Updates a Goal in the database.
-     * 
-     * @param goal Goal to be added to the database. Cannot be null.
-     * @throws IllegalArgumentException if the argument is null.
-     */
-    public void update(Goal goal);
-    
-    /**
-     * Delete a Goal from the database.
-     * 
-     * @param goal Goal to be deleted. Cannot be null.
-     * @throws IllegalArgumentException if the argument is null.
-     */
-    public void delete(Goal goal);
-    
-    /**
-     * Retrieve Goal with the given id from the database.
-     * 
-     * @param id Id of the Goal. Cannot be null.
-     * @return Goal with the specified id or null when it does not exist.
-     * @throws IllegalArgumentException if the argument is null.
-     */
-    public Goal getById(Long id);
-    
-    /**
-     * Retrieves all Goal entities from the database.
-     * If there are no entities, empty collection is returned.
-     * 
-     * @return Collection of Goals or empty collection if there are no Goals in the database.
-     */
-    public Collection<Goal> findAll();
     
     /**
      * Find all goals scored by the specified Player.
