@@ -23,7 +23,7 @@ public class Match
     @Id
     @GeneratedValue
     private Long id;
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date matchDate;
     @OneToOne
     private Team homeTeam;

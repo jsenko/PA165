@@ -286,7 +286,7 @@ public class MatchDAOImplTest {
         Long match1Id = match1.getId();
         Long match2Id = match2.getId();
         
-        List<Match> matches = mdaoi.findByHomeTeam(team);
+        List<Match> matches = mdaoi.findByAwayTeam(team);
         
         assertEquals(2, matches.size());
         
