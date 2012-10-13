@@ -64,7 +64,7 @@ public interface MatchDAO
      * Method finds all matches played by team away.
      * 
      * @param team Away team.
-     * @return List of Matches played by home team or empty List when team does not play any away match.
+     * @return List of Matches played by away team or empty List when team does not play any away match.
      */
     public List<Match> findByAwayTeam(Team team);
 }
