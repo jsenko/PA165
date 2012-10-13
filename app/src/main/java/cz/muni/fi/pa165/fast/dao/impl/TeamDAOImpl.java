@@ -10,6 +10,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
 
+/**
+ * Implementation of the TeamDAO interface.
+ *
+ * @author Michal Kimle
+ */
 public class TeamDAOImpl implements TeamDAO {
 
     private EntityManagerFactory emf;
@@ -91,11 +96,11 @@ public class TeamDAOImpl implements TeamDAO {
     @Override
     public Collection<Team> findAll() {
         EntityManager em = emf.createEntityManager();
-        
+
         Collection<Team> teams = em.createNamedQuery("Team.findAll").getResultList();
-        
+
         em.close();
-        
+
         return teams;
     }
 
@@ -104,20 +109,15 @@ public class TeamDAOImpl implements TeamDAO {
         if (player == null) {
             throw new IllegalArgumentException("player is null");
         }
-        
+
         EntityManager em = emf.createEntityManager();
-        
+
         Team team = null;
-        
-        try{
-            team = (Team) em.createNamedQuery("Team.findTeamByPlayer").setParameter("player", player).getSingleResult();
-        }catch(NoResultException ex){
-            
-        }finally{
-            em.close();
-            
-            return team;
-        }  
+        team = (Team) em.createNamedQuery("Team.findTeamByPlayer").setParameter("player", player).getSingleResult();
+
+        em.close();
+
+        return team;
     }
 
     @Override
@@ -125,20 +125,15 @@ public class TeamDAOImpl implements TeamDAO {
         if (match == null) {
             throw new IllegalArgumentException("player is null");
         }
-        
+
         EntityManager em = emf.createEntityManager();
-        
+
         Team team = null;
-        
-        try{
-            team = (Team) em.createNamedQuery("Team.findHomeTeamByMatch").setParameter("match", match).getSingleResult();
-        }catch(NoResultException ex){
-            
-        }finally{
-            em.close();
-            
-            return team;
-        } 
+        team = (Team) em.createNamedQuery("Team.findHomeTeamByMatch").setParameter("match", match).getSingleResult();
+
+        em.close();
+
+        return team;
     }
 
     @Override
@@ -146,20 +141,16 @@ public class TeamDAOImpl implements TeamDAO {
         if (match == null) {
             throw new IllegalArgumentException("player is null");
         }
-        
+
         EntityManager em = emf.createEntityManager();
-        
+
         Team team = null;
-        
-        try{
-            team = (Team) em.createNamedQuery("Team.findAwayTeamByMatch").setParameter("match", match).getSingleResult();
-        }catch(NoResultException ex){
-            
-        }finally{
-            em.close();
-            
-            return team;
-        }
+        team = (Team) em.createNamedQuery("Team.findAwayTeamByMatch").setParameter("match", match).getSingleResult();
+
+        em.close();
+
+        return team;
+
     }
 
     @Override

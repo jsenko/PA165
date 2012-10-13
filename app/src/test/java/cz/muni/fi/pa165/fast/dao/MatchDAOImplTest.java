@@ -1,4 +1,4 @@
-package cz.fi.muni.pa165.fast.test;
+package cz.muni.fi.pa165.fast.dao;
 
 import cz.muni.fi.pa165.fast.dao.impl.MatchDAOImpl;
 import cz.muni.fi.pa165.fast.model.Match;
@@ -38,7 +38,7 @@ public class MatchDAOImplTest {
     
     @Before
     public void setUp() {
-        emf = Persistence.createEntityManagerFactory("FAST-TestPU");
+        emf = Persistence.createEntityManagerFactory("TestPU");
         mdaoi = new MatchDAOImpl();
         mdaoi.setEntityManagerFactory(emf);
     }
@@ -89,7 +89,7 @@ public class MatchDAOImplTest {
     }
     
     @Test
-    public void updateMatchinvalid(){
+    public void updateMatchInvalid(){
         Match match = null;
         try {
             mdaoi.update(match);
@@ -106,7 +106,6 @@ public class MatchDAOImplTest {
         } catch (IllegalArgumentException ex) {
             //OK
         }
-        em.close();
     }
     
     @Test
@@ -176,10 +175,8 @@ public class MatchDAOImplTest {
             //OK
         }
         
-        Match match = new Match();
-        match.setId(Long.MAX_VALUE);
         try {
-            mdaoi.getById(match);
+            mdaoi.getById(Long.MAX_VALUE);
             fail();
         } catch (IllegalArgumentException ex) {
             //OK
@@ -223,19 +220,42 @@ public class MatchDAOImplTest {
     @Test
     public void findByHomeTeam(){
         Team team = new Team();
-        Match match = new Match();
-        match.setHomeTeam(team);
+        Match match1 = new Match();
+        match1.setHomeTeam(team);
+        Match match2 = new Match();
+        match2.setHomeTeam(team);
+        Match match3 = new Match();
+        match3.setAwayTeam(team);
+        
+        long time = System.currentTimeMillis();
+        match1.setMatchDate(new Date(time));
+        match2.setMatchDate(new Date(time+1000));
         
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
         em.persist(team);
-        em.persist(match);
+        em.persist(match1);
+        em.persist(match2);
+        em.persist(match3);
         em.getTransaction().commit();
         
-        Long matchId = match.getId();
+        Long match1Id = match1.getId();
+        Long match2Id = match2.getId();
         
-        assertEquals(matchId, mdaoi.findByHomeTeam(team).getId());
+        List<Match> matches = mdaoi.findByHomeTeam(team);
+        
+        assertEquals(2, matches.size());
+        
+        for(Match match:matches){
+            if(match1Id.equals(match.getId())) {
+                assertEquals(time, match.getMatchDate().getTime());
+            }
+            
+            if(match2Id.equals(match.getId())) {
+                assertEquals(time+1000, match.getMatchDate().getTime());
+            }
+        }
         
         em.close();
     }
@@ -243,19 +263,42 @@ public class MatchDAOImplTest {
     @Test
     public void findByAwayTeam(){
         Team team = new Team();
-        Match match = new Match();
-        match.setAwayTeam(team);
+        Match match1 = new Match();
+        match1.setAwayTeam(team);
+        Match match2 = new Match();
+        match2.setAwayTeam(team);
+        Match match3 = new Match();
+        match3.setHomeTeam(team);
+        
+        long time = System.currentTimeMillis();
+        match1.setMatchDate(new Date(time));
+        match2.setMatchDate(new Date(time+1000));
         
         EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
         em.persist(team);
-        em.persist(match);
+        em.persist(match1);
+        em.persist(match2);
+        em.persist(match3);
         em.getTransaction().commit();
         
-        Long matchId = match.getId();
+        Long match1Id = match1.getId();
+        Long match2Id = match2.getId();
         
-        assertEquals(matchId, mdaoi.findByAwayTeam(team).getId());
+        List<Match> matches = mdaoi.findByHomeTeam(team);
+        
+        assertEquals(2, matches.size());
+        
+        for(Match match:matches){
+            if(match1Id.equals(match.getId())) {
+                assertEquals(time, match.getMatchDate().getTime());
+            }
+            
+            if(match2Id.equals(match.getId())) {
+                assertEquals(time+1000, match.getMatchDate().getTime());
+            }
+        }
         
         em.close();
     }
