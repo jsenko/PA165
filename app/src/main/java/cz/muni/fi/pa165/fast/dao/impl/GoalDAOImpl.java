@@ -13,6 +13,7 @@ public class GoalDAOImpl implements GoalDAO
 {
     private EntityManagerFactory emf;
 
+    @Override
     public void setEntityManagerFactory(EntityManagerFactory emf) {
         this.emf = emf;
     }

@@ -14,6 +14,7 @@ public class TeamDAOImpl implements TeamDAO {
 
     private EntityManagerFactory emf;
 
+    @Override
     public void setEntityManagerFactory(EntityManagerFactory emf) {
         this.emf = emf;
     }
