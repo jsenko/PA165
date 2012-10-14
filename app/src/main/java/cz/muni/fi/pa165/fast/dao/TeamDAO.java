@@ -35,24 +35,5 @@ public interface TeamDAO extends DAO<Team>
      * @param match Match played
      * @return away Team of the Match
      */
-    public Team findAwayTeamByMatch(Match match);
-    
-    /**
-     * Finds the team that Scored the Goal
-     * 
-     * @param goal Goal
-     * @return Team that scored the Goal
-     */
-    public Team findScoringTeamByGoal(Goal goal);
-    
-    /**
-     * Finds the team that incassed the Goal
-     * 
-     * @param goal Goal
-     * @return Team that incassed the Goal
-     */
-    public Team findTeamIncassingByGoal(Goal goal);
-    
-    
-    
+    public Team findAwayTeamByMatch(Match match);  
 }

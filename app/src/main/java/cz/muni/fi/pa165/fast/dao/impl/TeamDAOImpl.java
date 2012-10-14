@@ -150,14 +150,4 @@ public class TeamDAOImpl implements TeamDAO {
         return team;
 
     }
-
-    @Override
-    public Team findScoringTeamByGoal(Goal goal) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public Team findTeamIncassingByGoal(Goal goal) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 }
