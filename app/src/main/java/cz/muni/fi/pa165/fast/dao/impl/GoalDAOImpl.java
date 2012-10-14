@@ -9,6 +9,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 
+/**
+ * 
+ * @author Peter Laurencik
+ */
 public class GoalDAOImpl implements GoalDAO
 {
     private EntityManagerFactory emf;
@@ -21,6 +25,11 @@ public class GoalDAOImpl implements GoalDAO
     @Override
     public void create(Goal goal)
     {
+        if(goal==null)
+        {
+            throw new IllegalArgumentException("Goal can not be null when new goal is created.");
+        }
+        
         EntityManager em = emf.createEntityManager();
         EntityTransaction emt = em.getTransaction();
         
@@ -33,6 +42,11 @@ public class GoalDAOImpl implements GoalDAO
     @Override
     public void update(Goal goal)
     {
+        if(goal==null)
+        {
+            throw new IllegalArgumentException("Can not update null goal");
+        }
+        
         EntityManager em = emf.createEntityManager();
         EntityTransaction emt = em.getTransaction();
         
@@ -45,6 +59,11 @@ public class GoalDAOImpl implements GoalDAO
     @Override
     public void delete(Goal goal)
     {
+        if(goal==null)
+        {
+            throw new IllegalArgumentException("Can not delete null goal.");
+        }
+        
         EntityManager em = emf.createEntityManager();
         EntityTransaction emt = em.getTransaction();
         
@@ -58,6 +77,11 @@ public class GoalDAOImpl implements GoalDAO
     @Override
     public Goal getById(Long id)
     {
+        if(id==null)
+        {
+            throw new IllegalArgumentException("Can not find goal with null id.");
+        }
+        
         EntityManager em = emf.createEntityManager();
         
         Goal goal = em.find(Goal.class, id);
@@ -76,6 +100,11 @@ public class GoalDAOImpl implements GoalDAO
     @Override
     public Collection<Goal> findByScorePlayer(Player player)
     {
+        if(player == null)
+        {
+            throw new IllegalArgumentException("Can not find goal by null scored player.");
+        }
+        
         EntityManager em = emf.createEntityManager();
         
         Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.scorePlayer='player'").getResultList();
@@ -84,6 +113,11 @@ public class GoalDAOImpl implements GoalDAO
 
     @Override
     public Collection<Goal> findByAssistPlayer(Player player) {
+        if(player == null)
+        {
+            throw new IllegalArgumentException("Can not find goal by null assist player.");
+        }
+        
         EntityManager em = emf.createEntityManager();
         
         Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.assistPlayer='player'").getResultList();
@@ -92,6 +126,11 @@ public class GoalDAOImpl implements GoalDAO
 
     @Override
     public Collection<Goal> findByMatch(Match match) {
+        if(match == null)
+        {
+            throw new IllegalArgumentException("Can not find goal by null match.");
+        }
+        
         EntityManager em = emf.createEntityManager();
         
         Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.assistPlayer='match'").getResultList();

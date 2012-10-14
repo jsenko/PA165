@@ -31,14 +31,8 @@ import javax.persistence.OneToMany;
 
 public class Team
 {
-    @Override
-	public String toString() {
-		return "Team {id=" + id + ", name=" + name + ", players=" + players
-				+ ", homeMatches=" + homeMatches + ", awayMatches="
-				+ awayMatches + "}";
-	}
 
-	@Id
+    @Id
     @GeneratedValue
     private Long id;
     
@@ -81,17 +75,17 @@ public class Team
 		return homeMatches;
 	}
 
-	public void setHomeMatches(List<Match> homeMatches) {
-		this.homeMatches = homeMatches;
-	}
+    public void setHomeMatches(List<Match> homeMatches) {
+	this.homeMatches = homeMatches;
+    }
 
-	public List<Match> getAwayMatches() {
-		return awayMatches;
-	}
+    public List<Match> getAwayMatches() {
+	return awayMatches;
+    }
 
-	public void setAwayMatches(List<Match> awayMatches) {
-		this.awayMatches = awayMatches;
-	}
+    public void setAwayMatches(List<Match> awayMatches) {
+	this.awayMatches = awayMatches;
+    }
 
     @Override
     public int hashCode() {
@@ -115,5 +109,10 @@ public class Team
         return true;
     }
     
-    
+    @Override
+    public String toString() {
+	return "Team {id=" + id + ", name=" + name + ", players=" + players
+				+ ", homeMatches=" + homeMatches + ", awayMatches="
+				+ awayMatches + "}";
+    }
 }
