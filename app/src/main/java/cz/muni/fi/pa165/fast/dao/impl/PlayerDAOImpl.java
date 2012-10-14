@@ -65,7 +65,7 @@ public class PlayerDAOImpl implements PlayerDAO
     @Override
     public Collection<Player> findAll() {
         EntityManager em = emf.createEntityManager();
-        Query query = em.createQuery("SELET p FROM Player p");
+        Query query = em.createQuery("SELECT p FROM Player p");
         Collection<Player> allPlayers = query.getResultList();
         em.close();
         return allPlayers;
@@ -98,7 +98,7 @@ public class PlayerDAOImpl implements PlayerDAO
     @Override
     public List<Player> findPlayersByTeam(Team team) {
         EntityManager em = emf.createEntityManager();
-        Query query = em.createQuery("SELET p FROM Player p JOIN :team t WHERE p IN t.players").setParameter("team",team);
+        Query query = em.createQuery("SELECT p FROM Player p JOIN :team t WHERE p IN t.players").setParameter("team",team);
         List<Player> list = query.getResultList();
         return list;
     }
