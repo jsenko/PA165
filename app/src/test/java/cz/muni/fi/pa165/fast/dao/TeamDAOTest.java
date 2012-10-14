@@ -1,5 +1,8 @@
 package cz.muni.fi.pa165.fast.dao;
 
+import java.util.ArrayList;
+
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -9,6 +12,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import cz.muni.fi.pa165.fast.dao.impl.TeamDAOImpl;
+import cz.muni.fi.pa165.fast.model.Match;
+import cz.muni.fi.pa165.fast.model.Player;
 import cz.muni.fi.pa165.fast.model.Team;
 
 

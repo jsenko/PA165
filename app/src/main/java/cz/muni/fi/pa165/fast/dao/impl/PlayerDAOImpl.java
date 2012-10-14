@@ -59,7 +59,7 @@ public class PlayerDAOImpl implements PlayerDAO
     @Override
     public Collection<Player> findAll() {
         EntityManager em = emf.createEntityManager();
-        Query query = em.createQuery("from Player");
+        Query query = em.createQuery("select p from Player p");
         Collection<Player> allPlayers = query.getResultList();
         em.close();
         return allPlayers;

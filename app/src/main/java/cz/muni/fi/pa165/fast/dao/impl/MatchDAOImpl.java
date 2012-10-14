@@ -80,7 +80,7 @@ public class MatchDAOImpl implements MatchDAO
 	{
 		if(id == null)
 		{
-			throw new IllegalArgumentException("Match is null.");
+			throw new IllegalArgumentException("Id is null.");
 		}
 		EntityManager em = getManager();
 		Match match = em.find(Match.class, id);
@@ -93,7 +93,7 @@ public class MatchDAOImpl implements MatchDAO
 	{
 		EntityManager em = getManager();
 		@SuppressWarnings("unchecked")
-		List<Match> result = em.createQuery("from Match").getResultList();
+		List<Match> result = em.createQuery("select m from Match m").getResultList();
 		em.close();
 		return result;
 	}
@@ -107,7 +107,7 @@ public class MatchDAOImpl implements MatchDAO
 		}
 		EntityManager em = getManager();
 		@SuppressWarnings("unchecked")
-		List<Match> result = em.createQuery("from Match m where m.homeTeam = :team")
+		List<Match> result = em.createQuery("select m from Match m where m.homeTeam = :team")
 			.setParameter("team", team)
 			.getResultList();
 		em.close();
@@ -123,7 +123,7 @@ public class MatchDAOImpl implements MatchDAO
 		}
 		EntityManager em = getManager();
 		@SuppressWarnings("unchecked")
-		List<Match> result = em.createQuery("from Match m where m.awayTeam = :team")
+		List<Match> result = em.createQuery("select m from Match m where m.awayTeam = :team")
 			.setParameter("team", team)
 			.getResultList();
 		em.close();

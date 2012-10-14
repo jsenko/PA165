@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.fast.model;
 
 import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,27 +17,41 @@ import javax.persistence.OneToMany;
  */
 @Entity
 
-/*
+
 @NamedQueries({
 @NamedQuery(name="Team.findAll",
             query="SELECT t FROM Team t"),
 @NamedQuery(name="Team.findTeamByPlayer",
-            query="SELECT t FROM Team t WHERE t.players = :player"),
+            query="SELECT t FROM Team t WHERE :player member of t.players"),
 @NamedQuery(name="Team.findHomeTeamByMatch",
-            query="SELECT t FROM Team t JOIN :match m WHERE m.homeTeam = t"),
+            query="SELECT t FROM Team t WHERE :match member of t.homeMatches"),
 @NamedQuery(name="Team.findAwayTeamByMatch",
-            query="SELECT t FROM Team t JOIN :match m WHERE m.awayTeam = t")
+            query="SELECT t FROM Team t WHERE :match member of t.awayMatches")
 })
-*/
+
 public class Team
 {
-    @Id
+    @Override
+	public String toString() {
+		return "Team {id=" + id + ", name=" + name + ", players=" + players
+				+ ", homeMatches=" + homeMatches + ", awayMatches="
+				+ awayMatches + "}";
+	}
+
+	@Id
     @GeneratedValue
     private Long id;
     
     private String name;
     @OneToMany(mappedBy = "team")
     private List<Player> players;
+    
+    @OneToMany(mappedBy = "homeTeam")
+    private List<Match> homeMatches;
+   
+
+	@OneToMany(mappedBy = "awayTeam")
+    private List<Match> awayMatches;
 
     public Long getId() {
         return id;
@@ -61,6 +76,22 @@ public class Team
     public void setPlayers(List<Player> players) {
         this.players = players;
     }
+    
+    public List<Match> getHomeMatches() {
+		return homeMatches;
+	}
+
+	public void setHomeMatches(List<Match> homeMatches) {
+		this.homeMatches = homeMatches;
+	}
+
+	public List<Match> getAwayMatches() {
+		return awayMatches;
+	}
+
+	public void setAwayMatches(List<Match> awayMatches) {
+		this.awayMatches = awayMatches;
+	}
 
     @Override
     public int hashCode() {
