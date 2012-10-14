@@ -89,9 +89,9 @@ public class Player
     @Override
     public String toString()
     {
-        return "Player {id: " + (id != null ? id.toString() : "null") + ", "
-                + "name: " + (name != null ? name.toString() : "null") + ", "
-                + "surname: " + (surname != null ? surname.toString() : "null") + ", "
+        return "Player {id: " + id + ", "
+                + "name: " + name + ", "
+                + "surname: " + surname + ", "
                 + "age: " + age + ", "
                 + "height: " + height + ", "
                 + "weight: " + weight
