@@ -5,22 +5,25 @@
 package cz.muni.fi.pa165.fast.dao;
 
 
-import cz.muni.fi.pa165.fast.dao.impl.PlayerDAOImpl;
-import cz.muni.fi.pa165.fast.dao.impl.TeamDAOImpl;
-import cz.muni.fi.pa165.fast.model.Player;
-import cz.muni.fi.pa165.fast.model.Team;
-import java.util.List;
-import java.util.Arrays;
+import static org.junit.Assert.fail;
+
+import java.util.ArrayList;
 import java.util.Collection;
-import javax.persistence.EntityManager;
+import java.util.List;
+
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import cz.muni.fi.pa165.fast.dao.impl.PlayerDAOImpl;
+import cz.muni.fi.pa165.fast.model.Player;
+import cz.muni.fi.pa165.fast.model.Team;
 
 /**
  *
@@ -34,7 +37,7 @@ public class PlayerDAOImplTest {
     @BeforeClass
     public static void setUpClass()
     {
-        emf = Persistence.createEntityManagerFactory("FAST-TestPU");
+        emf = Persistence.createEntityManagerFactory("TestPU");
     }
     
     @AfterClass
@@ -44,14 +47,14 @@ public class PlayerDAOImplTest {
     }
     
     @Before
-    public static void setUp()
+    public void setUp()
     {
         playerDAO = new PlayerDAOImpl();
         playerDAO.setEntityManagerFactory(emf);
     }
     
     @After
-    public static void tearDown(){}
+    public void tearDown(){}
     
     @Test
     public void createTest()
@@ -76,6 +79,7 @@ public class PlayerDAOImplTest {
             Assert.fail("Error when player is created.");
         } 
         
+        /* TODO: remove, this is actually ok
         Player player2 = new Player();
         player2.setId(null);
         try
@@ -86,6 +90,7 @@ public class PlayerDAOImplTest {
         {
             //OK
         }
+        */
     }
     
     @Test
@@ -164,6 +169,9 @@ public class PlayerDAOImplTest {
         Team team = new Team();
         Player player1 = new Player();
         Player player2 = new Player();
+        
+        team.setPlayers(new ArrayList<Player>());
+        
         List<Player> players = team.getPlayers();
         
         
@@ -183,8 +191,9 @@ public class PlayerDAOImplTest {
     {
         try{
             playerDAO.getPlayerByScoredGoal(null);
+            fail();
         }catch(UnsupportedOperationException ex){
-            Assert.fail("Does not implement.");
+            // ok
         }
     }
     
@@ -193,8 +202,9 @@ public class PlayerDAOImplTest {
     {
         try{
             playerDAO.getPlayerByAssistedGoal(null);
+            fail();
         }catch(UnsupportedOperationException ex){
-            Assert.fail("Does not implement.");
+            // ok
         }
     }
 }
