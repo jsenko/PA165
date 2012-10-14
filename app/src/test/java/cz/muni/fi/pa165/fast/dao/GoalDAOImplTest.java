@@ -82,8 +82,8 @@ public class GoalDAOImplTest {
         gdaoi.update(goal);
        
         EntityManager em2 = emf.createEntityManager();
-        Goal goalFromDB = em.find(Goal.class, goal.getId());
-        em.close();
+        Goal goalFromDB = em2.find(Goal.class, goal.getId());
+        em2.close();
         
         assertEquals(milis,goal.getGoalTime().getTime());
         

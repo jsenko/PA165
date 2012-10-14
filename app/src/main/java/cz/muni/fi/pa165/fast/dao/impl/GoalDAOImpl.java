@@ -48,12 +48,11 @@ public class GoalDAOImpl implements GoalDAO
         }
         
         EntityManager em = emf.createEntityManager();
-        EntityTransaction emt = em.getTransaction();
-        
-        em.persist(goal);
-        
-        emt.begin();
-        emt.commit();
+        em.getTransaction().begin();        
+        em.merge(goal);
+        em.getTransaction().commit();
+        em.close();
+
     }
     
     @Override
@@ -67,7 +66,7 @@ public class GoalDAOImpl implements GoalDAO
         EntityManager em = emf.createEntityManager();
         EntityTransaction emt = em.getTransaction();
         
-        em.persist(goal);
+        goal = em.merge(goal);
         
         emt.begin();
             em.remove(goal);
