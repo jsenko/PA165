@@ -187,6 +187,9 @@ public class TeamDAOTest
     	tt.setPlayers(new ArrayList<Player>());
     	tt.getPlayers().add(pp);
     	tt.getPlayers().add(pp2);
+        p.setTeam(t);
+        pp.setTeam(tt);
+        pp2.setTeam(tt);
     	
     	em.getTransaction().begin();
     	em.persist(p);

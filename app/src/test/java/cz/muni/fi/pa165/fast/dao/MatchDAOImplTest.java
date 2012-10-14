@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.fast.dao;
 import cz.muni.fi.pa165.fast.dao.impl.MatchDAOImpl;
 import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Team;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -178,8 +179,9 @@ public class MatchDAOImplTest {
             //OK
         }
         
-        if(mdaoi.getById(Long.MAX_VALUE) != null)
-        	fail();
+        if(mdaoi.getById(Long.MAX_VALUE) != null) {
+            fail();
+        }
     }
     
     @Test
@@ -225,6 +227,11 @@ public class MatchDAOImplTest {
         match2.setHomeTeam(team);
         Match match3 = new Match();
         match3.setAwayTeam(team);
+        team.setAwayMatches(new ArrayList<Match>());
+        team.getAwayMatches().add(match3);
+        team.setHomeMatches(new ArrayList<Match>());
+        team.getHomeMatches().add(match1);
+        team.getHomeMatches().add(match2);
         
         long time = System.currentTimeMillis();
         match1.setMatchDate(new Date(time));
@@ -268,6 +275,11 @@ public class MatchDAOImplTest {
         match2.setAwayTeam(team);
         Match match3 = new Match();
         match3.setHomeTeam(team);
+        team.setHomeMatches(new ArrayList<Match>());
+        team.getHomeMatches().add(match3);
+        team.setAwayMatches(new ArrayList<Match>());
+        team.getAwayMatches().add(match1);
+        team.getAwayMatches().add(match2);
         
         long time = System.currentTimeMillis();
         match1.setMatchDate(new Date(time));

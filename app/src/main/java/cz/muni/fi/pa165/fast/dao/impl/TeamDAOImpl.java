@@ -123,7 +123,7 @@ public class TeamDAOImpl implements TeamDAO {
     @Override
     public Team findHomeTeamByMatch(Match match) {
         if (match == null) {
-            throw new IllegalArgumentException("player is null");
+            throw new IllegalArgumentException("match is null");
         }
 
         EntityManager em = emf.createEntityManager();
@@ -138,7 +138,7 @@ public class TeamDAOImpl implements TeamDAO {
     @Override
     public Team findAwayTeamByMatch(Match match) {
         if (match == null) {
-            throw new IllegalArgumentException("player is null");
+            throw new IllegalArgumentException("match is null");
         }
 
         EntityManager em = emf.createEntityManager();
