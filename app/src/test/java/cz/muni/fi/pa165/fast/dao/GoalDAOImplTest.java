@@ -23,7 +23,7 @@ import static org.junit.Assert.*;
 
 /**
  *
- * @author Stefan
+ * @author Stefan Uhercik
  */
 public class GoalDAOImplTest {
 
