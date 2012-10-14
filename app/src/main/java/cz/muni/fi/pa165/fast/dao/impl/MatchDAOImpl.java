@@ -53,6 +53,10 @@ public class MatchDAOImpl implements MatchDAO
 			throw new IllegalArgumentException("Match is null.");
 		}
 		EntityManager em = getManager();
+		if(em.find(Match.class, match.getId()) == null)
+		{
+			throw new IllegalArgumentException("Match does not exist.");
+		}
 		em.getTransaction().begin();
 		em.merge(match);
 		em.getTransaction().commit();
@@ -67,6 +71,10 @@ public class MatchDAOImpl implements MatchDAO
 			throw new IllegalArgumentException("Match is null.");
 		}
 		EntityManager em = getManager();
+		if(em.find(Match.class, match.getId()) == null)
+		{
+			throw new IllegalArgumentException("Match does not exist.");
+		}
 		em.getTransaction().begin();
 		Match managed = em.merge(match);
 		em.remove(managed);

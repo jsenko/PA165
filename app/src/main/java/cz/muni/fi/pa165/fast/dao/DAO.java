@@ -28,7 +28,7 @@ public interface DAO<T>
      * Updates an entity T in the database.
      * 
      * @param entity T to be added to the database. Cannot be null.
-     * @throws IllegalArgumentException if the argument is null.
+     * @throws IllegalArgumentException if the argument is null or the entity does not exist.
      */
     public void update(T entity);
     

@@ -122,6 +122,9 @@ public class MatchDAOImplTest {
         
         mdaoi.delete(match);
         
+        // match is still in current persistence context, must clear it
+        em.clear();
+        
         assertNull(em.find(Match.class, matchId));
         em.close();
     }
@@ -175,12 +178,8 @@ public class MatchDAOImplTest {
             //OK
         }
         
-        try {
-            mdaoi.getById(Long.MAX_VALUE);
-            fail();
-        } catch (IllegalArgumentException ex) {
-            //OK
-        }
+        if(mdaoi.getById(Long.MAX_VALUE) != null)
+        	fail();
     }
     
     @Test
