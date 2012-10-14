@@ -68,18 +68,25 @@ public class PlayerDAOImpl implements PlayerDAO
     
     @Override
     public Player getPlayerByScoredGoal(Goal goal) {
+        /*
         EntityManager em = emf.createEntityManager();
         Query query = em.createQuery("SELET p FROM Player p JOIN :goal g WHERE g.scorePlayer=p").setParameter("goal",goal);
         Player p = (Player) query.getSingleResult();
         return p;
+        */
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public Player getPlayerByAssistedGoal(Goal goal) {
+        /*
         EntityManager em = emf.createEntityManager();
         Query query = em.createQuery("SELET p FROM Player p JOIN :goal g WHERE g.assistPlayer=p").setParameter("goal",goal);
         Player p = (Player) query.getSingleResult();
         return p;
+        */
+        throw new UnsupportedOperationException();
+        
     }
 
     @Override
