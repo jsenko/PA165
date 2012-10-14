@@ -5,15 +5,13 @@
 package cz.muni.fi.pa165.fast.dao;
 
 
-import static org.junit.Assert.fail;
 
+import static org.junit.Assert.fail;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -22,6 +20,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import cz.muni.fi.pa165.fast.dao.impl.PlayerDAOImpl;
+import cz.muni.fi.pa165.fast.dao.impl.TeamDAOImpl;
 import cz.muni.fi.pa165.fast.model.Player;
 import cz.muni.fi.pa165.fast.model.Team;
 
@@ -64,33 +63,21 @@ public class PlayerDAOImplTest {
         
         try{
             playerDAO.create(player);
-            Assert.fail("Null pointer exception shoud be thrown whne null player creating.");
+            fail("Null pointer exception shoud be thrown whne null player creating.");
         }catch(IllegalArgumentException ex)
         {
             //OK
         }
        
         player = new Player();
+        player.setName("Mike");
         
         try{
             playerDAO.create(player);
         }catch(Exception ex)
         {
-            Assert.fail("Error when player is created.");
+            fail("Error when player is created.");
         } 
-        
-        /* TODO: remove, this is actually ok
-        Player player2 = new Player();
-        player2.setId(null);
-        try
-        {
-            playerDAO.create(player2);
-            Assert.fail("Error when player with null id is created");
-        }catch(IllegalArgumentException ex)
-        {
-            //OK
-        }
-        */
     }
     
     @Test
@@ -101,7 +88,7 @@ public class PlayerDAOImplTest {
         
         try{
             playerDAO.update(player);
-            Assert.fail("Null pointer exception shoud be thrown whne null player updating.");
+            fail("Null pointer exception shoud be thrown whne null player updating.");
         }catch(IllegalArgumentException ex)
         {
             //OK
@@ -115,7 +102,7 @@ public class PlayerDAOImplTest {
             playerDAO.update(player);
         }catch(Exception ex)
         {
-            Assert.fail("Error when player is updated.");
+            fail("Error when player is updated.");
         }         
     }
     
@@ -127,7 +114,7 @@ public class PlayerDAOImplTest {
         
         try{
             playerDAO.delete(player);
-            Assert.fail("Null pointer exception shoud be thrown whne null player creating.");
+            fail("Null pointer exception shoud be thrown whne null player creating.");
         }catch(IllegalArgumentException ex)
         {
             //OK
@@ -141,7 +128,7 @@ public class PlayerDAOImplTest {
             
         }catch(Exception ex)
         {
-            Assert.fail("Error when player is deleted.");
+            fail("Error when player is deleted.");
         }         
     }
     
@@ -149,43 +136,23 @@ public class PlayerDAOImplTest {
     public void findAlltest()
     {
         Player player1 = new Player();
+        player1.setName("Mike");
         Player player2 = new Player();
+        player2.setName("Felix");
         
         playerDAO.create(player1);
         playerDAO.create(player2);
         
-        Collection<Player> players = playerDAO.findAll();
+        Collection<Player> allPlayers = playerDAO.findAll();
         
-        Assert.assertEquals(2, players.size());
+        Assert.assertEquals(2, allPlayers.size());
         
-        Assert.assertTrue(players.contains(player1));
-        Assert.assertTrue(players.contains(player2));
-        
-    }
-    
-    @Test
-    public void findPlayersByTeam()
-    {
-        Team team = new Team();
-        Player player1 = new Player();
-        Player player2 = new Player();
-        
-        team.setPlayers(new ArrayList<Player>());
-        
-        List<Player> players = team.getPlayers();
-        
-        
-        players.add(player1);
-        players.add(player2);
-        
-        team.setPlayers(players);
-        players = playerDAO.findPlayersByTeam(team);
-        Assert.assertTrue(players.contains(player1));
-        Assert.assertTrue(players.contains(player2));
-        
+        Assert.assertTrue(allPlayers.contains(player1));
+        Assert.assertTrue(allPlayers.contains(player2));
         
     }
     
+       
     @Test
     public void getPlayerByScoredGoalTest()
     {
