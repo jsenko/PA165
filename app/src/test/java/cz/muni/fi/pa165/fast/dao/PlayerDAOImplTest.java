@@ -33,27 +33,21 @@ public class PlayerDAOImplTest {
     private static EntityManagerFactory emf;
     private static PlayerDAO playerDAO;
     
-    @BeforeClass
-    public static void setUpClass()
-    {
-        emf = Persistence.createEntityManagerFactory("TestPU");
-    }
-    
-    @AfterClass
-    public static void tearDownClass()
-    {
-        emf.close();
-    }
+
     
     @Before
     public void setUp()
     {
+    	 emf = Persistence.createEntityManagerFactory("TestPU");
         playerDAO = new PlayerDAOImpl();
         playerDAO.setEntityManagerFactory(emf);
     }
     
     @After
-    public void tearDown(){}
+    public void tearDown(){
+    	
+    	emf.close();
+    }
     
     @Test
     public void createTest()
@@ -145,7 +139,7 @@ public class PlayerDAOImplTest {
         
         Collection<Player> allPlayers = playerDAO.findAll();
         
-        Assert.assertEquals(4, allPlayers.size());
+        Assert.assertEquals(2, allPlayers.size());
         
         Assert.assertTrue(allPlayers.contains(player1));
         Assert.assertTrue(allPlayers.contains(player2));
