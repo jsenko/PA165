@@ -275,26 +275,4 @@ public class TeamDAOTest
     	
     	assertEquals("Away", res.getName());
     }
-
-    @Test
-    public void findScoringTeamByGoal()
-    {
-    	try
-    	{
-    		dao.findScoringTeamByGoal(null);
-    		fail();
-    	}
-    	catch(UnsupportedOperationException e){ /* ok */ }
-    }
-    
-    @Test
-    public void findTeamIncassingByGoal()
-    {
-    	try
-    	{
-    		dao.findScoringTeamByGoal(null);
-    		fail();
-    	}
-    	catch(UnsupportedOperationException e){ /* ok */ }
-    }
 }
