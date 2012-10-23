@@ -25,18 +25,24 @@ public class GoalDAOImpl implements GoalDAO
     @Override
     public void create(Goal goal)
     {
+        
         if(goal==null)
         {
             throw new IllegalArgumentException("Goal can not be null when new goal is created.");
         }
         
         EntityManager em = emf.createEntityManager();
-        EntityTransaction emt = em.getTransaction();
         
-        em.persist(goal);        
-        
-        emt.begin();
-        emt.commit();
+        try{
+            EntityTransaction emt = em.getTransaction();
+
+            em.persist(goal);        
+
+            emt.begin();
+            emt.commit();
+        }finally{
+          em.close();  
+        }
     }
     
     @Override
@@ -48,10 +54,14 @@ public class GoalDAOImpl implements GoalDAO
         }
         
         EntityManager em = emf.createEntityManager();
-        em.getTransaction().begin();        
-        em.merge(goal);
-        em.getTransaction().commit();
-        em.close();
+        
+        try{
+            em.getTransaction().begin();        
+            em.merge(goal);
+            em.getTransaction().commit();
+        }finally{
+            em.close();
+        }
 
     }
     
@@ -64,13 +74,18 @@ public class GoalDAOImpl implements GoalDAO
         }
         
         EntityManager em = emf.createEntityManager();
-        EntityTransaction emt = em.getTransaction();
         
-        goal = em.merge(goal);
-        
-        emt.begin();
-            em.remove(goal);
-        emt.commit();
+        try{
+            EntityTransaction emt = em.getTransaction();
+
+            goal = em.merge(goal);
+
+            emt.begin();
+                em.remove(goal);
+            emt.commit();
+        }finally{
+            em.close();
+        }
     }
     
     @Override
@@ -83,17 +98,26 @@ public class GoalDAOImpl implements GoalDAO
         
         EntityManager em = emf.createEntityManager();
         
-        Goal goal = em.find(Goal.class, id);
+        try{
+            Goal goal = em.find(Goal.class, id);
+            return goal;
+        }finally{
+            em.close();
+        }
         
-        return goal;
     }
         
     @Override
     public Collection<Goal> findAll()
     {
         EntityManager em = emf.createEntityManager();
-        Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g").getResultList();
-        return goals;
+        try{
+            Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g").getResultList();
+            return goals;
+        }finally{
+            em.close();
+        }
+        
     }
     
     @Override
@@ -106,8 +130,12 @@ public class GoalDAOImpl implements GoalDAO
         
         EntityManager em = emf.createEntityManager();
         
-        Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.scorePlayer='player'").getResultList();
-        return goals;
+        try{
+            Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.scorePlayer='player'").getResultList();
+            return goals;
+        }finally{
+            em.close();
+        }
     }
 
     @Override
@@ -119,8 +147,12 @@ public class GoalDAOImpl implements GoalDAO
         
         EntityManager em = emf.createEntityManager();
         
-        Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.assistPlayer='player'").getResultList();
-        return goals;
+        try{
+            Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.assistPlayer='player'").getResultList();
+            return goals;
+        }finally{
+            em.close();
+        }
     }
 
     @Override
@@ -132,8 +164,12 @@ public class GoalDAOImpl implements GoalDAO
         
         EntityManager em = emf.createEntityManager();
         
-        Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.assistPlayer='match'").getResultList();
-        return goals;
+        try{
+            Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.assistPlayer='match'").getResultList();
+            return goals;
+        }finally{
+            em.close();
+        }
     }
     
     
