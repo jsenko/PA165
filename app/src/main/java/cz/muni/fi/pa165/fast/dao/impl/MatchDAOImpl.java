@@ -1,5 +1,7 @@
 package cz.muni.fi.pa165.fast.dao.impl;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -34,15 +36,20 @@ public class MatchDAOImpl implements MatchDAO
 	@Override
 	public void create(Match match)
 	{
+		EntityManager em = getManager();
+		try{
+			
+		
 		if(match == null)
 		{
 			throw new IllegalArgumentException("Match is null.");
 		}
-		EntityManager em = getManager();
+		
 		em.getTransaction().begin();
 		em.persist(match);
 		em.getTransaction().commit();
-		em.close();
+		
+		}finally{ em.close(); }
 	}
 
 	@Override
@@ -53,6 +60,10 @@ public class MatchDAOImpl implements MatchDAO
 			throw new IllegalArgumentException("Match is null.");
 		}
 		EntityManager em = getManager();
+		try{
+		
+
+		
 		if(em.find(Match.class, match.getId()) == null)
 		{
 			throw new IllegalArgumentException("Match does not exist.");
@@ -60,7 +71,8 @@ public class MatchDAOImpl implements MatchDAO
 		em.getTransaction().begin();
 		em.merge(match);
 		em.getTransaction().commit();
-		em.close();
+		
+		}finally{ em.close(); }
 	}
 
 	@Override
@@ -71,6 +83,7 @@ public class MatchDAOImpl implements MatchDAO
 			throw new IllegalArgumentException("Match is null.");
 		}
 		EntityManager em = getManager();
+		try{
 		if(em.find(Match.class, match.getId()) == null)
 		{
 			throw new IllegalArgumentException("Match does not exist.");
@@ -79,7 +92,7 @@ public class MatchDAOImpl implements MatchDAO
 		Match managed = em.merge(match);
 		em.remove(managed);
 		em.getTransaction().commit();
-		em.close();	
+	    }finally{ em.close(); }
 		
 	}
 
@@ -90,19 +103,29 @@ public class MatchDAOImpl implements MatchDAO
 		{
 			throw new IllegalArgumentException("Id is null.");
 		}
+		Match match = null;
 		EntityManager em = getManager();
-		Match match = em.find(Match.class, id);
-		em.close();
+		try{
+
+		match = em.find(Match.class, id);
+		}finally{ em.close(); }
+
 		return match;
 	}
 
 	@Override
 	public List<Match> findAll()
 	{
+		
 		EntityManager em = getManager();
-		@SuppressWarnings("unchecked")
-		List<Match> result = em.createQuery("select m from Match m").getResultList();
-		em.close();
+		List result = Collections.emptyList();
+		try{
+		
+		result = em.createQuery("select m from Match m").getResultList();
+
+	}finally{ em.close(); }
+
+		
 		return result;
 	}
 
@@ -114,11 +137,18 @@ public class MatchDAOImpl implements MatchDAO
 			throw new IllegalArgumentException("Team is null.");
 		}
 		EntityManager em = getManager();
-		@SuppressWarnings("unchecked")
-		List<Match> result = em.createQuery("select m from Match m where m.homeTeam = :team")
+		List result = Collections.emptyList();
+		try
+		{
+		
+		result = em.createQuery("select m from Match m where m.homeTeam = :team")
 			.setParameter("team", team)
 			.getResultList();
-		em.close();
+		}
+		finally
+		{
+			em.close();
+		}
 		return result;
 	}
 
@@ -130,11 +160,17 @@ public class MatchDAOImpl implements MatchDAO
 			throw new IllegalArgumentException("Team is null.");
 		}
 		EntityManager em = getManager();
-		@SuppressWarnings("unchecked")
-		List<Match> result = em.createQuery("select m from Match m where m.awayTeam = :team")
+		List result = Collections.emptyList();
+		try
+		{
+		
+		result = em.createQuery("select m from Match m where m.awayTeam = :team")
 			.setParameter("team", team)
 			.getResultList();
-		em.close();
+		}finally
+		{
+			em.close();
+		}
 		return result;
 	}
 
