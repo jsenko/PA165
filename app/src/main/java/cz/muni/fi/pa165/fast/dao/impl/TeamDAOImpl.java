@@ -31,10 +31,13 @@ public class TeamDAOImpl implements TeamDAO {
 
         EntityManager em = emf.createEntityManager();
 
-        em.getTransaction().begin();
-        em.persist(team);
-        em.getTransaction().commit();
-        em.close();
+        try {
+            em.getTransaction().begin();
+            em.persist(team);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 
     @Override
@@ -45,14 +48,17 @@ public class TeamDAOImpl implements TeamDAO {
 
         EntityManager em = emf.createEntityManager();
 
-        if (em.find(Team.class, team.getId()) == null) {
-            throw new IllegalArgumentException("team not in DB");
-        }
+        try {
+            if (em.find(Team.class, team.getId()) == null) {
+                throw new IllegalArgumentException("team not in DB");
+            }
 
-        em.getTransaction().begin();
-        em.merge(team);
-        em.getTransaction().commit();
-        em.close();
+            em.getTransaction().begin();
+            em.merge(team);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
+        }
     }
 
     @Override
@@ -63,16 +69,19 @@ public class TeamDAOImpl implements TeamDAO {
 
         EntityManager em = emf.createEntityManager();
 
-        Team manTeam = em.find(Team.class, team.getId());
+        try {
+            Team manTeam = em.find(Team.class, team.getId());
 
-        if (manTeam == null) {
-            throw new IllegalArgumentException("team not in DB");
+            if (manTeam == null) {
+                throw new IllegalArgumentException("team not in DB");
+            }
+
+            em.getTransaction().begin();
+            em.remove(manTeam);
+            em.getTransaction().commit();
+        } finally {
+            em.close();
         }
-
-        em.getTransaction().begin();
-        em.remove(manTeam);
-        em.getTransaction().commit();
-        em.close();
     }
 
     @Override
@@ -82,25 +91,31 @@ public class TeamDAOImpl implements TeamDAO {
         }
 
         EntityManager em = emf.createEntityManager();
+        Team manTeam = null;
+        
+        try {
+            manTeam = em.find(Team.class, id);
 
-        Team manTeam = em.find(Team.class, id);
-
-        if (manTeam == null) {
-            throw new IllegalArgumentException("team not in DB");
+            if (manTeam == null) {
+                throw new IllegalArgumentException("team not in DB");
+            }
+        } finally {
+            em.close();
         }
 
-        em.close();
-        
         return manTeam;
     }
 
     @Override
     public Collection<Team> findAll() {
         EntityManager em = emf.createEntityManager();
-
-        Collection<Team> teams = em.createNamedQuery("Team.findAll").getResultList();
-
-        em.close();
+        Collection<Team> teams = null;
+        
+        try {
+            teams = em.createNamedQuery("Team.findAll").getResultList();
+        } finally {
+            em.close();
+        }
 
         return teams;
     }
@@ -112,10 +127,13 @@ public class TeamDAOImpl implements TeamDAO {
         }
 
         EntityManager em = emf.createEntityManager();
+        Team team = null;
 
-        Team team = (Team) em.createNamedQuery("Team.findTeamByPlayer").setParameter("player", player).getSingleResult();
-
-        em.close();
+        try {
+            team = (Team) em.createNamedQuery("Team.findTeamByPlayer").setParameter("player", player).getSingleResult();
+        } finally {
+            em.close();
+        }
 
         return team;
     }
@@ -127,10 +145,13 @@ public class TeamDAOImpl implements TeamDAO {
         }
 
         EntityManager em = emf.createEntityManager();
-
-        Team team = (Team) em.createNamedQuery("Team.findHomeTeamByMatch").setParameter("match", match).getSingleResult();
-
-        em.close();
+        Team team = null;
+        
+        try {
+            team = (Team) em.createNamedQuery("Team.findHomeTeamByMatch").setParameter("match", match).getSingleResult();
+        } finally {
+            em.close();
+        }
 
         return team;
     }
@@ -142,12 +163,14 @@ public class TeamDAOImpl implements TeamDAO {
         }
 
         EntityManager em = emf.createEntityManager();
+        Team team = null;
 
-        Team team = (Team) em.createNamedQuery("Team.findAwayTeamByMatch").setParameter("match", match).getSingleResult();
-
-        em.close();
+        try {
+            team = (Team) em.createNamedQuery("Team.findAwayTeamByMatch").setParameter("match", match).getSingleResult();
+        } finally {
+            em.close();
+        }
 
         return team;
-
     }
 }
