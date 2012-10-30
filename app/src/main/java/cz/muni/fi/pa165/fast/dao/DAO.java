@@ -14,8 +14,6 @@ import javax.persistence.EntityManagerFactory;
  */
 public interface DAO<T>
 {
-	public void setEntityManagerFactory(EntityManagerFactory emf);
-	
     /**
      * Creates new entity T in the database.
      * 
