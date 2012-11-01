@@ -4,7 +4,12 @@ import java.util.List;
 
 import cz.muni.fi.pa165.fast.dto.MatchDTO;
 import cz.muni.fi.pa165.fast.dto.PlayerDTO;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 
+@Stateless
+@TransactionAttribute(TransactionAttributeType.REQUIRED)
 public interface PlayerService
 {
 	public long create(PlayerDTO dto);
