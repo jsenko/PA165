@@ -58,6 +58,7 @@ public class TeamServiceImpl implements TeamService{
             TeamDTO dto = getTeamInfo(entity);
             dtos.add(dto);
         }
+        Collections.sort(dtos);
         
         return dtos;
     }

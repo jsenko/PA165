@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.fast.dto;
 
-public class TeamDTO {
+public class TeamDTO implements Comparable<TeamDTO> {
 
     private long id;
     private String name;
@@ -83,5 +83,10 @@ public class TeamDTO {
 
     public void setTrend(MatchResult[] trend) {
         this.trend = trend;
+    }
+
+    @Override
+    public int compareTo(TeamDTO t) {
+        return this.points - t.points;
     }
 }
