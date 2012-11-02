@@ -4,12 +4,14 @@ import cz.muni.fi.pa165.fast.model.Goal;
 import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Player;
 import cz.muni.fi.pa165.fast.model.Team;
+import javax.ejb.Local;
 
 /**
  * This interface represents data access object for Team
  * 
  * @author Stefan Uhercik
  */
+@Local
 public interface TeamDAO extends DAO<Team>
 {
 

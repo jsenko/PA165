@@ -2,13 +2,11 @@ package cz.muni.fi.pa165.fast.model;
 
 import java.util.Collection;
 import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -19,7 +17,7 @@ import javax.persistence.TemporalType;
  * @author Stefan Uhercik
  */
 @Entity
-public class Match
+public class Match implements Comparable<Match>
 {
     @Id
     @GeneratedValue
@@ -100,8 +98,9 @@ public class Match
         }
         return true;
     }
-    
-    
-    
-    
+
+    @Override
+    public int compareTo(Match t) {
+        return this.getMatchDate().compareTo(t.getMatchDate());
+    }
 }

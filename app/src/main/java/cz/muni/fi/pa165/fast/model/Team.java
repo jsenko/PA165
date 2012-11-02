@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.fast.model;
 
 import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -16,8 +15,6 @@ import javax.persistence.OneToMany;
  * @version 1.0
  */
 @Entity
-
-
 @NamedQueries({
 @NamedQuery(name="Team.findAll",
             query="SELECT t FROM Team t"),
@@ -43,8 +40,7 @@ public class Team
     @OneToMany(mappedBy = "homeTeam")
     private List<Match> homeMatches;
    
-
-	@OneToMany(mappedBy = "awayTeam")
+    @OneToMany(mappedBy = "awayTeam")
     private List<Match> awayMatches;
 
     public Long getId() {
