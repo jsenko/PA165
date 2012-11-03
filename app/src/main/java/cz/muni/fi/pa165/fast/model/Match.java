@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.fast.model;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Entity;
@@ -17,7 +18,7 @@ import javax.persistence.TemporalType;
  * @author Stefan Uhercik
  */
 @Entity
-public class Match implements Comparable<Match>
+public class Match implements Comparable<Match>, Serializable
 {
     @Id
     @GeneratedValue

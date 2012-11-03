@@ -29,7 +29,7 @@ public class MatchDAOImplTest {
     
     private MatchDAOImpl mdaoi;
     private EntityManagerFactory emf;
-    private EntityManager emt; 
+    private EntityManager em; 
     
     public MatchDAOImplTest() {
     }
@@ -45,19 +45,19 @@ public class MatchDAOImplTest {
     @Before
     public void setUp() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
         emf = Persistence.createEntityManagerFactory("TestPU");
-        emt = emf.createEntityManager();
+        em = emf.createEntityManager();
         
         
         mdaoi = new MatchDAOImpl();
         // perform dependency injection
         Field f = mdaoi.getClass().getDeclaredField("em");
         f.setAccessible(true);
-        f.set(mdaoi, emt);
+        f.set(mdaoi, em);
     }
     
     @After
     public void tearDown() {
-    	emt.close();
+    	em.close();
         emf.close();
     }
     
@@ -68,6 +68,7 @@ public class MatchDAOImplTest {
         assertNotNull(match.getId());
     }
     
+    @Test
     public void createMatchInvalid(){
         Match match = null;
         try {
@@ -81,8 +82,6 @@ public class MatchDAOImplTest {
     @Test
     public void updateMatch(){
         Match match = new Match();
-        
-        EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
         em.persist(match);
@@ -90,7 +89,7 @@ public class MatchDAOImplTest {
         
         Long matchId = match.getId();
         
-        long time = System.currentTimeMillis();
+        long time = System.currentTimeMillis()-5000;
         match.setMatchDate(new Date(time));
         
         mdaoi.update(match);
@@ -98,7 +97,6 @@ public class MatchDAOImplTest {
         Match DBMatch = em.find(Match.class, matchId);
         
         assertEquals(time, DBMatch.getMatchDate().getTime());
-        em.close();
     }
     
     @Test
@@ -124,22 +122,17 @@ public class MatchDAOImplTest {
     @Test
     public void deleteMatch(){
         Match match = new Match();
-        
-        EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
         em.persist(match);
         em.getTransaction().commit();
+        em.clear();
         
         Long matchId = match.getId();
         
         mdaoi.delete(match);
         
-        // match is still in current persistence context, must clear it
-        em.clear();
-        
         assertNull(em.find(Match.class, matchId));
-        em.close();
     }
     
     @Test
@@ -167,8 +160,6 @@ public class MatchDAOImplTest {
         Match match = new Match();
         long time = System.currentTimeMillis();
         match.setMatchDate(new Date(time));
-        
-        EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
         em.persist(match);
@@ -179,7 +170,6 @@ public class MatchDAOImplTest {
         Match DBMatch = mdaoi.getById(matchId);
         
         assertEquals(time, DBMatch.getMatchDate().getTime());
-        em.close();
     }
     
     @Test
@@ -203,8 +193,6 @@ public class MatchDAOImplTest {
         match1.setMatchDate(new Date(time));
         Match match2 = new Match();
         match2.setMatchDate(new Date(time+1000));
-        
-        EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
         em.persist(match1);
@@ -227,7 +215,6 @@ public class MatchDAOImplTest {
                 assertEquals(time+1000, match.getMatchDate().getTime());
             }
         }
-        em.close();
     }
     
     @Test
@@ -248,8 +235,6 @@ public class MatchDAOImplTest {
         long time = System.currentTimeMillis();
         match1.setMatchDate(new Date(time));
         match2.setMatchDate(new Date(time+1000));
-        
-        EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
         em.persist(team);
@@ -274,8 +259,6 @@ public class MatchDAOImplTest {
                 assertEquals(time+1000, match.getMatchDate().getTime());
             }
         }
-        
-        em.close();
     }
     
     @Test
@@ -296,8 +279,6 @@ public class MatchDAOImplTest {
         long time = System.currentTimeMillis();
         match1.setMatchDate(new Date(time));
         match2.setMatchDate(new Date(time+1000));
-        
-        EntityManager em = emf.createEntityManager();
 
         em.getTransaction().begin();
         em.persist(team);
@@ -322,8 +303,6 @@ public class MatchDAOImplTest {
                 assertEquals(time+1000, match.getMatchDate().getTime());
             }
         }
-        
-        em.close();
     }
     
     @Test

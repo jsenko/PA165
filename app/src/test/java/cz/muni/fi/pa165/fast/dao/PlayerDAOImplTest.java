@@ -8,9 +8,12 @@ package cz.muni.fi.pa165.fast.dao;
 
 import cz.muni.fi.pa165.fast.dao.impl.PlayerDAOImpl;
 import cz.muni.fi.pa165.fast.model.Player;
+import java.lang.reflect.Field;
 import java.util.Collection;
 import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import org.junit.After;
 import org.junit.Assert;
 import static org.junit.Assert.fail;
 import org.junit.Before;
@@ -22,14 +25,27 @@ import org.junit.Test;
  */
 public class PlayerDAOImplTest {
     
-    @PersistenceContext(unitName = "TestPU")
     private EntityManager em;
+    private EntityManagerFactory emf;
     private static PlayerDAO playerDAO;
 
     @Before
-    public void setUp()
-    {
+    public void setUp() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+        emf = Persistence.createEntityManagerFactory("TestPU");
+        em = emf.createEntityManager();
+        
+        
         playerDAO = new PlayerDAOImpl();
+        // perform dependency injection
+        Field f = playerDAO.getClass().getDeclaredField("em");
+        f.setAccessible(true);
+        f.set(playerDAO, em);
+    }
+    
+    @After
+    public void tearDown() {
+    	em.close();
+        emf.close();
     }
     
     @Test
