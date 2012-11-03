@@ -107,8 +107,8 @@ public class Team
     
     @Override
     public String toString() {
-	return "Team {id=" + id + ", name=" + name + ", players=" + players
-				+ ", homeMatches=" + homeMatches + ", awayMatches="
-				+ awayMatches + "}";
+	return "Team {id=" + id + ", name=" + name + ", players=" + players.size()
+				+ ", homeMatches=" + homeMatches.size() + ", awayMatches="
+				+ awayMatches.size() + "}";
     }
 }

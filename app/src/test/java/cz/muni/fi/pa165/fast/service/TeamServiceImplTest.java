@@ -22,6 +22,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InOrder;
 import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -417,22 +418,19 @@ public class TeamServiceImplTest {
         //********Actual testing********//
 
         when(teamDaoMock.findAll()).thenReturn(teamList);
-        when(matchDaoMock.findByAwayTeam(teamA)).thenReturn(matchAAwayList);
-        when(matchDaoMock.findByAwayTeam(teamB)).thenReturn(matchBAwayList);
-        when(matchDaoMock.findByAwayTeam(teamC)).thenReturn(matchCAwayList);
-        when(matchDaoMock.findByHomeTeam(teamA)).thenReturn(matchAHomeList);
-        when(matchDaoMock.findByHomeTeam(teamB)).thenReturn(matchBHomeList);
-        when(matchDaoMock.findByHomeTeam(teamC)).thenReturn(matchCHomeList);
+        when(matchDaoMock.findByAwayTeam(any(Team.class))).thenReturn(matchAAwayList, matchBAwayList, matchCAwayList);
+        when(matchDaoMock.findByHomeTeam(any(Team.class))).thenReturn(matchAHomeList, matchBHomeList, matchCHomeList);
 
         List<TeamDTO> dtos = service.findAll();
 
         verify(teamDaoMock).findAll();
-        verify(matchDaoMock).findByAwayTeam(teamA);
-        verify(matchDaoMock).findByAwayTeam(teamB);
-        verify(matchDaoMock).findByAwayTeam(teamC);
-        verify(matchDaoMock).findByHomeTeam(teamA);
-        verify(matchDaoMock).findByHomeTeam(teamB);
-        verify(matchDaoMock).findByHomeTeam(teamC);
+        InOrder order = inOrder(matchDaoMock);
+        order.verify(matchDaoMock).findByAwayTeam(teamA);
+        order.verify(matchDaoMock).findByHomeTeam(teamA);
+        order.verify(matchDaoMock).findByAwayTeam(teamB);
+        order.verify(matchDaoMock).findByHomeTeam(teamB);
+        order.verify(matchDaoMock).findByAwayTeam(teamC);
+        order.verify(matchDaoMock).findByHomeTeam(teamC);
         verifyNoMoreInteractions(teamDaoMock);
         verifyNoMoreInteractions(matchDaoMock);
 

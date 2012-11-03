@@ -87,6 +87,6 @@ public class TeamDTO implements Comparable<TeamDTO> {
 
     @Override
     public int compareTo(TeamDTO t) {
-        return this.points - t.points;
+        return t.points - this.points;
     }
 }
