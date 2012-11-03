@@ -1,41 +1,33 @@
 package cz.muni.fi.pa165.fast.dao;
 
+import cz.muni.fi.pa165.fast.dao.impl.TeamDAOImpl;
+import cz.muni.fi.pa165.fast.model.Match;
+import cz.muni.fi.pa165.fast.model.Player;
+import cz.muni.fi.pa165.fast.model.Team;
+import java.util.ArrayList;
+import java.util.Collection;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
-import java.util.ArrayList;
-import java.util.Collection;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import cz.muni.fi.pa165.fast.dao.impl.TeamDAOImpl;
-import cz.muni.fi.pa165.fast.model.Match;
-import cz.muni.fi.pa165.fast.model.Player;
-import cz.muni.fi.pa165.fast.model.Team;
-import javax.persistence.PersistenceContext;
 
 /**
  * @author Jakub Senko
  */
 public class TeamDAOTest {
 
-    @PersistenceContext(unitName = "TestPU")
+    @PersistenceContext
     private EntityManager em;
     private TeamDAO dao;
 
     @Before
     public void seUp() {
         dao = new TeamDAOImpl();
-
     }
 
     @Test

@@ -1,9 +1,9 @@
 package cz.muni.fi.pa165.fast.service.impl;
 
 import cz.muni.fi.pa165.fast.convert.TeamConvert;
-import cz.muni.fi.pa165.fast.dao.impl.MatchDAOImpl;
-import cz.muni.fi.pa165.fast.dao.impl.PlayerDAOImpl;
-import cz.muni.fi.pa165.fast.dao.impl.TeamDAOImpl;
+import cz.muni.fi.pa165.fast.dao.MatchDAO;
+import cz.muni.fi.pa165.fast.dao.PlayerDAO;
+import cz.muni.fi.pa165.fast.dao.TeamDAO;
 import cz.muni.fi.pa165.fast.dto.MatchResult;
 import cz.muni.fi.pa165.fast.dto.TeamDTO;
 import cz.muni.fi.pa165.fast.model.Goal;
@@ -22,11 +22,11 @@ import javax.ejb.Stateless;
 public class TeamServiceImpl implements TeamService{
 
     @EJB
-    private TeamDAOImpl teamDao;
+    private TeamDAO teamDao;
     @EJB
-    private MatchDAOImpl matchDao;
+    private MatchDAO matchDao;
     @EJB
-    private PlayerDAOImpl playerDao;
+    private PlayerDAO playerDao;
     
     @Override
     public void create(TeamDTO dto) {

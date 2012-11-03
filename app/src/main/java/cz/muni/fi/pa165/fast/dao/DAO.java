@@ -1,8 +1,8 @@
 package cz.muni.fi.pa165.fast.dao;
 
 import java.util.Collection;
+import javax.ejb.Local;
 
-import javax.persistence.EntityManagerFactory;
 
 /**
  * Generic CRUD DAO interface

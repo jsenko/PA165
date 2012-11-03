@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Player;
 import cz.muni.fi.pa165.fast.model.Team;
 import java.util.Collection;
+import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,6 +15,7 @@ import javax.persistence.PersistenceContext;
  *
  * @author Michal Kimle
  */
+@Local(value=TeamDAO.class)
 @Stateless
 public class TeamDAOImpl implements TeamDAO {
 

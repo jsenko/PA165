@@ -6,23 +6,15 @@ package cz.muni.fi.pa165.fast.dao;
 
 
 
-import static org.junit.Assert.fail;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
 import cz.muni.fi.pa165.fast.dao.impl.PlayerDAOImpl;
-import cz.muni.fi.pa165.fast.dao.impl.TeamDAOImpl;
 import cz.muni.fi.pa165.fast.model.Player;
-import cz.muni.fi.pa165.fast.model.Team;
+import java.util.Collection;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import org.junit.Assert;
+import static org.junit.Assert.fail;
+import org.junit.Before;
+import org.junit.Test;
 
 /**
  *
@@ -30,23 +22,14 @@ import cz.muni.fi.pa165.fast.model.Team;
  */
 public class PlayerDAOImplTest {
     
-    private static EntityManagerFactory emf;
+    @PersistenceContext(unitName = "TestPU")
+    private EntityManager em;
     private static PlayerDAO playerDAO;
-    
 
-    
     @Before
     public void setUp()
     {
-    	 emf = Persistence.createEntityManagerFactory("TestPU");
         playerDAO = new PlayerDAOImpl();
-        playerDAO.setEntityManagerFactory(emf);
-    }
-    
-    @After
-    public void tearDown(){
-    	
-    	emf.close();
     }
     
     @Test

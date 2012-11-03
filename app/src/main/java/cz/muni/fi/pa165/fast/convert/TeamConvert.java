@@ -5,6 +5,9 @@ import cz.muni.fi.pa165.fast.model.Team;
 
 public class TeamConvert {
     public static TeamDTO fromEntityToDTO(Team entity){
+        if(entity == null) {
+            return null;
+        }
         TeamDTO dto = new TeamDTO();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
@@ -13,6 +16,9 @@ public class TeamConvert {
     }
     
     public static Team fromDTOToEntity(TeamDTO dto){
+        if(dto == null){
+            return null;
+        }
         Team entity = new Team();
         entity.setId(dto.getId());
         entity.setName(dto.getName());

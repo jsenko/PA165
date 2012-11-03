@@ -1,18 +1,14 @@
 package cz.muni.fi.pa165.fast.dao.impl;
 
-import java.util.List;
-
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import cz.muni.fi.pa165.fast.dao.MatchDAO;
 import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Team;
+import java.util.List;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  * Implementation of the MatchDAO interface.
@@ -27,7 +23,7 @@ public class MatchDAOImpl implements MatchDAO
 {
 	
 	@PersistenceContext
-	EntityManager em;
+	private EntityManager em;
 
 	@Override
 	public void create(Match match)
@@ -36,7 +32,6 @@ public class MatchDAOImpl implements MatchDAO
 		{
 			throw new IllegalArgumentException("Match is null.");
 		}
-
 		em.persist(match);
 	}
 

@@ -4,13 +4,10 @@ import cz.muni.fi.pa165.fast.dao.impl.MatchDAOImpl;
 import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Team;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import org.junit.After;
+import javax.persistence.PersistenceContext;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
 import org.junit.Before;
@@ -24,7 +21,8 @@ import org.junit.Test;
 public class MatchDAOImplTest {
     
     private MatchDAOImpl mdaoi;
-    private EntityManagerFactory emf;
+    @PersistenceContext
+    private EntityManager em;
     
     public MatchDAOImplTest() {
     }
@@ -39,14 +37,7 @@ public class MatchDAOImplTest {
     
     @Before
     public void setUp() {
-        emf = Persistence.createEntityManagerFactory("TestPU");
         mdaoi = new MatchDAOImpl();
-        mdaoi.setEntityManagerFactory(emf);
-    }
-    
-    @After
-    public void tearDown() {
-        emf.close();
     }
     
     @Test
@@ -69,12 +60,8 @@ public class MatchDAOImplTest {
     @Test
     public void updateMatch(){
         Match match = new Match();
-        
-        EntityManager em = emf.createEntityManager();
 
-        em.getTransaction().begin();
         em.persist(match);
-        em.getTransaction().commit();
         
         Long matchId = match.getId();
         
@@ -112,12 +99,8 @@ public class MatchDAOImplTest {
     @Test
     public void deleteMatch(){
         Match match = new Match();
-        
-        EntityManager em = emf.createEntityManager();
 
-        em.getTransaction().begin();
         em.persist(match);
-        em.getTransaction().commit();
         
         Long matchId = match.getId();
         
@@ -156,11 +139,7 @@ public class MatchDAOImplTest {
         long time = System.currentTimeMillis();
         match.setMatchDate(new Date(time));
         
-        EntityManager em = emf.createEntityManager();
-
-        em.getTransaction().begin();
         em.persist(match);
-        em.getTransaction().commit();
         
         Long matchId = match.getId();
         
@@ -192,12 +171,8 @@ public class MatchDAOImplTest {
         Match match2 = new Match();
         match2.setMatchDate(new Date(time+1000));
         
-        EntityManager em = emf.createEntityManager();
-
-        em.getTransaction().begin();
         em.persist(match1);
         em.persist(match2);
-        em.getTransaction().commit();
         
         Long match1Id = match1.getId();
         Long match2Id = match2.getId();
@@ -237,14 +212,10 @@ public class MatchDAOImplTest {
         match1.setMatchDate(new Date(time));
         match2.setMatchDate(new Date(time+1000));
         
-        EntityManager em = emf.createEntityManager();
-
-        em.getTransaction().begin();
         em.persist(team);
         em.persist(match1);
         em.persist(match2);
         em.persist(match3);
-        em.getTransaction().commit();
         
         Long match1Id = match1.getId();
         Long match2Id = match2.getId();
@@ -285,14 +256,10 @@ public class MatchDAOImplTest {
         match1.setMatchDate(new Date(time));
         match2.setMatchDate(new Date(time+1000));
         
-        EntityManager em = emf.createEntityManager();
-
-        em.getTransaction().begin();
         em.persist(team);
         em.persist(match1);
         em.persist(match2);
         em.persist(match3);
-        em.getTransaction().commit();
         
         Long match1Id = match1.getId();
         Long match2Id = match2.getId();
