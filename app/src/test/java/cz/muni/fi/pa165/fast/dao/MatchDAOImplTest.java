@@ -1,21 +1,29 @@
 package cz.muni.fi.pa165.fast.dao;
 
-import cz.muni.fi.pa165.fast.dao.impl.MatchDAOImpl;
-import cz.muni.fi.pa165.fast.model.Match;
-import cz.muni.fi.pa165.fast.model.Team;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+import java.lang.reflect.Field;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+
 import org.junit.After;
 import org.junit.AfterClass;
-import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import cz.muni.fi.pa165.fast.dao.impl.MatchDAOImpl;
+import cz.muni.fi.pa165.fast.model.Match;
+import cz.muni.fi.pa165.fast.model.Team;
 
 /**
  *
@@ -25,6 +33,7 @@ public class MatchDAOImplTest {
     
     private MatchDAOImpl mdaoi;
     private EntityManagerFactory emf;
+    private EntityManager emt; 
     
     public MatchDAOImplTest() {
     }
@@ -38,14 +47,21 @@ public class MatchDAOImplTest {
     }
     
     @Before
-    public void setUp() {
+    public void setUp() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
         emf = Persistence.createEntityManagerFactory("TestPU");
+        emt = emf.createEntityManager();
+        
+        
         mdaoi = new MatchDAOImpl();
-        mdaoi.setEntityManagerFactory(emf);
+        // perform dependency injection
+        Field f = mdaoi.getClass().getDeclaredField("em");
+        f.setAccessible(true);
+        f.set(mdaoi, emt);
     }
     
     @After
     public void tearDown() {
+    	emt.close();
         emf.close();
     }
     
@@ -312,5 +328,12 @@ public class MatchDAOImplTest {
         }
         
         em.close();
+    }
+    
+    @Test
+    public void findByRound()
+    {
+    	// TODO
+    	assertTrue(true);
     }
 }

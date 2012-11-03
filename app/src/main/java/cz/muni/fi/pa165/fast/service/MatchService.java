@@ -12,9 +12,21 @@ public interface MatchService
 	
 	public void delete(MatchDTO dto);
 	
+	/**
+	 * 
+	 * @return list of MatchDTO entities ordered by date of the game
+	 */
 	public List<MatchDTO> findAll();
 	
+	/**
+	 * 
+	 * @return list of MatchDTO entities ordered by date of the game
+	 */
 	public List<MatchDTO> findByRound(int round);
 	
+	/**
+	 * 
+	 * @return list of MatchDTO entities ordered by date of the game
+	 */
 	public List<MatchDTO> findByTeam(long teamId);
 }

@@ -119,4 +119,13 @@ public class MatchDAOImpl implements MatchDAO
 			.setParameter("team", team)
 			.getResultList();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Match> findByRound(int round)
+	{
+		return em.createQuery("select m from Match m where m.round = :round")
+				.setParameter("round", round)
+				.getResultList();
+	}
 }

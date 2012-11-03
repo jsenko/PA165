@@ -1,5 +1,8 @@
 package cz.muni.fi.pa165.fast.service.impl;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -8,6 +11,7 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+
 
 import cz.muni.fi.pa165.fast.convert.MatchConvert;
 import cz.muni.fi.pa165.fast.dao.MatchDAO;
@@ -28,6 +32,9 @@ public class MatchServiceImpl implements MatchService
 	@EJB
 	MatchConvert convert;
 	
+	@EJB
+	TeamDAO teamDAO;
+	
 	@Override
 	public long create(MatchDTO dto)
 	{
@@ -41,38 +48,79 @@ public class MatchServiceImpl implements MatchService
 	@Override
 	public void update(MatchDTO dto)
 	{
-		Match m = convert.fromDTOToEntity(dto);
-		
-		matchDAO.update(m);
+		try
+		{
+			Match m = convert.fromDTOToEntity(dto);
+			matchDAO.update(m);
+		}
+		catch(Exception e)
+		{
+			throw new RuntimeException("Update opration failed", e);
+		}
 	}
 
 	@Override
 	public void delete(MatchDTO dto)
-	{
-		// to reduce unnecessary overhead we will not use converter
-		Match m = new Match();
-		m.setId(dto.getId());
-		
-		matchDAO.delete(m);
+	{		
+		try
+		{
+			// to reduce unnecessary overhead we will not use converter
+			Match m = new Match();
+			m.setId(dto.getId());
+			matchDAO.delete(m);
+		}
+		catch(Exception e)
+		{
+			throw new RuntimeException("Delete operation failed", e);
+		}
 	}
 
 	@Override
 	public List<MatchDTO> findAll()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Collection<Match> matches = matchDAO.findAll();
+		List<MatchDTO> dtos = new ArrayList<MatchDTO>();
+		for(Match m: matches)
+		{
+			dtos.add(convert.fromEntityToDTO(m));
+		}
+		Collections.sort(dtos);
+		return dtos;
 	}
 
 	@Override
-	public List<MatchDTO> findByRound(int round) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MatchDTO> findByRound(int round)
+	{
+		Collection<Match> matches = matchDAO.findByRound(round);
+		List<MatchDTO> dtos = new ArrayList<MatchDTO>();
+		for(Match m: matches)
+		{
+			dtos.add(convert.fromEntityToDTO(m));
+		}
+		Collections.sort(dtos);
+		return dtos;
 	}
 
 	@Override
-	public List<MatchDTO> findByTeam(long teamId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MatchDTO> findByTeam(long teamId)
+	{
+		// get the team by id
+		Team t = teamDAO.getById(teamId);
+		
+		// get matches played as a home team
+		List<Match> matches = matchDAO.findByHomeTeam(t);
+		
+		// get matches played as an away team
+		matches.addAll( matchDAO.findByHomeTeam(t) );
+		
+		List<MatchDTO> dtos = new ArrayList<MatchDTO>();
+		//convert
+		for(Match m: matches)
+		{
+			dtos.add(convert.fromEntityToDTO(m));
+		}
+		Collections.sort(dtos);
+		return dtos;
 	}
 
 }
