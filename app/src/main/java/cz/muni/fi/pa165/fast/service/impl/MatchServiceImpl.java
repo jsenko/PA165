@@ -33,13 +33,11 @@ public class MatchServiceImpl implements MatchService
 	TeamDAO teamDAO;
 	
 	@Override
-	public long create(MatchDTO dto)
+	public void create(MatchDTO dto)
 	{
 		Match m = convert.fromDTOToEntity(dto);
 		
 		matchDAO.create(m);
-		
-		return m.getId();
 	}
 
 	@Override

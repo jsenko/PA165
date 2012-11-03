@@ -77,7 +77,13 @@ public class Match implements Comparable<Match>, Serializable
 
     @Override
     public String toString() {
-        return "Match{" + "id=" + id + ", matchDate=" + matchDate + ", homeTeam=" + homeTeam.getName() + ", awayTeam=" + awayTeam.getName() + '}';
+        return "Match{" 
+        		+ "id=" + id
+        		+ ", matchDate=" + matchDate 
+        		+ ", homeTeam=" + homeTeam 
+        		+ ", awayTeam=" + awayTeam 
+        		+ ", round=" + round
+        		+ '}';
     }
 
     @Override

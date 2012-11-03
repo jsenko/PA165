@@ -21,12 +21,16 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import com.stvconsultants.easygloss.javaee.JavaEEGloss;
+
 /**
  *
  * @author Michal Kimle
  */
 public class MatchDAOImplTest {
     
+	private JavaEEGloss gloss;
+	
     private MatchDAOImpl mdaoi;
     private EntityManagerFactory emf;
     private EntityManager em; 
@@ -34,25 +38,16 @@ public class MatchDAOImplTest {
     public MatchDAOImplTest() {
     }
     
-    @BeforeClass
-    public static void setUpClass() {
-    }
-    
-    @AfterClass
-    public static void tearDownClass() {
-    }
     
     @Before
-    public void setUp() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
+    public void setUp() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
+    {
         emf = Persistence.createEntityManagerFactory("TestPU");
         em = emf.createEntityManager();
         
-        
-        mdaoi = new MatchDAOImpl();
-        // perform dependency injection
-        Field f = mdaoi.getClass().getDeclaredField("em");
-        f.setAccessible(true);
-        f.set(mdaoi, em);
+        gloss = new JavaEEGloss();
+        gloss.addEM("TestPU", emf.createEntityManager());
+        mdaoi = gloss.make(MatchDAOImpl.class);
     }
     
     @After

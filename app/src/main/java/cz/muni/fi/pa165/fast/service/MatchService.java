@@ -13,7 +13,7 @@ import cz.muni.fi.pa165.fast.dto.MatchDTO;
  */
 public interface MatchService
 {
-	public long create(MatchDTO dto);
+	public void create(MatchDTO dto);
 	
 	public void update(MatchDTO dto);
 	

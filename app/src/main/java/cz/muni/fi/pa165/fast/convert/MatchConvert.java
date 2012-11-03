@@ -102,6 +102,7 @@ public class MatchConvert implements Convert<Match, MatchDTO>
 		
 		// create the match
 		Match m = new Match();
+		m.setId(dto.getId()); // just for tests
 		m.setHomeTeam(homeTeam);
 		m.setAwayTeam(awayTeam);
 		// goals is mappedBy attribute, we will ignore it
