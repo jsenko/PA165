@@ -6,13 +6,16 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 
 import cz.muni.fi.pa165.fast.dao.GoalDAO;
-import cz.muni.fi.pa165.fast.dao.PlayerDAO;
 import cz.muni.fi.pa165.fast.dao.TeamDAO;
 import cz.muni.fi.pa165.fast.dto.MatchDTO;
 import cz.muni.fi.pa165.fast.model.Goal;
 import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Team;
-
+/**
+ * Implementation of the Convert interface for match service.
+ * 
+ * @author Jakub Senko
+ */
 @Stateless
 @TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class MatchConvert implements Convert<Match, MatchDTO>
@@ -22,9 +25,6 @@ public class MatchConvert implements Convert<Match, MatchDTO>
 	
 	@EJB
 	GoalDAO goalDAO;
-	
-	@EJB
-	PlayerDAO playerDAO;
 
 	@Override
 	public MatchDTO fromEntityToDTO(Match entity)

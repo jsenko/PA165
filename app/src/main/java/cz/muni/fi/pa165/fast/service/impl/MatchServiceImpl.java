@@ -7,21 +7,18 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
-
 
 import cz.muni.fi.pa165.fast.convert.MatchConvert;
 import cz.muni.fi.pa165.fast.dao.MatchDAO;
 import cz.muni.fi.pa165.fast.dao.TeamDAO;
 import cz.muni.fi.pa165.fast.dto.MatchDTO;
-import cz.muni.fi.pa165.fast.dto.TeamDTO;
 import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Team;
 import cz.muni.fi.pa165.fast.service.MatchService;
 
+/**
+ * @author Jakub Senko
+ */
 @Stateless
 public class MatchServiceImpl implements MatchService
 {

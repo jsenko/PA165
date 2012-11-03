@@ -4,6 +4,13 @@ import java.util.List;
 
 import cz.muni.fi.pa165.fast.dto.MatchDTO;
 
+/**
+ * Service layer class designed to provide prepared match data
+ * for the presentation layer.
+ * 
+ * @author Jakub Senko
+ *
+ */
 public interface MatchService
 {
 	public long create(MatchDTO dto);

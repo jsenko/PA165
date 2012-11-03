@@ -1,8 +1,14 @@
 package cz.muni.fi.pa165.fast.dto;
 
 import java.util.Date;
-import java.util.GregorianCalendar;
 
+/**
+ * Match Data Transfer Object.
+ * 
+ * Comparable is ordering by match date.
+ * 
+ * @author Jakub Senko
+ */
 public class MatchDTO implements Comparable<MatchDTO>
 {
 	private long id;
