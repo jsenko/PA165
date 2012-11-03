@@ -1,9 +1,15 @@
 package cz.muni.fi.pa165.fast.dto;
 
 import java.util.Date;
-import java.util.GregorianCalendar;
 
-public class MatchDTO
+/**
+ * Match Data Transfer Object.
+ * 
+ * Comparable is ordering by match date.
+ * 
+ * @author Jakub Senko
+ */
+public class MatchDTO implements Comparable<MatchDTO>
 {
 	private long id;
 	
@@ -21,7 +27,7 @@ public class MatchDTO
 	
 	private Integer awayTeamGoals; // derived
 	
-	private Date time;
+	private Date date;
 
 	
 	
@@ -49,8 +55,8 @@ public class MatchDTO
 	public Integer getAwayTeamGoals() { return awayTeamGoals; }
 	public void setAwayTeamGoals(Integer awayTeamGoals) { this.awayTeamGoals = awayTeamGoals; }
 
-	public Date getTime() { return time; }
-	public void setTime(Date time) { this.time = time; }
+	public Date getDate() { return date; }
+	public void setDate(Date time) { this.date = time; }
 	
 	@Override
 	public int hashCode()
@@ -83,6 +89,11 @@ public class MatchDTO
 				+ homeTeamId + ", homeTeamName=" + homeTeamName
 				+ ", awayTeamId=" + awayTeamId + ", awayTeamName="
 				+ awayTeamName + ", homeTeamGoals=" + homeTeamGoals
-				+ ", awayTeamGoals=" + awayTeamGoals + ", time=" + time + "}";
+				+ ", awayTeamGoals=" + awayTeamGoals + ", time=" + date + "}";
+	}
+	@Override
+	public int compareTo(MatchDTO o)
+	{
+		return date.compareTo(o.date);
 	}
 }
