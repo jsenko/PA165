@@ -13,5 +13,5 @@ public interface PlayerService
 	
 	public void delete(PlayerDTO dto);
 	
-	public List<MatchDTO> findAll(PlayerOrderBy orderBy);
+	public List<PlayerDTO> findAll(PlayerOrderBy orderBy);
 }
