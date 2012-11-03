@@ -29,11 +29,12 @@ import com.stvconsultants.easygloss.javaee.JavaEEGloss;
  */
 public class MatchDAOImplTest {
     
-	private JavaEEGloss gloss;
+	
 	
     private MatchDAOImpl mdaoi;
     private EntityManagerFactory emf;
     private EntityManager em; 
+    private EntityManager emt; 
     
     public MatchDAOImplTest() {
     }
@@ -44,10 +45,13 @@ public class MatchDAOImplTest {
     {
         emf = Persistence.createEntityManagerFactory("TestPU");
         em = emf.createEntityManager();
+        emt = emf.createEntityManager();
         
-        gloss = new JavaEEGloss();
-        gloss.addEM("TestPU", emf.createEntityManager());
-        mdaoi = gloss.make(MatchDAOImpl.class);
+        mdaoi = new MatchDAOImpl();
+        // perform dependency injection
+        Field f = mdaoi.getClass().getDeclaredField("em");
+        f.setAccessible(true);
+        f.set(mdaoi, emt);
     }
     
     @After
@@ -59,7 +63,11 @@ public class MatchDAOImplTest {
     @Test
     public void createMatch(){
         Match match = new Match();
+        
+        emt.getTransaction().begin();
         mdaoi.create(match);
+        emt.getTransaction().commit();
+        
         assertNotNull(match.getId());
     }
     
@@ -125,7 +133,9 @@ public class MatchDAOImplTest {
         
         Long matchId = match.getId();
         
+        emt.getTransaction().begin();
         mdaoi.delete(match);
+        emt.getTransaction().commit();
         
         assertNull(em.find(Match.class, matchId));
     }
