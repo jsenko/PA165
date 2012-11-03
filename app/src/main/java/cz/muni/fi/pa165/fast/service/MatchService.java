@@ -8,7 +8,7 @@ public interface MatchService
 {
 	public long create(MatchDTO dto);
 	
-	public long update(MatchDTO dto);
+	public void update(MatchDTO dto);
 	
 	public void delete(MatchDTO dto);
 	

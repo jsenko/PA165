@@ -30,6 +30,8 @@ public class Match implements Comparable<Match>
     private Team awayTeam;
     @OneToMany(mappedBy = "match")
     private Collection<Goal> goals;
+    
+    private int round;
 
     public Long getId() {
         return id;
@@ -103,4 +105,12 @@ public class Match implements Comparable<Match>
     public int compareTo(Match t) {
         return this.getMatchDate().compareTo(t.getMatchDate());
     }
+
+	public int getRound() {
+		return round;
+	}
+
+	public void setRound(int round) {
+		this.round = round;
+	}
 }

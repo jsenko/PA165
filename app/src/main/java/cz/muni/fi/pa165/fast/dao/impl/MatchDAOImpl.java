@@ -22,7 +22,6 @@ import cz.muni.fi.pa165.fast.model.Team;
  */
 
 @Stateless
-@TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class MatchDAOImpl implements MatchDAO
 {
