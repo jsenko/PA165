@@ -6,6 +6,7 @@ import cz.muni.fi.pa165.fast.model.Player;
 import cz.muni.fi.pa165.fast.model.Team;
 import java.util.Collection;
 import java.util.List;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -16,6 +17,7 @@ import javax.persistence.Query;
  * 
  * @author Stefan Uhercik
  */
+@Stateless
 public class PlayerDAOImpl implements PlayerDAO
 {
 
