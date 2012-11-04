@@ -64,6 +64,36 @@ public class MatchServiceImplTest
 	public void tearDown(){}
 	
 	
+	public void crudPrepare(MatchDTO dto, Match m)
+	{
+		dto.setId(1);
+		dto.setHomeTeamId(2);
+		dto.setAwayTeamId(3);
+		
+		Team t1 = new Team();
+		t1.setId(2L);
+		Team t2 = new Team();
+		t2.setId(3L);
+		
+		m.setId(1L);
+		
+		doReturn(t1).when(teamDAOMock).getById(2L);
+		doReturn(t2).when(teamDAOMock).getById(3L);
+	}
+	
+	
+	public void crudVerify()
+	{
+		verifyNoMoreInteractions(matchDAOMock);
+		
+		verify(teamDAOMock).getById(2L);
+		verify(teamDAOMock).getById(3L);
+		verifyNoMoreInteractions(teamDAOMock);
+		
+		verifyZeroInteractions(goalDAOMock);
+	}
+	
+	
 	@Test
 	public void create()
 	{
@@ -74,31 +104,66 @@ public class MatchServiceImplTest
 		}
 		catch(Exception e){ /* ok */ }
 		
-		MatchDTO dto = new MatchDTO();
-		dto.setId(1);
-		dto.setHomeTeamId(2);
-		dto.setAwayTeamId(3);
-		
-		Team t1 = new Team();
-		t1.setId(2L);
-		Team t2 = new Team();
-		t2.setId(3L);
-		
 		Match m = new Match();
-		m.setId(1L);
+		MatchDTO dto = new MatchDTO();
 		
-		doReturn(t1).when(teamDAOMock).getById(2L);
-		doReturn(t2).when(teamDAOMock).getById(3L);
+		crudPrepare(dto, m);
 		
 		service.create(dto);
 		
 		verify(matchDAOMock).create(m);
+		crudVerify();
+	}
+	
+	@Test
+	public void update()
+	{
+		try
+		{
+			service.create(null);
+			fail();
+		}
+		catch(Exception e){ /* ok */ }
+		
+		Match m = new Match();
+		MatchDTO dto = new MatchDTO();
+		
+		crudPrepare(dto, m);
+		
+		service.update(dto);
+		
+		verify(matchDAOMock).update(m);
+		crudVerify();
+	}
+	
+	@Test
+	public void delete()
+	{
+		try
+		{
+			service.create(null);
+			fail();
+		}
+		catch(Exception e){ /* ok */ }
+		
+		Match m = new Match();
+		MatchDTO dto = new MatchDTO();
+		
+		crudPrepare(dto, m);
+		
+		service.delete(dto);
+		
+		verify(matchDAOMock).delete(m);
 		verifyNoMoreInteractions(matchDAOMock);
-		
-		verify(teamDAOMock).getById(2L);
-		verify(teamDAOMock).getById(3L);
-		verifyNoMoreInteractions(teamDAOMock);
-		
+		verifyZeroInteractions(teamDAOMock);
 		verifyZeroInteractions(goalDAOMock);
+	}
+	
+	
+	@Test
+	public void findAll()
+	{
+
+
 	}
 }

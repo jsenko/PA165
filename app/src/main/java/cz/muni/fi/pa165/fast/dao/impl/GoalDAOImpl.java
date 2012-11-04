@@ -120,7 +120,7 @@ public class GoalDAOImpl implements GoalDAO
     }
 
     @Override
-    public Collection<Goal> findByMatch(Match match) {
+    public Collection<Goal> findByMatch(Match match) { /*
         if(match == null)
         {
             throw new IllegalArgumentException("Can not find goal by null match.");
@@ -128,7 +128,9 @@ public class GoalDAOImpl implements GoalDAO
         
         Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.assistPlayer='match'").getResultList();
         
-        return goals;
+        return goals;*/
+    	
+    	throw new UnsupportedOperationException("Use match.getGoals()");
         
     }
     

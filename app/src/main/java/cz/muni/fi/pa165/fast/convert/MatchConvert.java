@@ -23,8 +23,8 @@ public class MatchConvert implements Convert<Match, MatchDTO>
 	@EJB
 	TeamDAO teamDAO;
 	
-	@EJB
-	GoalDAO goalDAO;
+	//@EJB
+	//GoalDAO goalDAO;
 
 	@Override
 	public MatchDTO fromEntityToDTO(Match entity)
@@ -48,7 +48,7 @@ public class MatchConvert implements Convert<Match, MatchDTO>
 		int homeGoals = 0;
 		int awayGoals = 0;
 		
-		for(Goal g: goalDAO.findByMatch(entity))
+		for(Goal g: entity.getGoals())
 		{
 			if(entity.getHomeTeam().equals(
 					teamDAO.findTeamByPlayer(g.getScorePlayer())
