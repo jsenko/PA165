@@ -25,27 +25,40 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public void create(TeamDTO dto) {
+        try{
         Team team = teamConvert.fromDTOToEntity(dto);
 
         teamDao.create(team);
+        }catch(Exception ex){
+            throw new RuntimeException("Create operation failed.", ex);
+        }
     }
 
     @Override
     public void update(TeamDTO dto) {
+        try{
         Team team = teamConvert.fromDTOToEntity(dto);
 
         teamDao.update(team);
+        }catch(Exception ex){
+            throw new RuntimeException("Update operation failed.", ex);
+        }
     }
 
     @Override
     public void delete(TeamDTO dto) {
+        try{
         Team team = teamConvert.fromDTOToEntity(dto);
 
         teamDao.delete(team);
+        }catch(Exception ex){
+            throw new RuntimeException("Delete operation failed.", ex);
+        }
     }
 
     @Override
     public List<TeamDTO> findAll() {
+        try{
         Collection<Team> teams = teamDao.findAll();
         List<TeamDTO> dtos = new ArrayList<TeamDTO>();
 
@@ -56,13 +69,20 @@ public class TeamServiceImpl implements TeamService {
         Collections.sort(dtos);
 
         return dtos;
+        }catch(Exception ex){
+            throw new RuntimeException("Error while retrieving teams.", ex);
+        }
     }
 
     @Override
     public TeamDTO findByPlayer(long playerId) {
+        try{
         Team entity = teamDao.findTeamByPlayer(playerDao.getById(playerId));
         TeamDTO dto = teamConvert.fromEntityToDTO(entity);
 
         return dto;
+        }catch(Exception ex){
+            throw new RuntimeException("Error while retrieving team.", ex);
+        }
     }
 }

@@ -18,11 +18,13 @@ import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InOrder;
+import static org.mockito.Matchers.any;
 import org.mockito.Mock;
 import static org.mockito.Mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -38,8 +40,6 @@ public class TeamServiceImplTest {
     private PlayerDAO playerDaoMock;
     private TeamConvert teamConvert;
     private TeamService service;
-    private JavaEEGloss serviceGloss;
-    private JavaEEGloss convertGloss;
 
     public TeamServiceImplTest() {
     }
@@ -54,10 +54,10 @@ public class TeamServiceImplTest {
 
     @Before
     public void setUp() {
-        convertGloss = new JavaEEGloss();
+        JavaEEGloss convertGloss = new JavaEEGloss();
         convertGloss.addEJB(matchDaoMock);
         teamConvert = convertGloss.make(TeamConvert.class);
-        serviceGloss = new JavaEEGloss();
+        JavaEEGloss serviceGloss = new JavaEEGloss();
         serviceGloss.addEJB(teamDaoMock);
         serviceGloss.addEJB(playerDaoMock);
         serviceGloss.addEJB(teamConvert);
@@ -80,6 +80,17 @@ public class TeamServiceImplTest {
         verify(teamDaoMock).create(entity);
         verifyNoMoreInteractions(teamDaoMock);
     }
+    
+    @Test
+    public void createTeamInvalid(){
+        doThrow(new IllegalArgumentException()).when(teamDaoMock).create(null);
+        try{
+            service.create(null);
+            fail();
+        }catch(Exception ex){
+            //OK
+        }
+    }
 
     @Test
     public void updateTeam() {
@@ -93,6 +104,17 @@ public class TeamServiceImplTest {
         verify(teamDaoMock).update(entity);
         verifyNoMoreInteractions(teamDaoMock);
     }
+    
+    @Test
+    public void updateTeamInvalid(){
+        doThrow(new IllegalArgumentException()).when(teamDaoMock).update(null);
+        try{
+            service.update(null);
+            fail();
+        }catch(RuntimeException ex){
+            //OK
+        }
+    }
 
     @Test
     public void deleteTeam() {
@@ -105,6 +127,17 @@ public class TeamServiceImplTest {
 
         verify(teamDaoMock).delete(entity);
         verifyNoMoreInteractions(teamDaoMock);
+    }
+    
+    @Test
+    public void deleteTeamInvalid(){
+        doThrow(new IllegalArgumentException()).when(teamDaoMock).delete(null);
+        try{
+            service.delete(null);
+            fail();
+        }catch(RuntimeException ex){
+            //OK
+        }
     }
 
     @Test

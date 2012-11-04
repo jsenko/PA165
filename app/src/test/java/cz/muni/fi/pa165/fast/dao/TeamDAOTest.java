@@ -53,7 +53,9 @@ public class TeamDAOTest {
     	t.setName("FC Losers");
     	
     	// sanity check
+        em.getTransaction().begin();
     	dao.create(t);
+        em.getTransaction().commit();
     	
     	Team tt = em.find(Team.class, t.getId());
     	assertNotNull(tt);

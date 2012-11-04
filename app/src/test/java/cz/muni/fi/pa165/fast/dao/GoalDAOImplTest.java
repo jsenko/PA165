@@ -6,7 +6,7 @@ package cz.muni.fi.pa165.fast.dao;
 
 import cz.muni.fi.pa165.fast.dao.impl.GoalDAOImpl;
 import cz.muni.fi.pa165.fast.model.Goal;
-import cz.muni.fi.pa165.fast.model.Player;
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,10 +16,10 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
@@ -29,6 +29,7 @@ public class GoalDAOImplTest {
 
     private GoalDAOImpl gdaoi;
     private EntityManagerFactory emf;
+    private EntityManager em;
 
     public GoalDAOImplTest() {
     }
@@ -42,14 +43,20 @@ public class GoalDAOImplTest {
     }
 
     @Before
-    public void setUp() {
+    public void setUp() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
         emf = Persistence.createEntityManagerFactory("TestPU");
+        em = emf.createEntityManager();
+        
         gdaoi = new GoalDAOImpl();
-        gdaoi.setEntityManagerFactory(emf);
+        
+        Field f = gdaoi.getClass().getDeclaredField("em");
+        f.setAccessible(true);
+        f.set(gdaoi, em);
     }
 
     @After
     public void tearDown() {
+        em.close();
         emf.close();
     }
 
@@ -59,7 +66,9 @@ public class GoalDAOImplTest {
     @Test
     public void testCreate() {
         Goal goal = new Goal();
+        em.getTransaction().begin();
         gdaoi.create(goal);
+        em.getTransaction().commit();
         assertNotNull(goal.getId());
     }
 
@@ -70,22 +79,18 @@ public class GoalDAOImplTest {
     public void testUpdate() {
         Goal goal = new Goal();
 
-        EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         em.persist(goal);
         em.getTransaction().commit();
-        em.close();
 
         long milis = 895465778;
         goal.setGoalTime(new Date(milis));
 
         gdaoi.update(goal);
 
-        EntityManager em2 = emf.createEntityManager();
-        Goal goalFromDB = em2.find(Goal.class, goal.getId());
-        em2.close();
+        Goal goalFromDB = em.find(Goal.class, goal.getId());
 
-        assertEquals(milis, goal.getGoalTime().getTime());
+        assertEquals(milis, goalFromDB.getGoalTime().getTime());
 
     }
 
@@ -95,25 +100,21 @@ public class GoalDAOImplTest {
     @Test
     public void testDelete() {
         Goal goal = new Goal();
-        EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
         em.persist(goal);
         em.getTransaction().commit();
-        em.close();
 
         Long goalId = goal.getId();
 
         gdaoi.delete(goal);
 
-        EntityManager em2 = emf.createEntityManager();
-        Goal goalFromDB = em2.find(Goal.class, goalId);
+        Goal goalFromDB = em.find(Goal.class, goalId);
         assertNull(goalFromDB);
     }
 
     @Test
     public void testFindAll() {
         Random r = new Random();
-        EntityManager em = emf.createEntityManager();
 
         List<Goal> list = new LinkedList<Goal>();
         em.getTransaction().begin();
@@ -130,14 +131,9 @@ public class GoalDAOImplTest {
         em.persist(g2);
 
         em.getTransaction().commit();
-       
+
         List<Goal> goalsFromDB = (List<Goal>) gdaoi.findAll();
 
         assertEquals(list, goalsFromDB);
-        em.close();
-
     }
-    
-    
-    
 }
