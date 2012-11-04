@@ -38,8 +38,11 @@ public class GoalConvert implements Convert<Goal, GoalDTO> {
             goalDTO.setIsHomeTeam(false);
         }
         
-        goalDTO.setPlayerId(entity.getScorePlayer().getId());
-        goalDTO.setPlayerName(entity.getScorePlayer().getName());
+        goalDTO.setScoredPlayerId(entity.getScorePlayer().getId());
+        goalDTO.setScoredPlayerName(entity.getScorePlayer().getName());
+        
+        goalDTO.setAssistPlayerId(entity.getAssistPlayer().getId());
+        goalDTO.setAssistPlayerName(entity.getAssistPlayer().getName());
         
         return goalDTO;
     }
@@ -49,8 +52,15 @@ public class GoalConvert implements Convert<Goal, GoalDTO> {
         Goal goal = new Goal();
         goal.setId(dto.getId());
         
-        Player p = playerDAO.getById(dto.getId());
-        goal.setScorePlayer(p);
+        Player scorer;
+        if(dto.getScoredPlayerId()==0) scorer=null;
+        else scorer=playerDAO.getById(dto.getScoredPlayerId());
+        goal.setScorePlayer(scorer);
+        
+        Player assistant;
+        if(dto.getScoredPlayerId()==0) assistant=null;
+        else assistant=playerDAO.getById(dto.getScoredPlayerId());
+        goal.setAssistPlayer(assistant);
         
         return goal;
     }

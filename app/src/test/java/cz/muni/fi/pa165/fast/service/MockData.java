@@ -250,6 +250,8 @@ public class MockData
 		doReturn(list(new Match[]{ m1vs2, m3vs2 })).when(matchDAOMock).findByAwayTeam(t2);
 		doReturn(list(new Match[]{ m1vs3, m2vs3 })).when(matchDAOMock).findByAwayTeam(t3);
                 
+                doReturn(list(new Match[]{m1vs2, m1vs3, m2vs1, m2vs3, m3vs1, m3vs2})).when(matchDAOMock).findAll();
+                
                 
                 
                 doReturn( g1 ).when(goalDAOMock).getById(1L);

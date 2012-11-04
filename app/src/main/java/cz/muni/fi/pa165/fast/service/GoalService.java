@@ -12,5 +12,9 @@ public interface GoalService
 	
 	public void delete(GoalDTO dto);
 	
+        /**
+	 * 
+	 * @return list of Goal data transfer objects by id of the match
+	 */
 	public List<GoalDTO> findByMatch(long matchId);
 }
