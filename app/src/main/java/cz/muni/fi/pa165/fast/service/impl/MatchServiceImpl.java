@@ -106,7 +106,7 @@ public class MatchServiceImpl implements MatchService
 		List<Match> matches = matchDAO.findByHomeTeam(t);
 		
 		// get matches played as an away team
-		matches.addAll( matchDAO.findByHomeTeam(t) );
+		matches.addAll( matchDAO.findByAwayTeam(t) );
 		
 		List<MatchDTO> dtos = new ArrayList<MatchDTO>();
 		//convert
