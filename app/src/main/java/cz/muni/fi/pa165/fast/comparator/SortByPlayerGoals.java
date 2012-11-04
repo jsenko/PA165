@@ -9,7 +9,7 @@ import java.util.Comparator;
 
 /**
  *
- * @author Lauro
+ * @author Peter Laurencik
  */
 public class SortByPlayerGoals implements Comparator<PlayerDTO> {
 

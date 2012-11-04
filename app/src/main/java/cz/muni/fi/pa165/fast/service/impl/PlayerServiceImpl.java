@@ -9,6 +9,7 @@ import cz.muni.fi.pa165.fast.comparator.SortByPlayerGoals;
 import cz.muni.fi.pa165.fast.comparator.SortByPlayerHeight;
 import cz.muni.fi.pa165.fast.comparator.SortByPlayerName;
 import cz.muni.fi.pa165.fast.comparator.SortByPlayerWeight;
+import cz.muni.fi.pa165.fast.convert.PlayerConvert;
 import cz.muni.fi.pa165.fast.dao.GoalDAO;
 import cz.muni.fi.pa165.fast.dao.PlayerDAO;
 import cz.muni.fi.pa165.fast.dto.MatchDTO;
@@ -27,6 +28,11 @@ import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
+/**
+ * 
+ * @author Peter Laurencik
+ */
+
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
@@ -38,17 +44,14 @@ public class PlayerServiceImpl implements PlayerService{
     @EJB
     GoalDAO goalDao;
     
+    @EJB
+    PlayerConvert convert;
+    
     
     @Override
     public long create(PlayerDTO dto) {
         
-        Player player = new Player();
-        
-        player.setName(dto.getName());
-        player.setSurname(dto.getSurname());
-        player.setAge(dto.getAge());
-        player.setHeight(dto.getHeight());
-        player.setWeight(dto.getWeight());
+        Player player = convert.fromDTOToEntity(dto);
         
         playerDao.create(player);
         
@@ -57,14 +60,7 @@ public class PlayerServiceImpl implements PlayerService{
 
     @Override
     public long update(PlayerDTO dto) {
-        Player player = new Player();
-        
-        player.setId(dto.getId());
-        player.setName(dto.getName());
-        player.setSurname(dto.getSurname());
-        player.setAge(dto.getAge());
-        player.setHeight(dto.getHeight());
-        player.setWeight(dto.getWeight());
+        Player player = convert.fromDTOToEntity(dto);
         
         playerDao.update(player);
         
@@ -73,14 +69,7 @@ public class PlayerServiceImpl implements PlayerService{
 
     @Override
     public void delete(PlayerDTO dto) {
-        Player player = new Player();
-        
-        player.setId(dto.getId());
-        player.setName(dto.getName());
-        player.setSurname(dto.getSurname());
-        player.setAge(dto.getAge());
-        player.setHeight(dto.getHeight());
-        player.setWeight(dto.getWeight());
+        Player player = convert.fromDTOToEntity(dto);
         
         playerDao.delete(player);
     }
@@ -93,16 +82,7 @@ public class PlayerServiceImpl implements PlayerService{
         
         for(Player player : allPlayers)
         {
-            PlayerDTO dtoPlayer = new PlayerDTO();
-                        
-            dtoPlayer.setId(player.getId());
-            dtoPlayer.setName(player.getName());
-            dtoPlayer.setSurname(player.getSurname());
-            dtoPlayer.setAge(player.getAge());
-            dtoPlayer.setHeight(player.getHeight());
-            dtoPlayer.setWeight(player.getWeight());
-            dtoPlayer.setGoals(goalDao.findByScorePlayer(player).size());
-            dtoPlayer.setAssists(goalDao.findByAssistPlayer(player).size());
+            PlayerDTO dtoPlayer = convert.fromEntityToDTO(player);
             
             allDtoPlayers.add(dtoPlayer);
         }

@@ -49,80 +49,124 @@ public class PlayerDAOImplTest {
     }
     
     @Test
-    public void createTest()
+    public void createNullTest()
     {
         Player player;
         player = null;
         
         try{
+            em.getTransaction().begin();
             playerDAO.create(player);
+            em.getTransaction().commit();
             fail("Null pointer exception shoud be thrown whne null player creating.");
         }catch(IllegalArgumentException ex)
         {
             //OK
         }
-       
-        player = new Player();
+    }
+    
+    @Test
+    public void createTest()
+    {
+        Player player = new Player();
         player.setName("Mike");
         
         try{
+            em.getTransaction().begin();
             playerDAO.create(player);
+            em.getTransaction().commit();
         }catch(Exception ex)
         {
             fail("Error when player is created.");
         } 
+        
+        Player foundPlayer = em.find(Player.class, player.getId());
+        
+        Assert.assertEquals(player, foundPlayer);
     }
     
     @Test
-    public void updateTest()
+    public void updateNullTest()
     {
         Player player;
         player = null;
         
         try{
+            
+            em.getTransaction().begin();
             playerDAO.update(player);
+            em.getTransaction().commit();
+            
+            
             fail("Null pointer exception shoud be thrown whne null player updating.");
         }catch(IllegalArgumentException ex)
         {
             //OK
         }
+        
+    }
        
-        player = new Player();
+    @Test
+    public void updateTest()
+    {
+        Player player = new Player();
+        player.setName("Mike");
         
         try{
+            em.getTransaction().begin();
             playerDAO.create(player);
-            player.setAge(24);;
+            em.getTransaction().commit();
+            
+            player.setAge(24);
+
             playerDAO.update(player);
+ 
         }catch(Exception ex)
         {
             fail("Error when player is updated.");
-        }         
+        }  
+        
+        Player foundPlayer = em.find(Player.class, player.getId());
+        
+        Assert.assertEquals(player, foundPlayer);
     }
     
     @Test
-    public void deleteTest()
+    public void deleteNullTest()
     {
         Player player;
         player = null;
         
         try{
+            em.getTransaction().begin();
             playerDAO.delete(player);
+            em.getTransaction().commit();
             fail("Null pointer exception shoud be thrown whne null player creating.");
         }catch(IllegalArgumentException ex)
         {
             //OK
         }
-       
-        player = new Player();
+    }   
+    
+    @Test
+    public void deleteTest()
+    {  
+        Player player = new Player();
         
         try{
+            em.getTransaction().begin();
             playerDAO.create(player);
+            em.getTransaction().commit();
             playerDAO.delete(player);
             
         }catch(Exception ex)
         {
             fail("Error when player is deleted.");
-        }         
+        }  
+        
+        Player deletedPlayer = em.find(Player.class, player.getId());
+        
+        Assert.assertNull(deletedPlayer);
     }
     
     @Test
@@ -133,8 +177,10 @@ public class PlayerDAOImplTest {
         Player player2 = new Player();
         player2.setName("Felix");
         
+        em.getTransaction().begin();
         playerDAO.create(player1);
-        playerDAO.create(player2);
+        playerDAO.create(player2);  
+        em.getTransaction().commit();
         
         Collection<Player> allPlayers = playerDAO.findAll();
         
@@ -150,7 +196,9 @@ public class PlayerDAOImplTest {
     public void getPlayerByScoredGoalTest()
     {
         try{
+            em.getTransaction().begin();
             playerDAO.getPlayerByScoredGoal(null);
+            em.getTransaction().commit();
             fail();
         }catch(UnsupportedOperationException ex){
             // ok
@@ -161,7 +209,9 @@ public class PlayerDAOImplTest {
     public void getPlayerByAssistedGoalTest()
     {
         try{
+            em.getTransaction().begin();
             playerDAO.getPlayerByAssistedGoal(null);
+            em.getTransaction().commit();
             fail();
         }catch(UnsupportedOperationException ex){
             // ok
