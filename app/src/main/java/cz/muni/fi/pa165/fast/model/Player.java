@@ -94,7 +94,8 @@ public class Player
                 + "surname: " + surname + ", "
                 + "age: " + age + ", "
                 + "height: " + height + ", "
-                + "weight: " + weight
+                + "weight: " + weight + ", "
+                + "team: " + team
         		+ "}";
     }
 }

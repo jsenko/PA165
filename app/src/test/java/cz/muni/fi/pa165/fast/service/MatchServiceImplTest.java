@@ -173,4 +173,31 @@ public class MatchServiceImplTest
 		assertEquals(1, (int)dto.getHomeTeamGoals());
 		assertEquals(0, (int)dto.getAwayTeamGoals());
 	}
+	
+	@Test
+	public void findByRound()
+	{
+		List<MatchDTO> dtos = service.findByRound(2);
+
+		assertEquals(3, dtos.size()); // six total, three in each round
+		
+		verify(matchDAOMock).findAll();
+		verifyNoMoreInteractions(matchDAOMock);
+		
+		// verify that all three matches are from round 2
+		for(MatchDTO dto: dtos)
+		{
+			assertEquals(2, dto.getRound());
+		}
+		
+		MatchDTO dto = dtos.get(0); // get sample - first match in second round
+		assertEquals(3, dto.getId());
+		assertEquals(2, dto.getRound());
+		assertEquals(2, dto.getHomeTeamId());
+		assertEquals("Second Team", dto.getHomeTeamName());
+		assertEquals(1, dto.getAwayTeamId());
+		assertEquals("First Team", dto.getAwayTeamName());
+		assertEquals(0, (int)dto.getHomeTeamGoals());
+		assertEquals(1, (int)dto.getAwayTeamGoals());
+	}
 }

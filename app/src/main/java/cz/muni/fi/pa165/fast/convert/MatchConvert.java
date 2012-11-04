@@ -30,6 +30,10 @@ public class MatchConvert implements Convert<Match, MatchDTO>
 		{
 			throw new IllegalArgumentException("Match entity is null.");
 		}
+		if(entity.getHomeTeam() == null || entity.getAwayTeam() == null )
+		{
+			throw new RuntimeException("Home/Away Team cannot be null");
+		}
 		
 		MatchDTO dto = new MatchDTO();
 		dto.setId(entity.getId());
@@ -46,11 +50,12 @@ public class MatchConvert implements Convert<Match, MatchDTO>
 		int awayGoals = 0;
 		
 		for(Goal g: entity.getGoals())
-		{
+		{System.err.println(g + "\n" + entity.getHomeTeam());
 			if(entity.getHomeTeam().equals(
 					teamDAO.findTeamByPlayer(g.getScorePlayer())
 			))
 			{
+
 				homeGoals++;
 			}
 			else
