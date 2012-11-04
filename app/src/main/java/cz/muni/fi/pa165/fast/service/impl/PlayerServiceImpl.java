@@ -42,9 +42,6 @@ public class PlayerServiceImpl implements PlayerService{
     PlayerDAO playerDao;
     
     @EJB
-    GoalDAO goalDao;
-    
-    @EJB
     PlayerConvert convert;
     
     
