@@ -50,7 +50,7 @@ public class MatchConvert implements Convert<Match, MatchDTO>
 		int awayGoals = 0;
 		
 		for(Goal g: entity.getGoals())
-		{System.err.println(g + "\n" + entity.getHomeTeam());
+		{
 			if(entity.getHomeTeam().equals(
 					teamDAO.findTeamByPlayer(g.getScorePlayer())
 			))

@@ -1,11 +1,12 @@
 package cz.muni.fi.pa165.fast.service;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.junit.Assert.fail;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Matchers.*;
 
 import java.util.List;
 
@@ -22,7 +23,7 @@ import cz.muni.fi.pa165.fast.dto.MatchDTO;
 import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Team;
 import cz.muni.fi.pa165.fast.service.impl.MatchServiceImpl;
-import static org.hamcrest.Matchers.*;
+
 
 //import static junit.framework.Assert.*;
 
@@ -198,6 +199,34 @@ public class MatchServiceImplTest
 		assertEquals(1, dto.getAwayTeamId());
 		assertEquals("First Team", dto.getAwayTeamName());
 		assertEquals(0, (int)dto.getHomeTeamGoals());
+		assertEquals(1, (int)dto.getAwayTeamGoals());
+	}
+	
+	@Test
+	public void findByTeam()
+	{
+		List<MatchDTO> dtos = service.findByTeam(3);
+
+		assertEquals(4, dtos.size()); // four total
+		
+		verify(matchDAOMock).findByHomeTeam(any(Team.class));
+		verify(matchDAOMock).findByAwayTeam(any(Team.class));
+		verifyNoMoreInteractions(matchDAOMock);
+		
+		// verify that all 4 matches have home or away team with id 3
+		for(MatchDTO dto: dtos)
+		{
+			assertTrue(dto.getHomeTeamId() == 3 || dto.getAwayTeamId() == 3);
+		}
+		
+		MatchDTO dto = dtos.get(0); // get sample - match with lowest date
+		assertEquals(2, dto.getId());
+		assertEquals(1, dto.getRound());
+		assertEquals(1, dto.getHomeTeamId());
+		assertEquals("First Team", dto.getHomeTeamName());
+		assertEquals(3, dto.getAwayTeamId());
+		assertEquals("Third Team", dto.getAwayTeamName());
+		assertEquals(1, (int)dto.getHomeTeamGoals());
 		assertEquals(1, (int)dto.getAwayTeamGoals());
 	}
 }
