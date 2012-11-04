@@ -36,10 +36,10 @@ public class TeamServiceImplTest {
     private MatchDAO matchDaoMock;
     @Mock
     private PlayerDAO playerDaoMock;
-    @Mock
-    private TeamConvert converterMock;
+    private TeamConvert teamConvert;
     private TeamService service;
-    private JavaEEGloss gloss;
+    private JavaEEGloss serviceGloss;
+    private JavaEEGloss convertGloss;
 
     public TeamServiceImplTest() {
     }
@@ -54,11 +54,14 @@ public class TeamServiceImplTest {
 
     @Before
     public void setUp() {
-        gloss = new JavaEEGloss();
-        gloss.addEJB(teamDaoMock);
-        gloss.addEJB(matchDaoMock);
-        gloss.addEJB(playerDaoMock);
-        service = gloss.make(TeamServiceImpl.class);
+        convertGloss = new JavaEEGloss();
+        convertGloss.addEJB(matchDaoMock);
+        teamConvert = convertGloss.make(TeamConvert.class);
+        serviceGloss = new JavaEEGloss();
+        serviceGloss.addEJB(teamDaoMock);
+        serviceGloss.addEJB(playerDaoMock);
+        serviceGloss.addEJB(teamConvert);
+        service = serviceGloss.make(TeamServiceImpl.class);
     }
 
     @After

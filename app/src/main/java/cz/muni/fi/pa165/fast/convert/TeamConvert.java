@@ -1,11 +1,25 @@
 package cz.muni.fi.pa165.fast.convert;
 
+import cz.muni.fi.pa165.fast.dao.MatchDAO;
+import cz.muni.fi.pa165.fast.dto.MatchResult;
 import cz.muni.fi.pa165.fast.dto.TeamDTO;
+import cz.muni.fi.pa165.fast.model.Goal;
+import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Team;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 
-public class TeamConvert {
+@Stateless
+public class TeamConvert implements Convert<Team, TeamDTO> {
 
-    public static TeamDTO fromEntityToDTO(Team entity) {
+    @EJB
+    private MatchDAO matchDao;
+
+    @Override
+    public TeamDTO fromEntityToDTO(Team entity) {
         if (entity == null) {
             return null;
         }
@@ -17,10 +31,53 @@ public class TeamConvert {
         }
         dto.setName(entity.getName());
 
+        List<Match> matches = matchDao.findByAwayTeam(entity);
+        matches.addAll(matchDao.findByHomeTeam(entity));
+        Collections.sort(matches);
+        int i = 0;
+        MatchResult[] trend = new MatchResult[5];
+
+        for (Match match : matches) {
+            Collection<Goal> goals = match.getGoals();
+            int inGoals = 0, outGoals = 0;
+            for (Goal goal : goals) {
+                if (entity.getPlayers().contains(goal.getScorePlayer())) {
+                    outGoals++;
+                } else {
+                    inGoals++;
+                }
+            }
+            dto.setGoalsFor(dto.getGoalsFor() + outGoals);
+            dto.setGoalsAgainst(dto.getGoalsAgainst() + inGoals);
+
+            if (outGoals > inGoals) {
+                dto.setWon(dto.getWon() + 1);
+                if (i < 5) {
+                    trend[i] = MatchResult.WON;
+                }
+            } else if (outGoals < inGoals) {
+                dto.setLost(dto.getLost() + 1);
+                if (i < 5) {
+                    trend[i] = MatchResult.LOST;
+                }
+            } else {
+                dto.setDrawn(dto.getDrawn() + 1);
+                if (i < 5) {
+                    trend[i] = MatchResult.DRAWN;
+                }
+            }
+
+            i++;
+        }
+
+        dto.setPoints(dto.getWon() * 2 + dto.getDrawn());
+        dto.setTrend(trend);
+
         return dto;
     }
 
-    public static Team fromDTOToEntity(TeamDTO dto) {
+    @Override
+    public Team fromDTOToEntity(TeamDTO dto) {
         if (dto == null) {
             return null;
         }

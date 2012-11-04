@@ -1,14 +1,9 @@
 package cz.muni.fi.pa165.fast.service.impl;
 
 import cz.muni.fi.pa165.fast.convert.TeamConvert;
-import cz.muni.fi.pa165.fast.dao.MatchDAO;
 import cz.muni.fi.pa165.fast.dao.PlayerDAO;
 import cz.muni.fi.pa165.fast.dao.TeamDAO;
-import cz.muni.fi.pa165.fast.dto.MatchResult;
 import cz.muni.fi.pa165.fast.dto.TeamDTO;
-import cz.muni.fi.pa165.fast.model.Goal;
-import cz.muni.fi.pa165.fast.model.Match;
-import cz.muni.fi.pa165.fast.model.Player;
 import cz.muni.fi.pa165.fast.model.Team;
 import cz.muni.fi.pa165.fast.service.TeamService;
 import java.util.ArrayList;
@@ -19,33 +14,33 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
 @Stateless
-public class TeamServiceImpl implements TeamService{
+public class TeamServiceImpl implements TeamService {
 
     @EJB
     private TeamDAO teamDao;
     @EJB
-    private MatchDAO matchDao;
-    @EJB
     private PlayerDAO playerDao;
-    
+    @EJB
+    private TeamConvert teamConvert;
+
     @Override
     public void create(TeamDTO dto) {
-        Team team = TeamConvert.fromDTOToEntity(dto);
-        
+        Team team = teamConvert.fromDTOToEntity(dto);
+
         teamDao.create(team);
     }
 
     @Override
     public void update(TeamDTO dto) {
-        Team team = TeamConvert.fromDTOToEntity(dto);
-        
+        Team team = teamConvert.fromDTOToEntity(dto);
+
         teamDao.update(team);
     }
 
     @Override
     public void delete(TeamDTO dto) {
-        Team team = TeamConvert.fromDTOToEntity(dto);
-        
+        Team team = teamConvert.fromDTOToEntity(dto);
+
         teamDao.delete(team);
     }
 
@@ -53,70 +48,21 @@ public class TeamServiceImpl implements TeamService{
     public List<TeamDTO> findAll() {
         Collection<Team> teams = teamDao.findAll();
         List<TeamDTO> dtos = new ArrayList<TeamDTO>();
-        
-        for(Team entity:teams){
-            TeamDTO dto = getTeamInfo(entity);
+
+        for (Team entity : teams) {
+            TeamDTO dto = teamConvert.fromEntityToDTO(entity);
             dtos.add(dto);
         }
         Collections.sort(dtos);
-        
+
         return dtos;
     }
 
     @Override
     public TeamDTO findByPlayer(long playerId) {
-        Player player = playerDao.getById(playerId);
-        Team entity = teamDao.findTeamByPlayer(player);
-        TeamDTO dto = getTeamInfo(entity);
-        
-        return dto;
-    }
-    
-    private TeamDTO getTeamInfo(Team entity){
-        TeamDTO dto = TeamConvert.fromEntityToDTO(entity);
-        
-        List<Match> matches = matchDao.findByAwayTeam(entity);
-        matches.addAll(matchDao.findByHomeTeam(entity));
-        Collections.sort(matches);
-        int i=0;
-        MatchResult[] trend = new MatchResult[5];
-        
-        for(Match match:matches){
-            Collection<Goal> goals = match.getGoals();
-            int inGoals = 0, outGoals = 0;
-            for(Goal goal:goals){
-                if(entity.getPlayers().contains(goal.getScorePlayer())){
-                    outGoals++;
-                }else{
-                    inGoals++;
-                }
-            }
-            dto.setGoalsFor(dto.getGoalsFor()+outGoals);
-            dto.setGoalsAgainst(dto.getGoalsAgainst()+inGoals);
-            
-            if(outGoals > inGoals){
-                dto.setWon(dto.getWon()+1);
-                if(i<5){
-                    trend[i] = MatchResult.WON;
-                }
-            }else if(outGoals < inGoals){
-                dto.setLost(dto.getLost()+1);
-                if(i<5){
-                    trend[i] = MatchResult.LOST;
-                }
-            }else{
-                dto.setDrawn(dto.getDrawn()+1);
-                if(i<5){
-                    trend[i] = MatchResult.DRAWN;
-                }
-            }
-            
-            i++;
-        }
-        
-        dto.setPoints(dto.getWon()*2+dto.getDrawn());
-        dto.setTrend(trend);
-        
+        Team entity = teamDao.findTeamByPlayer(playerDao.getById(playerId));
+        TeamDTO dto = teamConvert.fromEntityToDTO(entity);
+
         return dto;
     }
 }
