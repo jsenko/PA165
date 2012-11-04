@@ -22,9 +22,6 @@ public class MatchConvert implements Convert<Match, MatchDTO>
 {
 	@EJB
 	TeamDAO teamDAO;
-	
-	//@EJB
-	//GoalDAO goalDAO;
 
 	@Override
 	public MatchDTO fromEntityToDTO(Match entity)

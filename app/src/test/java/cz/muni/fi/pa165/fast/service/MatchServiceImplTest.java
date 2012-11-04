@@ -2,43 +2,36 @@ package cz.muni.fi.pa165.fast.service;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static junit.framework.Assert.*;
+import static org.mockito.Mockito.verifyZeroInteractions;
+
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.runners.MockitoJUnitRunner;
-import org.mockito.stubbing.Answer;
 
 import com.stvconsultants.easygloss.javaee.JavaEEGloss;
 
 import cz.muni.fi.pa165.fast.convert.MatchConvert;
-import cz.muni.fi.pa165.fast.dao.GoalDAO;
 import cz.muni.fi.pa165.fast.dao.MatchDAO;
 import cz.muni.fi.pa165.fast.dao.TeamDAO;
 import cz.muni.fi.pa165.fast.dto.MatchDTO;
 import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Team;
 import cz.muni.fi.pa165.fast.service.impl.MatchServiceImpl;
+import static org.hamcrest.Matchers.*;
 
-@RunWith(MockitoJUnitRunner.class)
+//import static junit.framework.Assert.*;
+
+//@RunWith(MockitoJUnitRunner.class)
 public class MatchServiceImplTest
 {
-	@Mock
 	MatchDAO matchDAOMock;
 	
-	@Mock
 	TeamDAO teamDAOMock;
-	
-	@Mock
-	GoalDAO goalDAOMock;
 	
 	MatchConvert convert;
 	
@@ -47,9 +40,13 @@ public class MatchServiceImplTest
 	@Before
 	public void setUp()
 	{
+		MockData mdata = new MockData();
+		mdata.mock();
+		matchDAOMock = mdata.getMatchDAOMock();
+		teamDAOMock = mdata.getTeamDAOMock();
+		
 		JavaEEGloss gloss = new JavaEEGloss();
 		gloss.addEJB(teamDAOMock);
-		gloss.addEJB(goalDAOMock);
 		convert = gloss.make(MatchConvert.class);
 		
 		gloss = new JavaEEGloss();
@@ -57,7 +54,6 @@ public class MatchServiceImplTest
 		gloss.addEJB(teamDAOMock);
 		gloss.addEJB(convert);
 		service = gloss.make(MatchServiceImpl.class);
-	
 	}
 	
 	@After
@@ -89,8 +85,6 @@ public class MatchServiceImplTest
 		verify(teamDAOMock).getById(2L);
 		verify(teamDAOMock).getById(3L);
 		verifyNoMoreInteractions(teamDAOMock);
-		
-		verifyZeroInteractions(goalDAOMock);
 	}
 	
 	
@@ -156,14 +150,27 @@ public class MatchServiceImplTest
 		verify(matchDAOMock).delete(m);
 		verifyNoMoreInteractions(matchDAOMock);
 		verifyZeroInteractions(teamDAOMock);
-		verifyZeroInteractions(goalDAOMock);
 	}
 	
 	
 	@Test
 	public void findAll()
 	{
+		List<MatchDTO> dtos = service.findAll();
 
-
+		assertEquals(6, dtos.size());
+		
+		verify(matchDAOMock).findAll();
+		verifyNoMoreInteractions(matchDAOMock);
+		
+		MatchDTO dto = dtos.get(4); // get sample - fifth match, ordered by date
+		assertEquals(5, dto.getId());
+		assertEquals(2, dto.getRound());
+		assertEquals(3, dto.getHomeTeamId());
+		assertEquals("Third Team", dto.getHomeTeamName());
+		assertEquals(1, dto.getAwayTeamId());
+		assertEquals("First Team", dto.getAwayTeamName());
+		assertEquals(1, (int)dto.getHomeTeamGoals());
+		assertEquals(0, (int)dto.getAwayTeamGoals());
 	}
 }
