@@ -27,7 +27,4 @@ public interface MatchDAO extends DAO<Match>
      * @return List of Matches played by away team or empty List when team does not play any away match.
      */
     public List<Match> findByAwayTeam(Team team);
-    
-    
-    public List<Match> findByRound(int round);
 }

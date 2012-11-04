@@ -22,9 +22,6 @@ public class MatchConvert implements Convert<Match, MatchDTO>
 {
 	@EJB
 	TeamDAO teamDAO;
-	
-	//@EJB
-	//GoalDAO goalDAO;
 
 	@Override
 	public MatchDTO fromEntityToDTO(Match entity)
@@ -32,6 +29,10 @@ public class MatchConvert implements Convert<Match, MatchDTO>
 		if(entity == null)
 		{
 			throw new IllegalArgumentException("Match entity is null.");
+		}
+		if(entity.getHomeTeam() == null || entity.getAwayTeam() == null )
+		{
+			throw new RuntimeException("Home/Away Team cannot be null");
 		}
 		
 		MatchDTO dto = new MatchDTO();
@@ -54,6 +55,7 @@ public class MatchConvert implements Convert<Match, MatchDTO>
 					teamDAO.findTeamByPlayer(g.getScorePlayer())
 			))
 			{
+
 				homeGoals++;
 			}
 			else

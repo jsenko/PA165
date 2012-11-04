@@ -86,11 +86,11 @@ public class MatchServiceImpl implements MatchService
 	@Override
 	public List<MatchDTO> findByRound(int round)
 	{
-		Collection<Match> matches = matchDAO.findByRound(round);
+		Collection<Match> matches = matchDAO.findAll();
 		List<MatchDTO> dtos = new ArrayList<MatchDTO>();
 		for(Match m: matches)
 		{
-			dtos.add(convert.fromEntityToDTO(m));
+			if(m.getRound() == round) dtos.add(convert.fromEntityToDTO(m));
 		}
 		Collections.sort(dtos);
 		return dtos;

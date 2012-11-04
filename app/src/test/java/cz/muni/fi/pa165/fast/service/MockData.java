@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.fast.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.mockito.Mockito;
@@ -59,35 +60,47 @@ public class MockData
 		p3.setTeam(t3);
 		
 		// MATCHES - home team vs away team
-		Match m1vs2 = new Match(); // result 1:0
+		Match m1vs2 = new Match(); // result 1:0, round 1, first
 		m1vs2.setId(1L);
 		m1vs2.setHomeTeam(t1);
 		m1vs2.setAwayTeam(t2);
+		m1vs2.setRound(1);
+		m1vs2.setMatchDate(new Date(1));
 		
-		Match m1vs3 = new Match(); // 1:1
+		Match m1vs3 = new Match(); // 1:1, round 1, second
 		m1vs3.setId(2L);
 		m1vs3.setHomeTeam(t1);
 		m1vs3.setAwayTeam(t3);
+		m1vs3.setRound(1);
+		m1vs3.setMatchDate(new Date(2));
 		
-		Match m2vs1 = new Match(); // 0:1
+		Match m2vs1 = new Match(); // 0:1, round 2, first
 		m2vs1.setId(3L);
 		m2vs1.setHomeTeam(t2);
 		m2vs1.setAwayTeam(t1);
+		m2vs1.setRound(2);
+		m2vs1.setMatchDate(new Date(4));
 		
-		Match m2vs3 = new Match(); // 1:0
+		Match m2vs3 = new Match(); // 1:0, round 1, third match
 		m2vs3.setId(4L);
 		m2vs3.setHomeTeam(t2);
 		m2vs3.setAwayTeam(t3);
+		m2vs3.setRound(1);
+		m2vs3.setMatchDate(new Date(3));
 		
-		Match m3vs1 = new Match(); // 1:0
+		Match m3vs1 = new Match(); // 1:0, round 2, second
 		m3vs1.setId(5L);
 		m3vs1.setHomeTeam(t3);
 		m3vs1.setAwayTeam(t1);
+		m3vs1.setRound(2);
+		m3vs1.setMatchDate(new Date(5));
 		
-		Match m3vs2 = new Match(); // 0:0
+		Match m3vs2 = new Match(); // 0:0, round 2, third
 		m3vs2.setId(6L);
 		m3vs2.setHomeTeam(t3);
 		m3vs2.setAwayTeam(t2);
+		m3vs2.setRound(2);
+		m3vs2.setMatchDate(new Date(6));
 		
 		// GOALS - 6 goals
 		
@@ -156,6 +169,10 @@ public class MockData
 		doReturn( m2vs3 ).when(matchDAOMock).getById(4L);
 		doReturn( m3vs1 ).when(matchDAOMock).getById(5L);
 		doReturn( m3vs2 ).when(matchDAOMock).getById(6L);
+		doReturn(list(
+				new Match[]{ m1vs2, m1vs3, m2vs1, m2vs3, m3vs1, m3vs2 }
+		)).when(matchDAOMock).findAll();
+		
 		doReturn(list(new Match[]{ m1vs2, m1vs3 })).when(matchDAOMock).findByHomeTeam(t1);
 		doReturn(list(new Match[]{ m2vs1, m2vs3 })).when(matchDAOMock).findByHomeTeam(t2);
 		doReturn(list(new Match[]{ m3vs1, m3vs2 })).when(matchDAOMock).findByHomeTeam(t3);

@@ -309,11 +309,4 @@ public class MatchDAOImplTest {
             }
         }
     }
-    
-    @Test
-    public void findByRound()
-    {
-    	// TODO
-    	assertTrue(true);
-    }
 }

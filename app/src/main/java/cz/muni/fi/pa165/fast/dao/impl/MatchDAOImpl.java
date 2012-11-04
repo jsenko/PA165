@@ -114,7 +114,8 @@ public class MatchDAOImpl implements MatchDAO
 			.setParameter("team", team)
 			.getResultList();
 	}
-
+	
+	/* TODO this is emulated at service layer. TODO uncomment if needed to improve performance
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Match> findByRound(int round)
@@ -122,5 +123,5 @@ public class MatchDAOImpl implements MatchDAO
 		return em.createQuery("select m from Match m where m.round = :round")
 				.setParameter("round", round)
 				.getResultList();
-	}
+	}*/
 }
