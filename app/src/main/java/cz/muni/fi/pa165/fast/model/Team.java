@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.fast.model;
 
+import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -26,7 +28,7 @@ import javax.persistence.OneToMany;
             query="SELECT t FROM Team t WHERE :match member of t.awayMatches")
 })
 
-public class Team
+public class Team implements Serializable
 {
 
     @Id
@@ -34,13 +36,13 @@ public class Team
     private Long id;
     
     private String name;
-    @OneToMany(mappedBy = "team")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "team")
     private List<Player> players;
     
-    @OneToMany(mappedBy = "homeTeam")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "homeTeam")
     private List<Match> homeMatches;
    
-    @OneToMany(mappedBy = "awayTeam")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "awayTeam")
     private List<Match> awayMatches;
 
     public Long getId() {

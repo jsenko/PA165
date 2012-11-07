@@ -21,7 +21,7 @@ import javax.persistence.Query;
 public class PlayerDAOImpl implements PlayerDAO
 {
 
-    @PersistenceContext
+    @PersistenceContext(name = "TestPU")
     private EntityManager em;
     
     @Override

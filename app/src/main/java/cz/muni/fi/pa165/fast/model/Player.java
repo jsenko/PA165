@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.fast.model;
 
+import java.io.Serializable;
 import javax.persistence.*;
 
 
@@ -10,7 +11,7 @@ import javax.persistence.*;
  * @version 1.0
  */
 @Entity
-public class Player
+public class Player implements Serializable
 {
     @Id
     @GeneratedValue

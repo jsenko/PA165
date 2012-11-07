@@ -16,10 +16,10 @@ import javax.persistence.PersistenceContext;
  * @author Michal Kimle
  */
 @Local(value=TeamDAO.class)
-@Stateless
+@Stateless(mappedName="TeamDaoImpl")
 public class TeamDAOImpl implements TeamDAO {
 
-    @PersistenceContext
+    @PersistenceContext(name = "TestPU")
     private EntityManager em;
 
     @Override

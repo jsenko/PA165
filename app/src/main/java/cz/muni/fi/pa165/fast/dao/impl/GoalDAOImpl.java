@@ -23,7 +23,7 @@ import javax.persistence.PersistenceContext;
 public class GoalDAOImpl implements GoalDAO
 {
     
-    @PersistenceContext
+    @PersistenceContext(name = "TestPU")
     EntityManager em;
    
     @Override

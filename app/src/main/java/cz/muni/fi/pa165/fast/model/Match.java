@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.fast.model;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -29,7 +30,7 @@ public class Match implements Comparable<Match>, Serializable
     private Team homeTeam;
     @ManyToOne
     private Team awayTeam;
-    @OneToMany(mappedBy = "match")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "match")
     private Collection<Goal> goals;
     
     private int round;

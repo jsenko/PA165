@@ -22,7 +22,7 @@ import javax.persistence.PersistenceContext;
 public class MatchDAOImpl implements MatchDAO
 {
 	
-	@PersistenceContext
+	@PersistenceContext(name = "TestPU")
 	private EntityManager em;
 
 	@Override
