@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.fast.dao;
 
-import cz.muni.fi.pa165.fast.dao.impl.MatchDAOImpl;
+
 import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Team;
 import java.lang.reflect.Field;
@@ -22,6 +22,13 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.stvconsultants.easygloss.javaee.JavaEEGloss;
+import java.util.Collection;
+import javax.ejb.EJBException;
+import javax.ejb.Stateless;
+import javax.ejb.embeddable.EJBContainer;
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.persistence.PersistenceContext;
 
 /**
  *
@@ -31,42 +38,40 @@ public class MatchDAOImplTest {
     
 	
 	
-    private MatchDAOImpl mdaoi;
-    private EntityManagerFactory emf;
-    private EntityManager em; 
-    private EntityManager emt; 
+    private static Context context;
+    private static MatchDAO mdaoi;
+    private static MatchFakeEntityManager em; 
+
+    @BeforeClass
+    public static void setUpClass() throws Exception
+    {
+        context = EJBContainer.createEJBContainer().getContext();
+        mdaoi = (MatchDAO) context.lookup("java:global/app/MatchDAOImpl");
+        em = (MatchFakeEntityManager) context.lookup("java:global/app/MatchFakeEntityManager");
+        
+    }
     
-    public MatchDAOImplTest() {
+    @AfterClass
+    public static void tearDownClass() throws NamingException
+    {
+        context.close();
     }
     
     
     @Before
-    public void setUp() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException
+    public void setUp()
     {
-        emf = Persistence.createEntityManagerFactory("TestPU");
-        em = emf.createEntityManager();
-        emt = emf.createEntityManager();
-        
-        mdaoi = new MatchDAOImpl();
-        // perform dependency injection
-        Field f = mdaoi.getClass().getDeclaredField("em");
-        f.setAccessible(true);
-        f.set(mdaoi, emt);
     }
     
     @After
     public void tearDown() {
-    	em.close();
-        emf.close();
     }
     
     @Test
     public void createMatch(){
         Match match = new Match();
         
-        emt.getTransaction().begin();
         mdaoi.create(match);
-        emt.getTransaction().commit();
         
         assertNotNull(match.getId());
     }
@@ -77,7 +82,7 @@ public class MatchDAOImplTest {
         try {
             mdaoi.create(match);
             fail();
-        } catch (IllegalArgumentException ex) {
+        } catch (EJBException ex) {
             //OK
         }
     }
@@ -86,9 +91,7 @@ public class MatchDAOImplTest {
     public void updateMatch(){
         Match match = new Match();
 
-        em.getTransaction().begin();
         em.persist(match);
-        em.getTransaction().commit();
         
         Long matchId = match.getId();
         
@@ -117,7 +120,7 @@ public class MatchDAOImplTest {
         try {
             mdaoi.update(match);
             fail();
-        } catch (IllegalArgumentException ex) {
+        } catch (EJBException ex) {
             //OK
         }
     }
@@ -126,16 +129,11 @@ public class MatchDAOImplTest {
     public void deleteMatch(){
         Match match = new Match();
 
-        em.getTransaction().begin();
         em.persist(match);
-        em.getTransaction().commit();
-        em.clear();
         
         Long matchId = match.getId();
         
-        emt.getTransaction().begin();
         mdaoi.delete(match);
-        emt.getTransaction().commit();
         
         assertNull(em.find(Match.class, matchId));
     }
@@ -146,7 +144,7 @@ public class MatchDAOImplTest {
         try {
             mdaoi.delete(match);
             fail();
-        } catch (IllegalArgumentException ex) {
+        } catch (EJBException ex) {
             //OK
         }
         
@@ -155,7 +153,7 @@ public class MatchDAOImplTest {
         try {
             mdaoi.delete(match);
             fail();
-        } catch (IllegalArgumentException ex) {
+        } catch (EJBException ex) {
             //OK
         }
     }
@@ -166,9 +164,7 @@ public class MatchDAOImplTest {
         long time = System.currentTimeMillis();
         match.setMatchDate(new Date(time));
 
-        em.getTransaction().begin();
         em.persist(match);
-        em.getTransaction().commit();
         
         Long matchId = match.getId();
         
@@ -182,7 +178,7 @@ public class MatchDAOImplTest {
         try {
             mdaoi.getById(null);
             fail();
-        } catch (IllegalArgumentException ex) {
+        } catch (EJBException ex) {
             //OK
         }
         
@@ -199,15 +195,13 @@ public class MatchDAOImplTest {
         Match match2 = new Match();
         match2.setMatchDate(new Date(time+1000));
 
-        em.getTransaction().begin();
         em.persist(match1);
         em.persist(match2);
-        em.getTransaction().commit();
         
         Long match1Id = match1.getId();
         Long match2Id = match2.getId();
         
-        List<Match> matches = mdaoi.findAll();
+        Collection<Match> matches = mdaoi.findAll();
         
         assertEquals(2, matches.size());
         
@@ -241,12 +235,10 @@ public class MatchDAOImplTest {
         match1.setMatchDate(new Date(time));
         match2.setMatchDate(new Date(time+1000));
 
-        em.getTransaction().begin();
         em.persist(team);
         em.persist(match1);
         em.persist(match2);
         em.persist(match3);
-        em.getTransaction().commit();
         
         Long match1Id = match1.getId();
         Long match2Id = match2.getId();
@@ -285,12 +277,10 @@ public class MatchDAOImplTest {
         match1.setMatchDate(new Date(time));
         match2.setMatchDate(new Date(time+1000));
 
-        em.getTransaction().begin();
         em.persist(team);
         em.persist(match1);
         em.persist(match2);
         em.persist(match3);
-        em.getTransaction().commit();
         
         Long match1Id = match1.getId();
         Long match2Id = match2.getId();
@@ -307,6 +297,25 @@ public class MatchDAOImplTest {
             if(match2Id.equals(match.getId())) {
                 assertEquals(time+1000, match.getMatchDate().getTime());
             }
+        }
+    }
+    
+    @Stateless
+    public static class MatchFakeEntityManager {
+
+        @PersistenceContext(name = "TestPU")
+        private EntityManager em;
+
+        public void remove(Match m) {
+            em.remove(em.find(Match.class, m.getId()));
+        }
+
+        public void persist(Object o) {
+            em.persist(o);
+        }
+
+        public Match find(Class<Match> c, Object o) {
+            return em.find(c, o);
         }
     }
 }

@@ -11,9 +11,15 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
+import javax.ejb.EJBException;
+import javax.ejb.Stateless;
+import javax.ejb.embeddable.EJBContainer;
+import javax.naming.Context;
+import javax.naming.NamingException;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.*;
@@ -27,37 +33,31 @@ import org.junit.Test;
  */
 public class GoalDAOImplTest {
 
-    private GoalDAOImpl gdaoi;
-    private EntityManagerFactory emf;
-    private EntityManager em;
-
-    public GoalDAOImplTest() {
-    }
+    private static Context context;
+    private static GoalDAO gdaoi;
+    private static GoalFakeEntityManager em;
 
     @BeforeClass
-    public static void setUpClass() {
+    public static void setUpClass() throws Exception {
+        
+        context = EJBContainer.createEJBContainer().getContext();
+        gdaoi = (GoalDAO) context.lookup("java:global/app/GoalDAOImpl");
+        em = (GoalFakeEntityManager) context.lookup("java:global/app/GoalFakeEntityManager");
     }
 
     @AfterClass
-    public static void tearDownClass() {
+    public static void tearDownClass() throws NamingException{
+        context.close();
     }
 
     @Before
-    public void setUp() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-        emf = Persistence.createEntityManagerFactory("TestPU");
-        em = emf.createEntityManager();
-        
-        gdaoi = new GoalDAOImpl();
-        
-        Field f = gdaoi.getClass().getDeclaredField("em");
-        f.setAccessible(true);
-        f.set(gdaoi, em);
+    public void setUp(){
+     
     }
 
     @After
     public void tearDown() {
-        em.close();
-        emf.close();
+        
     }
 
     /**
@@ -66,10 +66,12 @@ public class GoalDAOImplTest {
     @Test
     public void testCreate() {
         Goal goal = new Goal();
-        em.getTransaction().begin();
+        
         gdaoi.create(goal);
-        em.getTransaction().commit();
+
+        Goal founded = em.find(Goal.class, goal.getId());
         assertNotNull(goal.getId());
+        assertEquals(goal.getId(), founded.getId());
     }
 
     /**
@@ -79,14 +81,18 @@ public class GoalDAOImplTest {
     public void testUpdate() {
         Goal goal = new Goal();
 
-        em.getTransaction().begin();
         em.persist(goal);
-        em.getTransaction().commit();
+
+        
 
         long milis = 895465778;
         goal.setGoalTime(new Date(milis));
 
-        gdaoi.update(goal);
+            gdaoi.update(goal);
+
+
+        
+        
 
         Goal goalFromDB = em.find(Goal.class, goal.getId());
 
@@ -100,9 +106,9 @@ public class GoalDAOImplTest {
     @Test
     public void testDelete() {
         Goal goal = new Goal();
-        em.getTransaction().begin();
+
         em.persist(goal);
-        em.getTransaction().commit();
+
 
         Long goalId = goal.getId();
 
@@ -117,7 +123,6 @@ public class GoalDAOImplTest {
         Random r = new Random();
 
         List<Goal> list = new LinkedList<Goal>();
-        em.getTransaction().begin();
 
         Goal g = new Goal();
 
@@ -130,10 +135,28 @@ public class GoalDAOImplTest {
         list.add(g2);
         em.persist(g2);
 
-        em.getTransaction().commit();
 
         List<Goal> goalsFromDB = (List<Goal>) gdaoi.findAll();
 
         assertEquals(list, goalsFromDB);
+    }
+    
+    @Stateless
+    public static class GoalFakeEntityManager {
+
+        @PersistenceContext(name = "TestPU")
+        private EntityManager em;
+
+        public void remove(Goal g) {
+            em.remove(em.find(Goal.class, g.getId()));
+        }
+
+        public void persist(Object o) {
+            em.persist(o);
+        }
+
+        public Goal find(Class<Goal> c, Object o) {
+            return em.find(c, o);
+        }
     }
 }
