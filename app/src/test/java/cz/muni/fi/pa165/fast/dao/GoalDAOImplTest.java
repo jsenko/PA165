@@ -83,21 +83,16 @@ public class GoalDAOImplTest {
 
         em.persist(goal);
 
-        
-
         long milis = 895465778;
         goal.setGoalTime(new Date(milis));
 
-            gdaoi.update(goal);
-
-
-        
-        
+        gdaoi.update(goal);
 
         Goal goalFromDB = em.find(Goal.class, goal.getId());
 
         assertEquals(milis, goalFromDB.getGoalTime().getTime());
 
+        em.remove(goal);
     }
 
     /**

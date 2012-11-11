@@ -4,9 +4,8 @@ import cz.muni.fi.pa165.fast.dao.MatchDAO;
 import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Team;
 import java.util.List;
+import javax.ejb.Local;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -17,8 +16,9 @@ import javax.persistence.PersistenceContext;
  * @version 1.0
  */
 
+@Local(value=MatchDAO.class)
 @Stateless
-@TransactionAttribute(TransactionAttributeType.MANDATORY)
+//@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class MatchDAOImpl implements MatchDAO
 {
 	

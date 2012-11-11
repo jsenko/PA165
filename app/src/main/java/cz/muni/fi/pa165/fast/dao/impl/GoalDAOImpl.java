@@ -5,12 +5,9 @@ import cz.muni.fi.pa165.fast.model.Goal;
 import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Player;
 import java.util.Collection;
+import javax.ejb.Local;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -18,13 +15,14 @@ import javax.persistence.PersistenceContext;
  * @author Peter Laurencik
  */
 
+@Local(value=GoalDAO.class)
 @Stateless
-@TransactionAttribute(TransactionAttributeType.MANDATORY)
+//@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class GoalDAOImpl implements GoalDAO
 {
     
     @PersistenceContext(name = "TestPU")
-    EntityManager em;
+    private EntityManager em;
    
     @Override
     public void create(Goal goal)

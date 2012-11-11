@@ -3,32 +3,26 @@ package cz.muni.fi.pa165.fast.dao;
 
 import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Team;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import org.junit.After;
-import org.junit.AfterClass;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
-
-import com.stvconsultants.easygloss.javaee.JavaEEGloss;
-import java.util.Collection;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.ejb.embeddable.EJBContainer;
 import javax.naming.Context;
 import javax.naming.NamingException;
+import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import org.junit.After;
+import org.junit.AfterClass;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
+import org.junit.Before;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
 /**
  *
@@ -36,8 +30,6 @@ import javax.persistence.PersistenceContext;
  */
 public class MatchDAOImplTest {
     
-	
-	
     private static Context context;
     private static MatchDAO mdaoi;
     private static MatchFakeEntityManager em; 
@@ -48,7 +40,6 @@ public class MatchDAOImplTest {
         context = EJBContainer.createEJBContainer().getContext();
         mdaoi = (MatchDAO) context.lookup("java:global/app/MatchDAOImpl");
         em = (MatchFakeEntityManager) context.lookup("java:global/app/MatchFakeEntityManager");
-        
     }
     
     @AfterClass
@@ -74,6 +65,8 @@ public class MatchDAOImplTest {
         mdaoi.create(match);
         
         assertNotNull(match.getId());
+        
+        em.remove(match);
     }
     
     @Test
@@ -103,6 +96,8 @@ public class MatchDAOImplTest {
         Match DBMatch = em.find(Match.class, matchId);
         
         assertEquals(time, DBMatch.getMatchDate().getTime());
+        
+        em.remove(match);
     }
     
     @Test
@@ -111,7 +106,7 @@ public class MatchDAOImplTest {
         try {
             mdaoi.update(match);
             fail();
-        } catch (IllegalArgumentException ex) {
+        } catch (EJBException ex) {
             //OK
         }
         
@@ -171,6 +166,8 @@ public class MatchDAOImplTest {
         Match DBMatch = mdaoi.getById(matchId);
         
         assertEquals(time, DBMatch.getMatchDate().getTime());
+        
+        em.remove(match);
     }
     
     @Test
@@ -214,6 +211,9 @@ public class MatchDAOImplTest {
                 assertEquals(time+1000, match.getMatchDate().getTime());
             }
         }
+        
+        em.remove(match1);
+        em.remove(match2);
     }
     
     @Test
@@ -236,9 +236,6 @@ public class MatchDAOImplTest {
         match2.setMatchDate(new Date(time+1000));
 
         em.persist(team);
-        em.persist(match1);
-        em.persist(match2);
-        em.persist(match3);
         
         Long match1Id = match1.getId();
         Long match2Id = match2.getId();
@@ -256,6 +253,10 @@ public class MatchDAOImplTest {
                 assertEquals(time+1000, match.getMatchDate().getTime());
             }
         }
+        
+        em.remove(match1);
+        em.remove(match2);
+        em.remove(match3);
     }
     
     @Test
@@ -278,9 +279,6 @@ public class MatchDAOImplTest {
         match2.setMatchDate(new Date(time+1000));
 
         em.persist(team);
-        em.persist(match1);
-        em.persist(match2);
-        em.persist(match3);
         
         Long match1Id = match1.getId();
         Long match2Id = match2.getId();
@@ -298,6 +296,10 @@ public class MatchDAOImplTest {
                 assertEquals(time+1000, match.getMatchDate().getTime());
             }
         }
+        
+        em.remove(match1);
+        em.remove(match2);
+        em.remove(match3);
     }
     
     @Stateless
