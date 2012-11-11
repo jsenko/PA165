@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.fast.dao;
 
-import cz.muni.fi.pa165.fast.dao.impl.PlayerDAOImpl;
 import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Player;
 import cz.muni.fi.pa165.fast.model.Team;
@@ -29,13 +28,13 @@ public class TeamDAOTest {
 
     private static Context context;
     private static TeamDAO dao;
-    private static FakeEntityManager fem;
+    private static TeamFakeEntityManager fem;
 
     @BeforeClass
     public static void setUpClass() throws Exception {
         context = EJBContainer.createEJBContainer().getContext();
-        dao = (TeamDAO) context.lookup("java:global/app/TeamDAOImpl!cz.muni.fi.pa165.fast.dao.TeamDAO");
-        fem = (FakeEntityManager) context.lookup("java:global/app/FakeEntityManager!cz.muni.fi.pa165.fast.dao.TeamDAOTest$FakeEntityManager");
+        dao = (TeamDAO) context.lookup("java:global/app/TeamDAOImpl");
+        fem = (TeamFakeEntityManager) context.lookup("java:global/app/TeamFakeEntityManager");
     }
 
     @AfterClass
@@ -262,7 +261,7 @@ public class TeamDAOTest {
     }
 
     @Stateless
-    public static class FakeEntityManager {
+    public static class TeamFakeEntityManager {
 
         @PersistenceContext(name = "TestPU")
         private EntityManager em;

@@ -1,22 +1,21 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.fast.dao;
 
-
-
-import cz.muni.fi.pa165.fast.dao.impl.PlayerDAOImpl;
 import cz.muni.fi.pa165.fast.model.Player;
-import java.lang.reflect.Field;
+import cz.muni.fi.pa165.fast.model.Team;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import javax.ejb.EJBException;
+import javax.ejb.Stateless;
+import javax.ejb.embeddable.EJBContainer;
+import javax.naming.Context;
+import javax.naming.NamingException;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import org.junit.After;
+import javax.persistence.PersistenceContext;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import static org.junit.Assert.fail;
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -25,27 +24,20 @@ import org.junit.Test;
  */
 public class PlayerDAOImplTest {
     
-    private EntityManager em;
-    private EntityManagerFactory emf;
+    private static Context context;
     private static PlayerDAO playerDAO;
+    private static PlayerFakeEntityManager fem;
 
-    @Before
-    public void setUp() throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException {
-        emf = Persistence.createEntityManagerFactory("TestPU");
-        em = emf.createEntityManager();
-        
-        
-        playerDAO = new PlayerDAOImpl();
-        // perform dependency injection
-        Field f = playerDAO.getClass().getDeclaredField("em");
-        f.setAccessible(true);
-        f.set(playerDAO, em);
+    @BeforeClass
+    public static void setUpClass() throws Exception {
+        context = EJBContainer.createEJBContainer().getContext();
+        playerDAO = (PlayerDAO) context.lookup("java:global/app/PlayerDAOImpl");
+        fem = (PlayerFakeEntityManager) context.lookup("java:global/app/PlayerFakeEntityManager");
     }
-    
-    @After
-    public void tearDown() {
-    	em.close();
-        emf.close();
+
+    @AfterClass
+    public static void setDownClass() throws NamingException {
+        context.close();
     }
     
     @Test
@@ -55,11 +47,9 @@ public class PlayerDAOImplTest {
         player = null;
         
         try{
-            em.getTransaction().begin();
             playerDAO.create(player);
-            em.getTransaction().commit();
             fail("Null pointer exception shoud be thrown whne null player creating.");
-        }catch(IllegalArgumentException ex)
+        }catch(EJBException ex)
         {
             //OK
         }
@@ -72,15 +62,13 @@ public class PlayerDAOImplTest {
         player.setName("Mike");
         
         try{
-            em.getTransaction().begin();
             playerDAO.create(player);
-            em.getTransaction().commit();
         }catch(Exception ex)
         {
             fail("Error when player is created.");
         } 
         
-        Player foundPlayer = em.find(Player.class, player.getId());
+        Player foundPlayer = fem.find(Player.class, player.getId());
         
         Assert.assertEquals(player, foundPlayer);
     }
@@ -92,14 +80,10 @@ public class PlayerDAOImplTest {
         player = null;
         
         try{
-            
-            em.getTransaction().begin();
             playerDAO.update(player);
-            em.getTransaction().commit();
             
-            
-            fail("Null pointer exception shoud be thrown whne null player updating.");
-        }catch(IllegalArgumentException ex)
+            fail("Null pointer exception shoud be thrown when null player updating.");
+        }catch(EJBException ex)
         {
             //OK
         }
@@ -113,20 +97,18 @@ public class PlayerDAOImplTest {
         player.setName("Mike");
         
         try{
-            em.getTransaction().begin();
-            playerDAO.create(player);
-            em.getTransaction().commit();
+            fem.persist(player);
             
             player.setAge(24);
 
             playerDAO.update(player);
  
-        }catch(Exception ex)
+        }catch(EJBException ex)
         {
             fail("Error when player is updated.");
         }  
         
-        Player foundPlayer = em.find(Player.class, player.getId());
+        Player foundPlayer = fem.find(Player.class, player.getId());
         
         Assert.assertEquals(player, foundPlayer);
     }
@@ -138,11 +120,10 @@ public class PlayerDAOImplTest {
         player = null;
         
         try{
-            em.getTransaction().begin();
             playerDAO.delete(player);
-            em.getTransaction().commit();
+            
             fail("Null pointer exception shoud be thrown whne null player creating.");
-        }catch(IllegalArgumentException ex)
+        }catch(EJBException ex)
         {
             //OK
         }
@@ -154,9 +135,8 @@ public class PlayerDAOImplTest {
         Player player = new Player();
         
         try{
-            em.getTransaction().begin();
-            playerDAO.create(player);
-            em.getTransaction().commit();
+            fem.persist(player);
+
             playerDAO.delete(player);
             
         }catch(Exception ex)
@@ -164,23 +144,21 @@ public class PlayerDAOImplTest {
             fail("Error when player is deleted.");
         }  
         
-        Player deletedPlayer = em.find(Player.class, player.getId());
+        Player deletedPlayer = fem.find(Player.class, player.getId());
         
         Assert.assertNull(deletedPlayer);
     }
     
     @Test
-    public void findAlltest()
+    public void findAllTest()
     {
         Player player1 = new Player();
         player1.setName("Mike");
         Player player2 = new Player();
         player2.setName("Felix");
         
-        em.getTransaction().begin();
-        playerDAO.create(player1);
-        playerDAO.create(player2);  
-        em.getTransaction().commit();
+        fem.persist(player1);
+        fem.persist(player2);
         
         Collection<Player> allPlayers = playerDAO.findAll();
         
@@ -191,30 +169,43 @@ public class PlayerDAOImplTest {
         
     }
     
-       
     @Test
-    public void getPlayerByScoredGoalTest()
-    {
-        try{
-            em.getTransaction().begin();
-            playerDAO.getPlayerByScoredGoal(null);
-            em.getTransaction().commit();
-            fail();
-        }catch(UnsupportedOperationException ex){
-            // ok
-        }
+    public void findPlayersByTeamTest(){
+        Team t = new Team();
+        Player p1 = new Player();
+        Player p2 = new Player();
+        p1.setTeam(t);
+        p2.setTeam(t);
+        t.setPlayers(new ArrayList<Player>());
+        t.getPlayers().add(p1);
+        t.getPlayers().add(p2);
+        
+        fem.persist(t);
+        
+        List<Player> list = playerDAO.findPlayersByTeam(t);
+        
+        Assert.assertEquals(2, list.size());
+        
+        Assert.assertTrue(list.contains(p1));
+        Assert.assertTrue(list.contains(p2));
     }
     
-    @Test
-    public void getPlayerByAssistedGoalTest()
-    {
-        try{
-            em.getTransaction().begin();
-            playerDAO.getPlayerByAssistedGoal(null);
-            em.getTransaction().commit();
-            fail();
-        }catch(UnsupportedOperationException ex){
-            // ok
+    @Stateless
+    public static class PlayerFakeEntityManager {
+
+        @PersistenceContext(name = "TestPU")
+        private EntityManager em;
+
+        public void remove(Player p) {
+            em.remove(em.find(Player.class, p.getId()));
+        }
+
+        public void persist(Object o) {
+            em.persist(o);
+        }
+
+        public Player find(Class<Player> c, Object o) {
+            return em.find(c, o);
         }
     }
 }

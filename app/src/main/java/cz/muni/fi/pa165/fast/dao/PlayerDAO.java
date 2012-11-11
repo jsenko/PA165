@@ -12,25 +12,7 @@ import cz.muni.fi.pa165.fast.model.Team;
  * @author Michal Kimle
  */
 public interface PlayerDAO extends DAO<Player>
-{    
-    /**
-     * Retrieves a Player who scored given goal.
-     * 
-     * @param goal Scored goal. Cannot be null.
-     * @return Player who scored the goal or null if it does not exist.
-     * @throws IllegalArgumentException if the argument is null.
-     */
-    public Player getPlayerByScoredGoal(Goal goal);
-    
-    /**
-     * Retrieves a Player who assisted given goal.
-     * 
-     * @param goal Assisted goal. Cannot be null.
-     * @return Player who assisted the goal or null if it does not exist.
-     * @throws IllegalArgumentException if the argument is null.
-     */
-    public Player getPlayerByAssistedGoal(Goal goal);
-    
+{        
     /**
      * Retrieves Players from given team
      * 

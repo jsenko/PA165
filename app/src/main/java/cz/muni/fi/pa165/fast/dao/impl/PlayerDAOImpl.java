@@ -26,24 +26,49 @@ public class PlayerDAOImpl implements PlayerDAO
     
     @Override
     public void create(Player player) {
+        if(player == null){
+            throw new IllegalArgumentException("player is null");
+        }
         em.persist(player);
     }
 
     @Override
     public void update(Player player) {
+        if (player == null) {
+            throw new IllegalArgumentException("player is null");
+        }
+
+        if (em.find(Player.class, player.getId()) == null) {
+            throw new IllegalArgumentException("player not in DB");
+        }
         em.merge(player);
     }
 
     @Override
     public void delete(Player player) {
-        Player managed = em.merge(player);
+        if (player == null) {
+            throw new IllegalArgumentException("player is null");
+        }
+
+        Player managed = em.find(Player.class, player.getId());
+        if (managed == null) {
+            throw new IllegalArgumentException("player not in DB");
+        }
+
         em.remove(managed);
     }
 
     @Override
     public Player getById(Long id) {
-        Player player = em.find(Player.class, id);
-        return player;
+        if (id == null) {
+            throw new IllegalArgumentException("id is null");
+        }
+
+        Player managed = em.find(Player.class, id);
+        if (managed == null) {
+            throw new IllegalArgumentException("team not in DB");
+        }
+        return managed;
     }
 
     @Override
@@ -52,34 +77,10 @@ public class PlayerDAOImpl implements PlayerDAO
         Collection<Player> allPlayers = query.getResultList();
         return allPlayers;
     }
-    
-    
-    @Override
-    public Player getPlayerByScoredGoal(Goal goal) {
-        /*
-        EntityManager em = emf.createEntityManager();
-        Query query = em.createQuery("SELET p FROM Player p JOIN :goal g WHERE g.scorePlayer=p").setParameter("goal",goal);
-        Player p = (Player) query.getSingleResult();
-        return p;
-        */
-        throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Player getPlayerByAssistedGoal(Goal goal) {
-        /*
-        EntityManager em = emf.createEntityManager();
-        Query query = em.createQuery("SELET p FROM Player p JOIN :goal g WHERE g.assistPlayer=p").setParameter("goal",goal);
-        Player p = (Player) query.getSingleResult();
-        return p;
-        */
-        throw new UnsupportedOperationException();
-        
-    }
 
     @Override
     public List<Player> findPlayersByTeam(Team team) {
-        Query query = em.createQuery("SELECT p FROM Player p JOIN :team t WHERE p IN t.players").setParameter("team",team);
+        Query query = em.createQuery("SELECT p FROM Player p WHERE p.team=:team").setParameter("team",team);
         List<Player> list = query.getResultList();
         return list;
     } 
