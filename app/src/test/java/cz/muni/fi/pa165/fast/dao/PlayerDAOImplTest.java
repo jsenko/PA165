@@ -71,6 +71,8 @@ public class PlayerDAOImplTest {
         Player foundPlayer = fem.find(Player.class, player.getId());
         
         Assert.assertEquals(player, foundPlayer);
+        
+        fem.remove(player);
     }
     
     @Test
@@ -111,6 +113,8 @@ public class PlayerDAOImplTest {
         Player foundPlayer = fem.find(Player.class, player.getId());
         
         Assert.assertEquals(player, foundPlayer);
+        
+        fem.remove(player);
     }
     
     @Test
@@ -167,6 +171,8 @@ public class PlayerDAOImplTest {
         Assert.assertTrue(allPlayers.contains(player1));
         Assert.assertTrue(allPlayers.contains(player2));
         
+        fem.remove(player1);
+        fem.remove(player2);
     }
     
     @Test
@@ -188,6 +194,9 @@ public class PlayerDAOImplTest {
         
         Assert.assertTrue(list.contains(p1));
         Assert.assertTrue(list.contains(p2));
+        
+        fem.remove(p2);
+        fem.remove(p1);
     }
     
     @Stateless

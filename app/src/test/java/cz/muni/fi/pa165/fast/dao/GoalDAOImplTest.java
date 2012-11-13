@@ -72,6 +72,8 @@ public class GoalDAOImplTest {
         Goal founded = em.find(Goal.class, goal.getId());
         assertNotNull(goal.getId());
         assertEquals(goal.getId(), founded.getId());
+        
+        em.remove(goal);
     }
 
     /**
@@ -134,6 +136,9 @@ public class GoalDAOImplTest {
         List<Goal> goalsFromDB = (List<Goal>) gdaoi.findAll();
 
         assertEquals(list, goalsFromDB);
+        
+        em.remove(g);
+        em.remove(g2);
     }
     
     @Stateless
