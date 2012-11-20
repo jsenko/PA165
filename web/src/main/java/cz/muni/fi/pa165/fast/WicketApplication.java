@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.fast;
 
+import org.apache.wicket.Page;
 import org.apache.wicket.protocol.http.WebApplication;
 
 /**

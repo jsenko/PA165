@@ -1,0 +1,135 @@
+body
+{
+	background: #6c9fb3;
+	text-align: center;
+}
+.header
+{
+	margin: auto;
+	margin-top: -10px;
+	padding: 0;
+	width: 900px;
+	background: #fff;
+}
+
+#logo
+{
+	margin: 10px 0 0 0;
+} 
+.language
+{
+	float: right;
+	margin: 10px 5px 0 5px;
+}
+.container
+{
+	margin: auto;
+	margin-top: 0px;
+	width: 900px;
+	background: #fff;
+	overflow: hidden;
+	border-radius: 0 0 20px 20px;
+}
+
+#menu
+{
+	width: 100px;
+	margin-left: 50px;
+	float: left;
+	text-align: left;
+}
+#menu ul
+{
+	display: inline;
+	list-style-type: none;
+}
+#menu li
+{
+	margin-top: 10px;
+}
+#menu a:hover
+{
+	text-decoration: underline;
+}
+
+#menu a:active
+{
+	text-decoration: underline;
+
+}
+
+#menu a
+{
+	color: #000;
+	text-decoration: none;
+}
+#menu .select
+{
+	text-decoration: underline;
+}
+#content
+{
+	width: 750px;
+	float: left;	
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+#content table
+{
+	margin: 0 auto;
+	border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 30px;
+}
+.team
+{
+	width: 60px;
+	padding-left: 10px;
+}
+#content tr:nth-child(even)
+{
+	background: #9fc9d9;
+}
+#content tr:nth-child(odd)
+{
+	background: #6494a7;
+}
+#league_table tr:first-child 	
+{
+	background: #fff;
+}
+#league_table td
+{
+	width:15px;
+	padding-left: 10px;
+}
+#league_table td:first-child 	
+{
+	text-align: right;
+	width: 7px;
+	padding-right: 8px;
+}
+.name
+{
+	padding-right: 50px;
+}
+#content tr
+{
+	background: #9fc9d9;
+	padding: 0;
+}
+.round
+{
+	padding-right: 10px
+}
+
+.team-show
+{
+	margin-bottom: 10px;
+}
+
+.footer
+{
+	font-size: 18px;
+	margin-top: 10px;
+}
