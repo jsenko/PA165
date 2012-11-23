@@ -9,7 +9,7 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 "
 default-autowire="byName" >
-
+<!-- 
     <context:component-scan base-package="cz.muni.makub"/>
     <context:annotation-config/>
     <tx:annotation-driven/>
@@ -29,5 +29,5 @@ default-autowire="byName" >
         <property name="transactionManager" ref="transactionManager"/>
     </bean>
 
-
+-->
 </beans>
