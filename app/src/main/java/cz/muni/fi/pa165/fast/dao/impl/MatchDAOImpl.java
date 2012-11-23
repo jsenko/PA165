@@ -18,7 +18,6 @@ import javax.persistence.PersistenceContext;
 
 @Local(value=MatchDAO.class)
 @Stateless
-//@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class MatchDAOImpl implements MatchDAO
 {
 	
@@ -84,7 +83,7 @@ public class MatchDAOImpl implements MatchDAO
 	@Override
 	public List<Match> findAll()
 	{
-		return em.createQuery("select m from Match m").getResultList();
+                  return em.createQuery("select m from Match m").getResultList();
 	}
 
 	@SuppressWarnings("unchecked")

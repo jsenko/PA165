@@ -4,7 +4,7 @@
 
 <s:layout-render name="/cover.jsp">
     <s:layout-component name="content">
-        <h1>Team</h1>
+        <h1>Players</h1>
 
         <s:form action="team.jsp" method="post">
 

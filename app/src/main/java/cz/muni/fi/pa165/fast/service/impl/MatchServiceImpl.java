@@ -23,13 +23,13 @@ import cz.muni.fi.pa165.fast.service.MatchService;
 public class MatchServiceImpl implements MatchService
 {
 
-	@EJB
+	@EJB(name="java:global/myapp/MatchDAOImpl!cz.muni.fi.pa165.fast.dao.MatchDAO")
 	MatchDAO matchDAO;
 	
-	@EJB
+	@EJB(name="java:global/myapp/MatchConvertImpl!cz.muni.fi.pa165.fast.convert.MatchConvert")
 	MatchConvert convert;
 	
-	@EJB
+	@EJB(name="java:global/myapp/TeamDAOImpl!cz.muni.fi.pa165.fast.dao.TeamDAO")
 	TeamDAO teamDAO;
 	
 	@Override

@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -19,6 +20,7 @@ import javax.persistence.TemporalType;
  * @author Stefan Uhercik
  */
 @Entity
+@Table(name="FootballMatch")
 public class Match implements Comparable<Match>, Serializable
 {
     @Id

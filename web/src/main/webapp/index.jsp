@@ -4,22 +4,21 @@
 
 <s:layout-render name="/cover.jsp">
     <s:layout-component name="content">
+        <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean" var="actionBean"/>
         <h1>League</h1>
-        
-        
-        <%--<c:forEach items="">--%>
-            <table>
-                <%--<c:forEach items="">--%>
-                    <tr>
-                        <td class="round">1</td>
-			<td>18.11.2012 17:00</td>
-			<td class="team">Lorem</td>
-			<td class="team">Ipsum</td>
-			<td>2:1 (1:1)</td>
-                    </tr>
-                    <%--</c:forEach>--%>
-            </table> 
-        <%--</c:forEach>--%>
-        
+
+        <table>
+            <c:forEach items="${actionBean.matches}" var="match">
+
+                <tr>
+                    <td class="round"><c:out value="${match.round}"/></td>
+                    <td><c:out value="${match.date}"/></td>
+                    <td class="team"><c:out value="${match.homeTeamName}"/></td>
+                    <td class="team"><c:out value="${match.awayTeamName}"/></td>
+                    <td><c:out value="${match.homeTeamGoals}"/>:<c:out value="${match.awayTeamGoals}"/></td>
+                </tr>
+
+            </c:forEach>
+        </table>
     </s:layout-component>
 </s:layout-render>
