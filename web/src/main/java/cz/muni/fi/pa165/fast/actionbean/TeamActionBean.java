@@ -8,13 +8,20 @@ import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
+import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.action.UrlBinding;
+import net.sourceforge.stripes.validation.Validate;
+import net.sourceforge.stripes.validation.ValidateNestedProperties;
 
-//@UrlBinding("/matches/all")
-//@EJB(name = "matchServiceImpl", beanInterface = "cz.muni.fi.pa165.fast.service.MatchService")
+@UrlBinding("/teams/{$event}")
 public class TeamActionBean implements ActionBean{
     
     private ActionBeanContext context;
+    @ValidateNestedProperties(value = {
+            @Validate(on = {"add", "save"}, field = "name", required = true)
+    })
+    private TeamDTO team;
     
     @EJBBean("java:global/myapp/TeamServiceImpl!cz.muni.fi.pa165.fast.service.TeamService")
     protected TeamService teamService;
@@ -22,6 +29,24 @@ public class TeamActionBean implements ActionBean{
     @DefaultHandler
     public Resolution all() {
         return new ForwardResolution("/table.jsp");
+    }
+    
+    public Resolution add() {
+        teamService.create(team);
+        return new RedirectResolution(this.getClass(), "all");
+    }
+    
+    public Resolution delete() {
+        teamService.delete(team);
+        return new RedirectResolution(this.getClass(), "all");
+    }
+    
+    public TeamDTO getTeam(){
+        return team;
+    }
+    
+    public void setTeam(TeamDTO team){
+        this.team = team;
     }
     
     public List<TeamDTO> getTeams() {

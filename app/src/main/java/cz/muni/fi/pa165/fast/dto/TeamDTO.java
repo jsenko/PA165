@@ -10,7 +10,7 @@ public class TeamDTO implements Comparable<TeamDTO> {
     private int goalsAgainst;
     private int won;
     private int lost;
-    private int drawn;
+    private int draw;
     private MatchResult[] trend;
 
     public long getId() {
@@ -69,12 +69,12 @@ public class TeamDTO implements Comparable<TeamDTO> {
         this.lost = lost;
     }
 
-    public int getDrawn() {
-        return drawn;
+    public int getDraw() {
+        return draw;
     }
 
-    public void setDrawn(int drawn) {
-        this.drawn = drawn;
+    public void setDraw(int draw) {
+        this.draw = draw;
     }
 
     public MatchResult[] getTrend() {

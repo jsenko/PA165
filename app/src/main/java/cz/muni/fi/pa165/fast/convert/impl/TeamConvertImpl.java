@@ -64,7 +64,7 @@ public class TeamConvertImpl implements TeamConvert{
                     trend[i] = MatchResult.LOST;
                 }
             } else {
-                dto.setDrawn(dto.getDrawn() + 1);
+                dto.setDraw(dto.getDraw() + 1);
                 if (i < 5) {
                     trend[i] = MatchResult.DRAWN;
                 }
@@ -73,7 +73,7 @@ public class TeamConvertImpl implements TeamConvert{
             i++;
         }
 
-        dto.setPoints(dto.getWon() * 2 + dto.getDrawn());
+        dto.setPoints(dto.getWon() * 2 + dto.getDraw());
         dto.setTrend(trend);
 
         return dto;

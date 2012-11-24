@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class Goal
 {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date goalTime;
