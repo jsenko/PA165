@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.fast.convert.impl;
 
 import cz.muni.fi.pa165.fast.convert.GoalConvert;
-<<<<<<< Updated upstream
+
 import cz.muni.fi.pa165.fast.convert.TeamConvert;
 
 import cz.muni.fi.pa165.fast.dao.PlayerDAO;
