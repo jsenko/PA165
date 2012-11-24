@@ -14,7 +14,7 @@ import javax.ejb.Stateless;
  * 
  * @author Jakub Senko
  */
-@Local(value=MatchConvert.class)
+//@Local(value=MatchConvert.class)
 @Stateless
 public class MatchConvertImpl implements MatchConvert
 {

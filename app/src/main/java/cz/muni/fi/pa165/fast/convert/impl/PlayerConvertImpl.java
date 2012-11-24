@@ -7,14 +7,14 @@ import cz.muni.fi.pa165.fast.dao.TeamDAO;
 import cz.muni.fi.pa165.fast.dto.PlayerDTO;
 import cz.muni.fi.pa165.fast.model.Player;
 import javax.ejb.EJB;
-import javax.ejb.Local;
+
 import javax.ejb.Stateless;
 
 /**
  *
  * @author Peter Laurencik
  */
-@Local(value=PlayerConvert.class)
+
 @Stateless
 public class PlayerConvertImpl implements PlayerConvert {
 
