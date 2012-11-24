@@ -1,9 +1,9 @@
-package cz.muni.fi.pa165.fast.actionbean;
+package cz.muni.fi.pa165.fast.action;
 
-import com.samaxes.stripejb3.EJBBean;
-import cz.muni.fi.pa165.fast.dto.TeamDTO;
-import cz.muni.fi.pa165.fast.service.TeamService;
 import java.util.List;
+
+import javax.ejb.EJB;
+
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.Before;
@@ -15,6 +15,8 @@ import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
+import cz.muni.fi.pa165.fast.dto.TeamDTO;
+import cz.muni.fi.pa165.fast.service.TeamService;
 
 @UrlBinding("/teams/{$event}")
 public class TeamActionBean implements ActionBean{
@@ -25,7 +27,7 @@ public class TeamActionBean implements ActionBean{
     })
     private TeamDTO team;
     
-    @EJBBean("java:global/myapp/TeamServiceImpl!cz.muni.fi.pa165.fast.service.TeamService")
+    @EJB//Bean("java:global/myapp/TeamServiceImpl!cz.muni.fi.pa165.fast.service.TeamService")
     protected TeamService teamService;
     
     @DefaultHandler

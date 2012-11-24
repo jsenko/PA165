@@ -21,6 +21,11 @@
     </properties>
 
     <dependencies>
+    <dependency>
+	<groupId>com.samaxes.stripes</groupId>
+	<artifactId>stripejb3</artifactId>
+	<version>1.0.3</version>
+</dependency>
 
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -50,13 +55,23 @@
             <artifactId>jstl</artifactId>
             <version>1.2</version>
         </dependency>
-        
+        <dependency>
+    <groupId>com.samaxes.stripes</groupId>
+    <artifactId>stripes-injection-enricher</artifactId>
+    <version>1.0.2</version>
+</dependency>
+        <!-- 
         <dependency>
             <groupId>com.samaxes.stripejb3</groupId>
             <artifactId>stripejb3</artifactId>
             <version>1.0.1</version>
         </dependency>
-        
+        -->
+                <dependency>
+            <groupId>org.apache.derby</groupId>
+            <artifactId>derbyclient</artifactId>
+            <version>10.7.1.1</version>
+        </dependency>
         <dependency>
             <groupId>cz.muni.fi.pa165</groupId>
             <artifactId>fast-app</artifactId>
@@ -193,7 +208,7 @@
                     <port>8080</port>
                     <contextRoot>pa165</contextRoot>
                     <name>${name}</name>
-                    <!--<configFile>${basedir}/domain.xml</configFile>-->
+                    <configFile>${basedir}/domain.xml</configFile>
                 </configuration>
                 <executions>
                     <execution>
