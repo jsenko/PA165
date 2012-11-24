@@ -18,6 +18,16 @@ public class PlayerDTO
 	private int weight;
 	
 	private int height;
+        
+        private long teamId;
+
+    public long getTeamId() {
+        return teamId;
+    }
+
+    public void setTeamId(long teamId) {
+        this.teamId = teamId;
+    }
 
     public long getId() {
         return id;

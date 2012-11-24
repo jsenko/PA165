@@ -19,6 +19,7 @@
                 <td>PTS</td>
                 <td>Trend</td>
                 <td></td>
+                <td></td>
             </tr>
             <c:forEach items="${actionBean.teams}" var="team" varStatus="loop">
 
@@ -33,6 +34,7 @@
                     <td><c:out value="${team.points}"/></td>
                     <td></td>
                     <td><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" event="delete"><s:param name="team.id" value="${team.id}"/><i class="icon-remove"></i></s:link></td>
+                    <td><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" event="edit"><s:param name="team.id" value="${team.id}"/><i class="icon-pencil"></i></s:link> </td>
                 </tr>
 
             </c:forEach>

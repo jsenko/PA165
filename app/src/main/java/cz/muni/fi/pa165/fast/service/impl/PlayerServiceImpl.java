@@ -10,9 +10,8 @@ import cz.muni.fi.pa165.fast.comparator.SortByPlayerHeight;
 import cz.muni.fi.pa165.fast.comparator.SortByPlayerName;
 import cz.muni.fi.pa165.fast.comparator.SortByPlayerWeight;
 import cz.muni.fi.pa165.fast.convert.PlayerConvert;
-import cz.muni.fi.pa165.fast.dao.GoalDAO;
 import cz.muni.fi.pa165.fast.dao.PlayerDAO;
-import cz.muni.fi.pa165.fast.dto.MatchDTO;
+import cz.muni.fi.pa165.fast.dao.TeamDAO;
 import cz.muni.fi.pa165.fast.dto.PlayerDTO;
 import cz.muni.fi.pa165.fast.model.Player;
 import cz.muni.fi.pa165.fast.service.PlayerOrderBy;
@@ -40,6 +39,9 @@ public class PlayerServiceImpl implements PlayerService{
 
     @EJB
     PlayerDAO playerDao;
+    
+    @EJB
+    TeamDAO teamDao;
     
     @EJB
     PlayerConvert convert;
@@ -105,6 +107,41 @@ public class PlayerServiceImpl implements PlayerService{
         }
         
         return allDtoPlayers;
+    }
+    
+    @Override
+    public List<PlayerDTO> findPlayersByTeam(Long teamId, PlayerOrderBy orderBy){
+        Collection<Player> players = playerDao.findPlayersByTeam(teamDao.getById(teamId));
+        List<PlayerDTO> dtoPlayers = new ArrayList<PlayerDTO>();
+        
+        for(Player player : players)
+        {
+            PlayerDTO dtoPlayer = convert.fromEntityToDTO(player);
+            
+            dtoPlayers.add(dtoPlayer);
+        }
+        
+        switch(orderBy)
+        {
+            
+            case NAME:
+                Collections.sort(dtoPlayers, new SortByPlayerName());
+                break;
+            case GOALS:
+                Collections.sort(dtoPlayers, new SortByPlayerGoals());
+                break;
+            case AGE:
+                Collections.sort(dtoPlayers, new SortByPlayerAge());
+                break;
+            case WEIGHT:
+                Collections.sort(dtoPlayers, new SortByPlayerWeight());
+                break;
+            case HEIGHT:
+                Collections.sort(dtoPlayers, new SortByPlayerHeight());
+                break;
+        }
+        
+        return dtoPlayers;
     }
     
 }

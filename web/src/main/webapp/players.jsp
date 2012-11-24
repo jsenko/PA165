@@ -4,15 +4,14 @@
 
 <s:layout-render name="/cover.jsp">
     <s:layout-component name="content">
+        <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" var="actionBean"/>
         <h1>Players</h1>
 
-        <s:form action="team.jsp" method="post">
-
-            <s:select name="team">
-                <s:option></s:option> 
-                <s:option>FC Team</s:option>
+        <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean">
+            <s:select name="${team.id}">
+                <s:options-collection collection="${actionBean.teams}" label="name" value="id"/>             
             </s:select>
-            <input type="submit" name="submit" value="Show" title="show" class="btn btn-info team-show"/>
+            <s:submit class="btn btn-info team-show" name="selectTeam">Show</s:submit>
         </s:form>
 
         <div class="btn-group">
@@ -22,26 +21,41 @@
             </button>
             <ul class="dropdown-menu">
                 <li><s:link href="#">Name</s:link></li>
-                    <li><a href="#">Goals</a></li>
-                    <li><a href="#">Age</a></li>
-                    <li><a href="#">Weight</a></li>
-                    <li><a href="#">Height</a></li>
-                </ul>
-            </div>
-        <%--<c:forEach items="">--%>
+                <li><a href="#">Goals</a></li>
+                <li><a href="#">Age</a></li>
+                <li><a href="#">Weight</a></li>
+                <li><a href="#">Height</a></li>
+            </ul>
+        </div>
         <table>
-            <%--<c:forEach items="">--%>
             <tr>
-                <td class="round">1</td>
-                <td>18.11.2012 17:00</td>
-                <td class="team">Lorim</td>
-                <td class="team">Ipsum</td>
-                <td>2:1 (1:1)</td>
+                <td>No.</td>
+                <td>Name</td>
+                <td>Goals</td>
+                <td>Assistances</td>
+                <td>Age</td>
+                <td>Weight</td>
+                <td>Height</td>
             </tr>
-            <%--</c:forEach>--%>
-        </table> 
-        <%--</c:forEach>--%>
-
+            <c:forEach items="${actionBean.players}" var="player" varStatus="loop">
+                <tr>
+                    <td><c:out value="${loop.index + 1}"/>.</td>
+                    <td><c:out value="${player.name}"/> <c:out value="${player.surname}"/></td>
+                    <td><c:out value="${player.goals}"/></td>
+                    <td><c:out value="${player.assists}"/></td>
+                    <td><c:out value="${player.age}"/></td>
+                    <td><c:out value="${player.weight}"/></td>
+                    <td><c:out value="${player.height}"/></td>
+                </tr>
+            </c:forEach>
+        </table>
+                
+        <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean">
+            <fieldset><legend>New player</legend>
+                <%@include file="forms/playerForm.jsp"%>
+                <s:submit name="add">Create new player</s:submit>
+                </fieldset>
+        </s:form>
 
     </s:layout-component>
 </s:layout-render>

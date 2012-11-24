@@ -1,17 +1,22 @@
 package cz.muni.fi.pa165.fast.convert.impl;
 
 import cz.muni.fi.pa165.fast.convert.GoalConvert;
+import cz.muni.fi.pa165.fast.convert.TeamConvert;
 import cz.muni.fi.pa165.fast.dao.PlayerDAO;
 import cz.muni.fi.pa165.fast.dto.GoalDTO;
 import cz.muni.fi.pa165.fast.model.Goal;
 import cz.muni.fi.pa165.fast.model.Player;
 import cz.muni.fi.pa165.fast.model.Team;
 import javax.ejb.EJB;
+import javax.ejb.Local;
+import javax.ejb.Stateless;
 
 /**
  *
  * @author Stefan
  */
+@Local(value=GoalConvert.class)
+@Stateless
 public class GoalConvertImpl implements GoalConvert {
 
     @EJB

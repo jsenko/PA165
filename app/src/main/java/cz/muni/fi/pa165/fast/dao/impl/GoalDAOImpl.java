@@ -98,7 +98,7 @@ public class GoalDAOImpl implements GoalDAO
             throw new IllegalArgumentException("Can not find goal by null scored player.");
         }
         
-        Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.scorePlayer='player'").getResultList();
+        Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.scorePlayer= :player").setParameter("player", player).getResultList();
         
         return goals;
         
@@ -111,7 +111,7 @@ public class GoalDAOImpl implements GoalDAO
             throw new IllegalArgumentException("Can not find goal by null assist player.");
         }
         
-        Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.assistPlayer='player'").getResultList();
+        Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.assistPlayer= :player").setParameter("player", player).getResultList();
         
         return goals;
         

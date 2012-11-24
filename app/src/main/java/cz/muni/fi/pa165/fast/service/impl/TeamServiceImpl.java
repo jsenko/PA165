@@ -55,6 +55,18 @@ public class TeamServiceImpl implements TeamService {
             throw new RuntimeException("Delete operation failed.", ex);
         }
     }
+    
+    @Override
+    public TeamDTO getById(Long id){
+        try{
+            Team team = teamDao.getById(id);
+            TeamDTO dto = teamConvert.fromEntityToDTO(team);
+            
+            return dto;
+        }catch(Exception ex){
+            throw new RuntimeException("Error while retrieving team by its id.", ex);
+        }
+    }
 
     @Override
     public List<TeamDTO> findAll() {

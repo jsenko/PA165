@@ -28,6 +28,7 @@ public interface TeamService {
     */
     public void delete(TeamDTO dto);
 
+    public TeamDTO getById(Long id);
     /**
      * Finding all of team data transfer objects
      * 

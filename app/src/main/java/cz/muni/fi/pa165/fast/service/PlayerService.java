@@ -37,4 +37,6 @@ public interface PlayerService
          * @return sorted list of player data transfer object
          */
 	public List<PlayerDTO> findAll(PlayerOrderBy orderBy);
+        
+        public List<PlayerDTO> findPlayersByTeam(Long teamId, PlayerOrderBy orderBy);
 }
