@@ -31,6 +31,10 @@
             <param-name>Interceptor.Classes</param-name>
             <param-value>com.samaxes.stripejb3.EJBInterceptor</param-value>
         </init-param>
+        <init-param>
+    <param-name>ActionBeanContext.Class</param-name>
+    <param-value>cz.muni.fi.pa165.fast.actionbean.context.PlayerActionBeanContext</param-value>
+</init-param>
     </filter>
     <filter-mapping>
         <filter-name>StripesFilter</filter-name>

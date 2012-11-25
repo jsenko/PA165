@@ -20,11 +20,11 @@
                 <span class="caret"></span>
             </button>
             <ul class="dropdown-menu">
-                <li><s:link href="#">Name</s:link></li>
-                <li><a href="#">Goals</a></li>
-                <li><a href="#">Age</a></li>
-                <li><a href="#">Weight</a></li>
-                <li><a href="#">Height</a></li>
+                <li><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="order"><s:param name="order" value="0"/>Name</s:link></li>
+                <li><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="order"><s:param name="order" value="1"/>Goals</s:link></li>
+                <li><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="order"><s:param name="order" value="2"/>Age</s:link></li>
+                <li><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="order"><s:param name="order" value="3"/>Weight</s:link></li>
+                <li><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="order"><s:param name="order" value="4"/>Height</s:link></li>
             </ul>
         </div>
         <table>
@@ -36,6 +36,8 @@
                 <td>Age</td>
                 <td>Weight</td>
                 <td>Height</td>
+                <td></td>
+                <td></td>
             </tr>
             <c:forEach items="${actionBean.players}" var="player" varStatus="loop">
                 <tr>
@@ -46,6 +48,8 @@
                     <td><c:out value="${player.age}"/></td>
                     <td><c:out value="${player.weight}"/></td>
                     <td><c:out value="${player.height}"/></td>
+                    <td><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="delete"><s:param name="player.id" value="${player.id}"/><i class="icon-remove"></i></s:link></td>
+                    <td><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="edit"><s:param name="player.id" value="${player.id}"/><i class="icon-pencil"></i></s:link> </td>
                 </tr>
             </c:forEach>
         </table>

@@ -17,7 +17,7 @@
                 <td>T</td>
                 <td>SC</td>
                 <td>PTS</td>
-                <td>Trend</td>
+                <!--<td>Trend</td>-->
                 <td></td>
                 <td></td>
             </tr>
@@ -32,7 +32,7 @@
                     <td><c:out value="${team.draw}"/></td>
                     <td><c:out value="${team.goalsFor}"/>:<c:out value="${team.goalsAgainst}"/></td>
                     <td><c:out value="${team.points}"/></td>
-                    <td></td>
+                    <!--<td></td>-->
                     <td><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" event="delete"><s:param name="team.id" value="${team.id}"/><i class="icon-remove"></i></s:link></td>
                     <td><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" event="edit"><s:param name="team.id" value="${team.id}"/><i class="icon-pencil"></i></s:link> </td>
                 </tr>

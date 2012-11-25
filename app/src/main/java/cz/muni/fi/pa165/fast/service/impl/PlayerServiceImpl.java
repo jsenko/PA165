@@ -72,6 +72,18 @@ public class PlayerServiceImpl implements PlayerService{
         
         playerDao.delete(player);
     }
+    
+    @Override
+    public PlayerDTO getById(Long id){
+        try{
+            Player player = playerDao.getById(id);
+            PlayerDTO dto = convert.fromEntityToDTO(player);
+            
+            return dto;
+        }catch(Exception ex){
+            throw new RuntimeException("Error while retrieving player by its id.", ex);
+        }
+    }
 
     @Override
     public List<PlayerDTO> findAll(PlayerOrderBy orderBy) {

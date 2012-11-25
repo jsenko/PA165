@@ -23,6 +23,7 @@ public interface PlayerService
          */
 	public long update(PlayerDTO dto);
 	
+        public PlayerDTO getById(Long id);
         /**
          * Deleting player.
          * 

@@ -14,7 +14,7 @@ import javax.ejb.Stateless;
  *
  * @author Peter Laurencik
  */
-@Local(value=PlayerConvert.class)
+@Local(value = PlayerConvert.class)
 @Stateless
 public class PlayerConvertImpl implements PlayerConvert {
 
@@ -67,7 +67,9 @@ public class PlayerConvertImpl implements PlayerConvert {
         player.setAge(dto.getAge());
         player.setHeight(dto.getHeight());
         player.setWeight(dto.getWeight());
-        player.setTeam(teamDao.getById(dto.getTeamId()));
+        if (dto.getTeamId() != 0) {
+            player.setTeam(teamDao.getById(dto.getTeamId()));
+        }
 
         return player;
     }
