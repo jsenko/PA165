@@ -11,6 +11,7 @@
 </head>
 <body>
     <div class="header">
+        
         <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.CoverActionBean" event="sk">
             <s:param name="locale" value="sk"/>
             <img src="${pageContext.request.contextPath}/img/sk.png" alt="Slovenčina" class="language"/>

@@ -5,6 +5,8 @@
 package cz.muni.fi.pa165.fast.actionbean;
 
 import cz.muni.fi.pa165.fast.actionbean.context.PlayerActionBeanContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.RedirectResolution;
@@ -15,12 +17,20 @@ import org.apache.log4j.Logger;
  *
  * @author Stefan
  */
+
 public class CoverActionBean implements ActionBean {
 
     private ActionBeanContext context;
    
     public Resolution sk(){
-        return new RedirectResolution("/");
+        System.out.println("this is request url" + context.getRequest().getRequestURL());
+        return new Resolution() {
+
+            @Override
+            public void execute(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
+                
+            }
+        };
     }
     
     @Override

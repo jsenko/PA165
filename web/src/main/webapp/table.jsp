@@ -5,7 +5,7 @@
 <s:layout-render name="/cover.jsp">
     <s:layout-component name="content">
         <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" var="actionBean"/>
-        <h1>Table</h1>
+        <h1><s:label name="table.header"/></h1>
 
         <table id="league_table">
             <tr>
@@ -41,9 +41,9 @@
         </table> 
 
         <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean">
-            <fieldset><legend>New team</legend>
+            <fieldset><legend><s:label name="table.newTeam"/></legend>
                 <%@include file="forms/teamForm.jsp"%>
-                <s:submit name="add">Create new team</s:submit>
+                <s:submit name="table.createNewTeam"></s:submit>
                 </fieldset>
         </s:form>
     </s:layout-component>

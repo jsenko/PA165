@@ -5,7 +5,7 @@
 <s:layout-render name="/cover.jsp">
     <s:layout-component name="content">
     <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.AdminActionBean" var="actionBean"/>
-        <h1>Sign in</h1>
+    <h1><s:label name="admin.signIn"/></h1>
         
         <s:errors/>
         <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.AdminActionBean" class="form-horizontal" action="admin">

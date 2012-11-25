@@ -7,7 +7,7 @@
     
         <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean" var="actionBean"/>
     
-        <h1>Matches</h1>
+        <h1><s:label name="index.matches"/></h1>
 
         <table>
             <tr>

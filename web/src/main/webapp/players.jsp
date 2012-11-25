@@ -11,7 +11,7 @@
             <s:select name="team.id">
                 <s:options-collection collection="${actionBean.teams}" label="name" value="id"/>             
             </s:select>
-            <s:submit class="btn btn-info team-show" name="selectTeam"><s:label name="player.show"/></s:submit>
+            <s:submit class="btn btn-info team-show" name="player.show"></s:submit>
         </s:form>
 
         <div class="btn-group">

@@ -5,7 +5,7 @@
 <s:layout-render name="/cover.jsp">
     <s:layout-component name="content">
         <form action="/pa165/admin/" method="get">
-            <p> Invalid username / password</p>
+            <p><s:label name="admin.invalidCred" Invalid username / password</p>
             <input type="submit" class="btn btn-danger" value="Back"/>
         </form>
         
