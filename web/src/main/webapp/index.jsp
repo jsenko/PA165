@@ -4,21 +4,34 @@
 
 <s:layout-render name="/cover.jsp">
     <s:layout-component name="content">
+    
         <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean" var="actionBean"/>
-        <h1>League</h1>
+    
+        <h1>Matches</h1>
 
         <table>
-            <c:forEach items="${actionBean.matches}" var="match">
-
+            <tr>
+                <td>Round</td>
+                <td>Date</td>
+                <td>Home Team</td>
+                <td>Result</td>
+                <td>Away Team</td>
+            </tr>
+            <c:forEach items="${actionBean.matches}" var="matchDTO" varStatus="loop">
                 <tr>
-                    <td class="round"><c:out value="${match.round}"/></td>
-                    <td><c:out value="${match.date}"/></td>
-                    <td class="team"><c:out value="${match.homeTeamName}"/></td>
-                    <td class="team"><c:out value="${match.awayTeamName}"/></td>
-                    <td><c:out value="${match.homeTeamGoals}"/>:<c:out value="${match.awayTeamGoals}"/></td>
+                    <!-- <td><c:out value="${loop.index + 1}"/>.</td>-->
+                    <td><c:out value="${matchDTO.round}"/></td>
+                    <td><c:out value="${matchDTO.date}"/></td>
+                    <td><c:out value="${matchDTO.homeTeam}"/></td>
+                    <td><c:out value="${matchDTO.homeTeamGoals}"/> : <c:out value="${matchDTO.awayTeamGoals}"/></td>
+                    <td><c:out value="${matchDTO.awayTeam}"/></td>
                 </tr>
-
             </c:forEach>
         </table>
+        
+        <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean"
+         event="create">novy zapas</s:link>
+
     </s:layout-component>
 </s:layout-render>
+
