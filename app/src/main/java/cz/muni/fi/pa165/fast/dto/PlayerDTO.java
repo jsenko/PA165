@@ -101,6 +101,11 @@ public class PlayerDTO
     }
 
     @Override
+    public String toString() {
+        return "PlayerDTO{" + "id=" + id + ", name=" + name + ", surname=" + surname + ", goals=" + goals + ", assists=" + assists + ", age=" + age + ", weight=" + weight + ", height=" + height + ", teamId=" + teamId + '}';
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;

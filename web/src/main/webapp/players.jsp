@@ -8,7 +8,7 @@
         <h1>Players</h1>
 
         <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean">
-            <s:select name="${team.id}">
+            <s:select name="team.id">
                 <s:options-collection collection="${actionBean.teams}" label="name" value="id"/>             
             </s:select>
             <s:submit class="btn btn-info team-show" name="selectTeam">Show</s:submit>

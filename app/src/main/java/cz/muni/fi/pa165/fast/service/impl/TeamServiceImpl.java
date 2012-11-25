@@ -1,9 +1,12 @@
 package cz.muni.fi.pa165.fast.service.impl;
 
+import cz.muni.fi.pa165.fast.convert.PlayerConvert;
 import cz.muni.fi.pa165.fast.convert.TeamConvert;
 import cz.muni.fi.pa165.fast.dao.PlayerDAO;
 import cz.muni.fi.pa165.fast.dao.TeamDAO;
+import cz.muni.fi.pa165.fast.dto.PlayerDTO;
 import cz.muni.fi.pa165.fast.dto.TeamDTO;
+import cz.muni.fi.pa165.fast.model.Player;
 import cz.muni.fi.pa165.fast.model.Team;
 import cz.muni.fi.pa165.fast.service.TeamService;
 import java.util.ArrayList;
@@ -22,7 +25,7 @@ public class TeamServiceImpl implements TeamService {
     private PlayerDAO playerDao;
     @EJB
     private TeamConvert teamConvert;
-
+    
     @Override
     public void create(TeamDTO dto) {
         try{
