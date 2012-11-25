@@ -16,15 +16,21 @@
                 <td>Home Team</td>
                 <td>Result</td>
                 <td>Away Team</td>
+                <td></td>
+                <td></td>
             </tr>
             <c:forEach items="${actionBean.matches}" var="matchDTO" varStatus="loop">
                 <tr>
                     <!-- <td><c:out value="${loop.index + 1}"/>.</td>-->
                     <td><c:out value="${matchDTO.round}"/></td>
                     <td><c:out value="${matchDTO.date}"/></td>
-                    <td><c:out value="${matchDTO.homeTeam}"/></td>
+                    <td><c:out value="${matchDTO.homeTeamName}"/></td>
                     <td><c:out value="${matchDTO.homeTeamGoals}"/> : <c:out value="${matchDTO.awayTeamGoals}"/></td>
-                    <td><c:out value="${matchDTO.awayTeam}"/></td>
+                    <td><c:out value="${matchDTO.awayTeamName}"/></td>
+                    <td><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean" event="delete">
+                    	<s:param name="matchDTO.id" value="${matchDTO.id}"/><i class="icon-remove"></i></s:link></td>
+                    <td><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean" event="edit">
+                    	<s:param name="matchDTO.id" value="${matchDTO.id}"/><i class="icon-pencil"></i></s:link> </td>
                 </tr>
             </c:forEach>
         </table>

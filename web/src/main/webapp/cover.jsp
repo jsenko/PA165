@@ -22,6 +22,8 @@
                 <li><s:link href="${pageContext.request.contextPath}/index.jsp">HOME</s:link></li>
                 <li><s:link href="${pageContext.request.contextPath}/table.jsp">TABLE</s:link></li>
                 <li><s:link href="${pageContext.request.contextPath}/players.jsp">PLAYERS</s:link></li>
+                <li><s:link href="${pageContext.request.contextPath}/table.jsp">TEAMS</s:link></li>
+
             </ul>
         </div>
     
