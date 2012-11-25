@@ -11,11 +11,11 @@
 
         <table>
             <tr>
-                <td>Round</td>
-                <td>Date</td>
-                <td>Home Team</td>
-                <td>Result</td>
-                <td>Away Team</td>
+                <td><s:label name="index.round"/></td>
+                <td><s:label name="index.date"/></td>
+                <td><s:label name="index.homeTeam"/></td>
+                <td><s:label name="index.result"/></td>
+                <td><s:label name="index.awayTeam"/></td>
             </tr>
             <c:forEach items="${actionBean.matches}" var="matchDTO" varStatus="loop">
                 <tr>

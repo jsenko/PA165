@@ -11,17 +11,23 @@
 </head>
 <body>
     <div class="header">
-	<img src="${pageContext.request.contextPath}/img/sk.png" alt="Slovenčina" class="language"/>
-        <img src="${pageContext.request.contextPath}/img/us.png" alt="English" class="language"/>
+        <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.CoverActionBean" event="sk">
+            <s:param name="locale" value="sk"/>
+            <img src="${pageContext.request.contextPath}/img/sk.png" alt="Slovenčina" class="language"/>
+        </s:link>
+        <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.CoverActionBean" event="en">
+            <s:param name="locale" value="en"/>
+            <img src="${pageContext.request.contextPath}/img/us.png" alt="English" class="language"/>
+        </s:link>
         <img src="${pageContext.request.contextPath}/img/logo.jpg" alt="FAST - Fotball analytical and statistical tool" id="logo" />
     </div>
     <div class="container">
         
         <div id="menu">
             <ul>
-                <li><s:link href="${pageContext.request.contextPath}/index.jsp">HOME</s:link></li>
-                <li><s:link href="${pageContext.request.contextPath}/table.jsp">TABLE</s:link></li>
-                <li><s:link href="${pageContext.request.contextPath}/players.jsp">PLAYERS</s:link></li>
+                <li><s:link href="${pageContext.request.contextPath}/index.jsp"><s:label name="home"/></s:link></li>
+                <li><s:link href="${pageContext.request.contextPath}/table.jsp"><s:label name="table"/></s:link></li>
+                <li><s:link href="${pageContext.request.contextPath}/players.jsp"><s:label name="players"/></s:link></li>
             </ul>
         </div>
     
