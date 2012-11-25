@@ -25,7 +25,7 @@ public class GoalConvertImpl implements GoalConvert {
     @Override
     public GoalDTO fromEntityToDTO(Goal entity) {
         GoalDTO goalDTO = new GoalDTO();
-
+        goalDTO.setId(entity.getId() == null ? 0 : entity.getId());
         Team homeTeam = entity.getMatch().getHomeTeam();
         Team scoringPlayerTeam = entity.getScorePlayer().getTeam();
 
@@ -66,7 +66,7 @@ public class GoalConvertImpl implements GoalConvert {
             assistant = playerDAO.getById(dto.getScoredPlayerId());
         }
         goal.setAssistPlayer(assistant);
-
+        goal.setId(dto.getId() == 0 ? null : dto.getId()); // just for tests
         return goal;
     }
 }

@@ -64,7 +64,7 @@ public class MatchActionBean implements ActionBean{
             return;
         }
         
-        System.out.println("###########");
+        
         matchDTO = matchService.getById(Long.parseLong(ids));
         date = matchDTO.getDate().getDate();
         month = matchDTO.getDate().getMonth();
@@ -87,7 +87,6 @@ public class MatchActionBean implements ActionBean{
     	d.setYear(year);
     	
     	matchDTO.setDate(d);
-    	//System.out.println(matchDTO);
     	
     	matchService.create(matchDTO);
     	
@@ -103,11 +102,11 @@ public class MatchActionBean implements ActionBean{
     
     public Resolution edit() {
 
-        return new RedirectResolution("/match/edit.jsp");
+        return new RedirectResolution("/match/edit.jsp?matchDTO.id="+matchDTO.getId());// hack, neviem preco to nefunguje normalne
     }
     
     public Resolution save() {
-    	System.out.println("%%%%%%%%%%%%%%%");
+    	
         matchService.update(matchDTO);
         return new RedirectResolution(this.getClass(), "all");
     }

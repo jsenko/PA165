@@ -69,5 +69,18 @@ public class GoalServiceImpl implements GoalService{
         return matchGoalsDto;
         
     }
+
+	@Override
+	public GoalDTO getById(long id) {
+		try
+		{
+
+			return goalConvert.fromEntityToDTO(goalDAO.getById(id));
+		}
+		catch(Exception e)
+		{
+			throw new RuntimeException("getById operation failed", e);
+		}
+	}
     
 }

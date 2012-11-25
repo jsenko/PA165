@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.fast.dto;
 
-import java.util.GregorianCalendar;
 
 public class GoalDTO
 {

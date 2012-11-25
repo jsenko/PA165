@@ -25,7 +25,14 @@
                     <td><c:out value="${matchDTO.round}"/></td>
                     <td><c:out value="${matchDTO.date}"/></td>
                     <td><c:out value="${matchDTO.homeTeamName}"/></td>
-                    <td><c:out value="${matchDTO.homeTeamGoals}"/> : <c:out value="${matchDTO.awayTeamGoals}"/></td>
+                    <td>
+                    
+                    <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.GoalActionBean" event="all">
+                    	<s:param name="matchId" value="${matchDTO.id}"/>
+                    <c:out value="${matchDTO.homeTeamGoals}"/> : <c:out value="${matchDTO.awayTeamGoals}"/>
+                    </s:link>
+                    
+                    </td>
                     <td><c:out value="${matchDTO.awayTeamName}"/></td>
                     <td><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean" event="delete">
                     	<s:param name="matchDTO.id" value="${matchDTO.id}"/><i class="icon-remove"></i></s:link></td>

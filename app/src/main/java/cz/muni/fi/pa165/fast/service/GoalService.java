@@ -17,4 +17,6 @@ public interface GoalService
 	 * @return list of Goal data transfer objects by id of the match
 	 */
 	public List<GoalDTO> findByMatch(long matchId);
+
+		public GoalDTO getById(long id);
 }
