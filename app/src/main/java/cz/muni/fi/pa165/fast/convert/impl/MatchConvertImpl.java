@@ -34,9 +34,7 @@ public class MatchConvertImpl implements MatchConvert
 		}
 		
 		MatchDTO dto = new MatchDTO();
-		
-		dto.setId(entity.getId() == null ? 0 : entity.getId());
-		
+		dto.setId(entity.getId());
 		dto.setRound(entity.getRound());
 		dto.setDate(entity.getMatchDate());
 		
@@ -104,9 +102,7 @@ public class MatchConvertImpl implements MatchConvert
 		
 		// create the match
 		Match m = new Match();
-		
-		m.setId(dto.getId() == 0 ? null : dto.getId()); // just for tests
-		
+		m.setId(dto.getId()); // just for tests
 		m.setHomeTeam(homeTeam);
 		m.setAwayTeam(awayTeam);
 		// goals is mappedBy attribute, we will ignore it

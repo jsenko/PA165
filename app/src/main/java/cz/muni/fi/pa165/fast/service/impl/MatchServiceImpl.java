@@ -121,18 +121,4 @@ public class MatchServiceImpl implements MatchService
 		return dtos;
 	}
 
-	@Override
-	public MatchDTO getById(Long id)
-	{
-		try
-		{
-
-			return convert.fromEntityToDTO(matchDAO.getById(id));
-		}
-		catch(Exception e)
-		{
-			throw new RuntimeException("getById operation failed", e);
-		}
-	}
-
 }

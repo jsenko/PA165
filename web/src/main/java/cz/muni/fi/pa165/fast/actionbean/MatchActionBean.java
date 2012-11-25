@@ -16,14 +16,13 @@ import net.sourceforge.stripes.action.ForwardResolution;
 import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
-import net.sourceforge.stripes.controller.LifecycleStage;
 
 /**
  * 
  * @author Jakub Senko
  *
  */
-@UrlBinding("/matches/{$event}")
+@UrlBinding("/matches/{$event}/{matchDTO.id}")
 public class MatchActionBean implements ActionBean{
     
     private ActionBeanContext context;
@@ -33,7 +32,6 @@ public class MatchActionBean implements ActionBean{
     
     @EJBBean("java:global/myapp/TeamServiceImpl!cz.muni.fi.pa165.fast.service.TeamService")
     protected TeamService teamService;
-    
     
     private MatchDTO matchDTO; //todo process date
     
@@ -56,6 +54,7 @@ public class MatchActionBean implements ActionBean{
     	return teamService.findAll();
     }
     
+
     @Before(stages = LifecycleStage.BindingAndValidation)
     public void loadMatchFromDatabase() {
     	
@@ -71,13 +70,13 @@ public class MatchActionBean implements ActionBean{
         year = matchDTO.getDate().getYear();
         System.out.println(matchDTO);
     }
+
     
     public Resolution create()
     {
     	return new ForwardResolution("/match/create.jsp");
     }
 
-    
     public Resolution add()
     {
     	
@@ -87,17 +86,13 @@ public class MatchActionBean implements ActionBean{
     	d.setYear(year);
     	
     	matchDTO.setDate(d);
-    	
+
     	matchService.create(matchDTO);
     	
         return new ForwardResolution(this.getClass(), "all");
     }
 
-    
-    public Resolution delete() {
-        matchService.delete(matchDTO);
-        return new RedirectResolution(this.getClass(), "all");
-    }
+
 
     
     public Resolution edit() {
@@ -110,6 +105,7 @@ public class MatchActionBean implements ActionBean{
         matchService.update(matchDTO);
         return new RedirectResolution(this.getClass(), "all");
     }
+
 
 	public MatchDTO getMatchDTO() {
 		return matchDTO;

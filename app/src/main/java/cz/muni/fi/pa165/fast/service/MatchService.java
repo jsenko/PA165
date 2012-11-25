@@ -36,6 +36,4 @@ public interface MatchService
 	 * @return list of MatchDTO entities ordered by date of the game
 	 */
 	public List<MatchDTO> findByTeam(long teamId);
-
-	public MatchDTO getById(Long id);
 }
