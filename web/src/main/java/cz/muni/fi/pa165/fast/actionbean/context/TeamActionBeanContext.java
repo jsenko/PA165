@@ -1,14 +1,13 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package cz.muni.fi.pa165.fast.actionbean.context;
 
-import cz.muni.fi.pa165.fast.dto.TeamDTO;
-import net.sourceforge.stripes.action.ActionBeanContext;
-
-public class TeamActionBeanContext extends ActionBeanContext {
-    public TeamActionBeanContext(){
-        super();
-    }
+/**
+ *
+ * @author misenko
+ */
+public class TeamActionBeanContext {
     
-    public TeamDTO getSelectedTeam() {
-      return (TeamDTO) getServletContext().getAttribute("selectedTeam");
-  }
 }

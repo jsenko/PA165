@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.fast.actionbean;
 
 import com.samaxes.stripejb3.EJBBean;
-import cz.muni.fi.pa165.fast.actionbean.context.TeamActionBeanContext;
 import cz.muni.fi.pa165.fast.dto.PlayerDTO;
 import cz.muni.fi.pa165.fast.dto.TeamDTO;
 import cz.muni.fi.pa165.fast.service.PlayerOrderBy;
@@ -22,7 +21,7 @@ import net.sourceforge.stripes.validation.ValidateNestedProperties;
 @UrlBinding("/players/{$event}")
 public class PlayerActionBean implements ActionBean {
 
-    private TeamActionBeanContext context;
+    private ActionBeanContext context;
     @ValidateNestedProperties(value = {
         @Validate(on = {"add", "save"}, field = "name", required = true)
     })
@@ -32,6 +31,8 @@ public class PlayerActionBean implements ActionBean {
     protected PlayerService playerService;
     @EJBBean("java:global/myapp/TeamServiceImpl!cz.muni.fi.pa165.fast.service.TeamService")
     protected TeamService teamService;
+    
+    private TeamDTO utTeam;
 
     @DefaultHandler
     public Resolution all() {
@@ -42,7 +43,7 @@ public class PlayerActionBean implements ActionBean {
         if (team == null || team.getId() == 0) {
             System.out.println("No team or no team id");
         } else {
-            team = teamService.getById(team.getId());
+            utTeam = teamService.getById(team.getId());
             System.out.println("Some team");
         }
         return new RedirectResolution(this.getClass(), "all");
@@ -94,14 +95,14 @@ public class PlayerActionBean implements ActionBean {
     }
 
     public List<TeamDTO> getTeams() {
-        if (team == null || team.getId() == 0) {
+        if (utTeam == null || utTeam.getId() == 0) {
             System.out.println("No team or no team id --> returning all teams");
             return teamService.findAll();
         }
         int i;
         List<TeamDTO> list = teamService.findAll();
         for (i = 0; i < list.size(); i++) {
-            if (team.getId() == list.get(i).getId()) {
+            if (utTeam.getId() == list.get(i).getId()) {
                 break;
             }
         }
@@ -114,7 +115,7 @@ public class PlayerActionBean implements ActionBean {
     }
 
     public List<PlayerDTO> getPlayers() {
-        if (team == null || team.getId() == 0) {
+        if (utTeam == null || utTeam.getId() == 0) {
             System.out.println("No team or no team id --> returning players of first team");
             if (teamService.findAll().size() > 0) {
                 return playerService.findPlayersByTeam(teamService.findAll().get(0).getId(), PlayerOrderBy.NAME);
@@ -123,12 +124,12 @@ public class PlayerActionBean implements ActionBean {
             }
         }
 
-        return playerService.findPlayersByTeam(team.getId(), PlayerOrderBy.NAME);
+        return playerService.findPlayersByTeam(utTeam.getId(), PlayerOrderBy.NAME);
     }
 
     @Override
     public void setContext(ActionBeanContext context) {
-        this.context = (TeamActionBeanContext) context;
+        this.context = context;
     }
 
     @Override
