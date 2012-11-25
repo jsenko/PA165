@@ -56,22 +56,25 @@ public class MatchActionBean implements ActionBean{
     	return teamService.findAll();
     }
     
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
+    @Before(stages = LifecycleStage.BindingAndValidation)
     public void loadMatchFromDatabase() {
     	
         String ids = context.getRequest().getParameter("matchDTO.id");
         if (ids == null) {
             return;
         }
+        
+        System.out.println("###########");
         matchDTO = matchService.getById(Long.parseLong(ids));
         date = matchDTO.getDate().getDate();
         month = matchDTO.getDate().getMonth();
         year = matchDTO.getDate().getYear();
+        System.out.println(matchDTO);
     }
     
     public Resolution create()
     {
-    	return new ForwardResolution("/matches/create.jsp");
+    	return new ForwardResolution("/match/create.jsp");
     }
 
     
@@ -99,12 +102,12 @@ public class MatchActionBean implements ActionBean{
 
     
     public Resolution edit() {
-    	//System.out.println(matchDTO);
-    	
-        return new RedirectResolution("/matches/edit.jsp");
+
+        return new RedirectResolution("/match/edit.jsp");
     }
     
     public Resolution save() {
+    	System.out.println("%%%%%%%%%%%%%%%");
         matchService.update(matchDTO);
         return new RedirectResolution(this.getClass(), "all");
     }
