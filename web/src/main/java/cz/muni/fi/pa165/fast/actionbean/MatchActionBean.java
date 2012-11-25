@@ -10,20 +10,17 @@ import java.util.Date;
 import java.util.List;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
-import net.sourceforge.stripes.controller.LifecycleStage;
 
 /**
  * 
  * @author Jakub Senko
  *
  */
-@UrlBinding("/matches/{$event}")
+@UrlBinding("/matches/{$event}/{matchDTO.id}")
 public class MatchActionBean implements ActionBean{
     
     private ActionBeanContext context;
@@ -33,7 +30,6 @@ public class MatchActionBean implements ActionBean{
     
     @EJBBean("java:global/myapp/TeamServiceImpl!cz.muni.fi.pa165.fast.service.TeamService")
     protected TeamService teamService;
-    
     
     private MatchDTO matchDTO; //todo process date
     
@@ -56,25 +52,12 @@ public class MatchActionBean implements ActionBean{
     	return teamService.findAll();
     }
     
-    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
-    public void loadMatchFromDatabase() {
-    	
-        String ids = context.getRequest().getParameter("matchDTO.id");
-        if (ids == null) {
-            return;
-        }
-        matchDTO = matchService.getById(Long.parseLong(ids));
-        date = matchDTO.getDate().getDate();
-        month = matchDTO.getDate().getMonth();
-        year = matchDTO.getDate().getYear();
-    }
     
     public Resolution create()
     {
     	return new ForwardResolution("/matches/create.jsp");
     }
 
-    
     public Resolution add()
     {
     	
@@ -84,30 +67,14 @@ public class MatchActionBean implements ActionBean{
     	d.setYear(year);
     	
     	matchDTO.setDate(d);
-    	//System.out.println(matchDTO);
-    	
+    	System.out.println(matchDTO);
+    	System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
     	matchService.create(matchDTO);
     	
         return new ForwardResolution(this.getClass(), "all");
     }
 
-    
-    public Resolution delete() {
-        matchService.delete(matchDTO);
-        return new RedirectResolution(this.getClass(), "all");
-    }
 
-    
-    public Resolution edit() {
-    	//System.out.println(matchDTO);
-    	
-        return new RedirectResolution("/matches/edit.jsp");
-    }
-    
-    public Resolution save() {
-        matchService.update(matchDTO);
-        return new RedirectResolution(this.getClass(), "all");
-    }
 
 	public MatchDTO getMatchDTO() {
 		return matchDTO;

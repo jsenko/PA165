@@ -27,6 +27,12 @@
             <param-name>LocalePicker.Locales</param-name>
             <param-value>cs:utf-8,en:utf-8</param-value>
         </init-param>
+        
+        <init-param>
+            <param-name>LocalePicker.Class</param-name>
+            <param-value>cz.muni.fi.pa165.fast.actionbean.CustomLocalePicker</param-value>
+        </init-param>
+        
         <init-param>
             <param-name>Interceptor.Classes</param-name>
             <param-value>com.samaxes.stripejb3.EJBInterceptor</param-value>

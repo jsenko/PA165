@@ -11,12 +11,12 @@
             <tr>
                 <td>No.</td>
                 <td class="name">Name</td>
-                <td>GP</td>
-                <td>W</td>
-                <td>L</td>
-                <td>T</td>
-                <td>SC</td>
-                <td>PTS</td>
+                <td><s:label name="table.gamesPlayed"/></td>
+                <td><s:label name="table.wins"/></td>
+                <td><s:label name="table.losses"/></td>
+                <td><s:label name="table.tosses"/></td>
+                <td><s:label name="table.score"/></td>
+                <td><s:label name="table.points"/></td>
                 <!--<td>Trend</td>-->
                 <td></td>
                 <td></td>
