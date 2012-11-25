@@ -4,18 +4,19 @@
 
 <s:layout-render name="/cover.jsp">
     <s:layout-component name="content">
+    <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.AdminActionBean" var="actionBean"/>
         <h1>Sign in</h1>
         
-        
-        <s:form action="${pageContext.request.contextPath}/index.jsp" method="post" class="form-horizontal">
+        <s:errors/>
+        <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.AdminActionBean" class="form-horizontal" action="admin">
             <p>
-                <input type="text" placeholder="Username"/>
+                <s:text id="p1" name="admin.name"/>
             </p>
             <p>
-                <input type="password" placeholder="password"/>
+                <s:password id="p2" name="admin.password"/>
             </p>
             <p>
-                <input type="submit" class="btn" value="Sign in" name="sent" title="Sign in"/>
+                <s:submit class="btn" name="login" title="Sign in">Sign in</s:submit>
             </p>
         </s:form>
         
