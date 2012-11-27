@@ -42,9 +42,9 @@
             <c:forEach items="${actionBean.players}" var="player" varStatus="loop">
                 <tr>
                     <td><c:out value="${loop.index + 1}"/>.</td>
-                    <td>this<c:out value="${player.name}"/> <c:out value="${player.surname}"/></td>
-                    <td>this<c:out value="${player.goals}"/></td>
-                    <td>this<c:out value="${player.assists}"/></td>
+                    <td><c:out value="${player.name}"/> <c:out value="${player.surname}"/></td>
+                    <td><c:out value="${player.goals}"/></td>
+                    <td><c:out value="${player.assists}"/></td>
                     <td><c:out value="${player.age}"/></td>
                     <td><c:out value="${player.weight}"/></td>
                     <td><c:out value="${player.height}"/></td>
@@ -58,7 +58,7 @@
             <fieldset><legend><s:label name="player.newPlayer"/></legend>
                 <%@include file="forms/playerForm.jsp"%>
                 <%--<s:submit name="add"><s:label name="player.createNewPlayer"/></s:submit>--%>
-                <s:submit name="player.createNewPlayer"/>
+                <s:submit value="player.createNewPlayer" name="add"/>
             </fieldset>
         </s:form>
     </s:layout-component>
