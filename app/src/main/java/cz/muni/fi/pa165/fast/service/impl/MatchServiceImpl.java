@@ -22,25 +22,23 @@ import cz.muni.fi.pa165.fast.service.MatchService;
 @Stateless
 public class MatchServiceImpl implements MatchService
 {
-
-	//@EJB(name="java:global/myapp/MatchDAOImpl!cz.muni.fi.pa165.fast.dao.MatchDAO")
 	@EJB
         MatchDAO matchDAO;
-	
-	//@EJB(name="java:global/myapp/MatchConvertImpl!cz.muni.fi.pa165.fast.convert.MatchConvert")
         @EJB
 	MatchConvert convert;
-	
-	//@EJB(name="java:global/myapp/TeamDAOImpl!cz.muni.fi.pa165.fast.dao.TeamDAO")
         @EJB
 	TeamDAO teamDAO;
 	
 	@Override
 	public void create(MatchDTO dto)
 	{
+            try{
 		Match m = convert.fromDTOToEntity(dto);
 		
 		matchDAO.create(m);
+            }catch(Exception ex){
+                throw new RuntimeException("Create operation failed.", ex);
+            }
 	}
 
 	@Override
@@ -76,6 +74,7 @@ public class MatchServiceImpl implements MatchService
 	@Override
 	public List<MatchDTO> findAll()
 	{
+            try{
 		Collection<Match> matches = matchDAO.findAll();
 		List<MatchDTO> dtos = new ArrayList<MatchDTO>();
 		for(Match m: matches)
@@ -84,11 +83,15 @@ public class MatchServiceImpl implements MatchService
 		}
 		Collections.sort(dtos);
 		return dtos;
+            }catch(Exception ex){
+                throw new RuntimeException("Error while retrieving matches.", ex);
+            }
 	}
 
 	@Override
 	public List<MatchDTO> findByRound(int round)
 	{
+            try{
 		Collection<Match> matches = matchDAO.findAll();
 		List<MatchDTO> dtos = new ArrayList<MatchDTO>();
 		for(Match m: matches)
@@ -97,11 +100,15 @@ public class MatchServiceImpl implements MatchService
 		}
 		Collections.sort(dtos);
 		return dtos;
+            }catch(Exception ex){
+                throw new RuntimeException("Error while retrieving matches.", ex);
+            }
 	}
 
 	@Override
 	public List<MatchDTO> findByTeam(long teamId)
 	{
+            try{
 		// get the team by id
 		Team t = teamDAO.getById(teamId);
 		
@@ -119,6 +126,9 @@ public class MatchServiceImpl implements MatchService
 		}
 		Collections.sort(dtos);
 		return dtos;
+            }catch(Exception ex){
+                throw new RuntimeException("Error while retrieving matches.", ex);
+            }
 	}
 
 		@Override

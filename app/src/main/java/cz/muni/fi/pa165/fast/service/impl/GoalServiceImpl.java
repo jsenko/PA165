@@ -35,26 +35,39 @@ public class GoalServiceImpl implements GoalService{
     
     @Override
     public long create(GoalDTO dto) {
+        try{
         Goal g = goalConvert.fromDTOToEntity(dto);
         goalDAO.create(g);
-        return g.getId();        
+        return g.getId();
+        }catch(Exception ex){
+            throw new RuntimeException("Create operation failed.", ex);
+        }
     }
 
     @Override
     public long update(GoalDTO dto) {
+        try{
         Goal g = goalConvert.fromDTOToEntity(dto);
         goalDAO.update(g);
         return g.getId();
+        }catch(Exception ex){
+            throw new RuntimeException("Update operation failed.", ex);
+        }
     }
 
     @Override
     public void delete(GoalDTO dto) {
+        try{
         Goal g = goalConvert.fromDTOToEntity(dto);
         goalDAO.delete(g);
+        }catch(Exception ex){
+            throw new RuntimeException("Delete operation failed.", ex);
+        }
     }
 
     @Override
     public List<GoalDTO> findByMatch(long matchId) {
+        try{
         Match m = matchDAO.getById(matchId);
         
         Collection<Goal> matchGoals = m.getGoals();
@@ -67,6 +80,9 @@ public class GoalServiceImpl implements GoalService{
         }
         
         return matchGoalsDto;
+        }catch(Exception ex){
+            throw new RuntimeException("Error while retrieving goals.", ex);
+        }
         
     }
 

@@ -29,8 +29,8 @@ public class PlayerActionBean implements ActionBean {
         @Validate(on = {"add", "save"}, field = "name", required = true),
         @Validate(on = {"add", "save"}, field = "surname", required = true),
         @Validate(on = {"add", "save"}, field = "age", required = true, minvalue = 16),
-        @Validate(on = {"add", "save"}, field = "weight", required = true, minvalue = 50),
-        @Validate(on = {"add", "save"}, field = "height", required = true, minvalue = 100),
+        @Validate(on = {"add", "save"}, field = "height", required = true, minvalue = 50),
+        @Validate(on = {"add", "save"}, field = "weight", required = true, minvalue = 100),
         @Validate(on = {"add", "save"}, field = "teamId", required = true, minvalue = 1),
     })
     private PlayerDTO player;
