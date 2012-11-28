@@ -1,22 +1,41 @@
 package cz.muni.fi.pa165.fast.dto;
 
+import java.util.Date;
 
-public class GoalDTO
-{
+public class GoalDTO {
+
     private long id;
-
     private long scoredPlayerId;
-
     private String scoredPlayerName;
-    
     private long assistPlayerId;
-
     private String assistPlayerName;
-
     private boolean isHomeTeam;
-    
-    public long getId() { return id;   }
-    public void setId(long id) { this.id = id; }
+    private Date goalTime;
+    private long matchId;
+
+    public Date getGoalTime() {
+        return goalTime;
+    }
+
+    public void setGoalTime(Date goalTime) {
+        this.goalTime = goalTime;
+    }
+
+    public long getMatchId() {
+        return matchId;
+    }
+
+    public void setMatchId(long matchId) {
+        this.matchId = matchId;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public long getScoredPlayerId() {
         return scoredPlayerId;
@@ -26,6 +45,14 @@ public class GoalDTO
         this.scoredPlayerId = scoredPlayerId;
     }
 
+    public long getAssistPlayerId() {
+        return assistPlayerId;
+    }
+
+    public void setAssistPlayerId(long assistPlayerId) {
+        this.assistPlayerId = assistPlayerId;
+    }
+    
     public String getScoredPlayerName() {
         return scoredPlayerName;
     }
@@ -34,26 +61,21 @@ public class GoalDTO
         this.scoredPlayerName = scoredPlayerName;
     }
 
-    public long getAssistPlayerId() {
-        return assistPlayerId;
-    }
-
-    public void setAssistPlayerId(long assistPlayerId) {
-        this.assistPlayerId = assistPlayerId;
-    }
-
     public String getAssistPlayerName() {
         return assistPlayerName;
     }
 
-    public void setAssistPlayerName(String assitPlayerName) {
-        this.assistPlayerName = assitPlayerName;
+    public void setAssistPlayerName(String assistPlayerName) {
+        this.assistPlayerName = assistPlayerName;
     }
-    
-    
-    
-    public boolean isIsHomeTeam() { return isHomeTeam; }
-    public void setIsHomeTeam(boolean isHomeTeam) { this.isHomeTeam = isHomeTeam; }
+
+    public boolean isIsHomeTeam() {
+        return isHomeTeam;
+    }
+
+    public void setIsHomeTeam(boolean isHomeTeam) {
+        this.isHomeTeam = isHomeTeam;
+    }
 
     @Override
     public int hashCode() {
@@ -77,6 +99,8 @@ public class GoalDTO
         return true;
     }
 
-    
-    
+    @Override
+    public String toString() {
+        return "GoalDTO{" + "id=" + id + ", scoredPlayerId=" + scoredPlayerId + ", assistPlayerId=" + assistPlayerId + ", isHomeTeam=" + isHomeTeam + ", goalTime=" + goalTime + ", matchId=" + matchId + '}';
+    }
 }

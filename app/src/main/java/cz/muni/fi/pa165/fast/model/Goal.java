@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.fast.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.*;
 
@@ -9,7 +10,7 @@ import javax.persistence.*;
  * @author Michal Kimle
  */
 @Entity
-public class Goal
+public class Goal implements Serializable
 {
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
@@ -89,6 +90,6 @@ public class Goal
 
     @Override
     public String toString() {
-        return "Goal{" + "id=" + id + ", goalTime=" + goalTime + ", scorePlayer=" + scorePlayer + ", assistPlayer=" + assistPlayer + '}';
+        return "Goal{" + "id=" + id + ", goalTime=" + goalTime + ", scorePlayer=" + scorePlayer + ", assistPlayer=" + assistPlayer + "match=" + match + '}';
     }
 }

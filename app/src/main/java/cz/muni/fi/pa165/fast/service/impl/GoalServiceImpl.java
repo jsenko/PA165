@@ -70,7 +70,7 @@ public class GoalServiceImpl implements GoalService{
         try{
         Match m = matchDAO.getById(matchId);
         
-        Collection<Goal> matchGoals = m.getGoals();
+        Collection<Goal> matchGoals = goalDAO.findByMatch(m);
         List<GoalDTO> matchGoalsDto = new ArrayList();
         
         for(Goal g : matchGoals)

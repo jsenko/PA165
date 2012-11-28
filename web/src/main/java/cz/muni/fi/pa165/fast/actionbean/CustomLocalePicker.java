@@ -16,22 +16,23 @@ import org.apache.log4j.Logger;
  */
 public class CustomLocalePicker extends DefaultLocalePicker {
 
-    public static final String LOCALE = "locale" ;
-    
+    public static final String LOCALE = "locale";
+
     @Override
     public Locale pickLocale(HttpServletRequest request) {
-       
-        HttpSession session= request.getSession();
+
+        HttpSession session = request.getSession();
         String requestLocaleAttr = (String) request.getParameter(LOCALE);
-        if(requestLocaleAttr!=null) session.setAttribute(LOCALE, requestLocaleAttr);
-        String sessionLocaleAttr = (String) session.getAttribute(LOCALE);
-        
-        if(sessionLocaleAttr!=null){
-            return new Locale(sessionLocaleAttr);
+        if (requestLocaleAttr != null) {
+            session.setAttribute(LOCALE, requestLocaleAttr);
         }
-        else{
+        String sessionLocaleAttr = (String) session.getAttribute(LOCALE);
+
+        if (sessionLocaleAttr != null) {
+            return new Locale(sessionLocaleAttr);
+        } else {
             return new Locale("en");
         }
-        
+
     }
 }

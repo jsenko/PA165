@@ -9,6 +9,7 @@ package cz.muni.fi.pa165.fast.Users;
  * @author Lauro
  */
 public class Admin {
+
     String name;
     String password;
 
@@ -27,7 +28,4 @@ public class Admin {
     public void setPassword(String password) {
         this.password = password;
     }
-    
-    
-    
 }

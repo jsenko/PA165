@@ -31,12 +31,10 @@ public class PlayerActionBean implements ActionBean {
         @Validate(on = {"add", "save"}, field = "age", required = true, minvalue = 16),
         @Validate(on = {"add", "save"}, field = "height", required = true, minvalue = 50),
         @Validate(on = {"add", "save"}, field = "weight", required = true, minvalue = 100),
-        @Validate(on = {"add", "save"}, field = "teamId", required = true, minvalue = 1),
-    })
+        @Validate(on = {"add", "save"}, field = "teamId", required = true, minvalue = 1),})
     private PlayerDTO player;
     private TeamDTO team;
     private int order;
-
     @EJBBean("java:global/myapp/PlayerServiceImpl!cz.muni.fi.pa165.fast.service.PlayerService")
     protected PlayerService playerService;
     @EJBBean("java:global/myapp/TeamServiceImpl!cz.muni.fi.pa165.fast.service.TeamService")
@@ -85,8 +83,8 @@ public class PlayerActionBean implements ActionBean {
         playerService.update(player);
         return new RedirectResolution(this.getClass(), "all");
     }
-    
-    public Resolution order(){
+
+    public Resolution order() {
         getContext().setOrder(PlayerOrderBy.values()[order]);
         return new RedirectResolution(this.getClass(), "all");
     }
@@ -98,7 +96,7 @@ public class PlayerActionBean implements ActionBean {
     public void setOrder(int order) {
         this.order = order;
     }
-    
+
     public PlayerDTO getPlayer() {
         return player;
     }
@@ -127,7 +125,11 @@ public class PlayerActionBean implements ActionBean {
                 break;
             }
         }
-
+        
+        if(i >= list.size()){
+            return teamService.findAll();
+        }
+            
         TeamDTO tmp = list.get(i);
         list.set(i, list.get(0));
         list.set(0, tmp);

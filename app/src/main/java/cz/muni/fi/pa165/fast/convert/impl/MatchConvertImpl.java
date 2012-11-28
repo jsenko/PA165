@@ -51,7 +51,8 @@ public class MatchConvertImpl implements MatchConvert {
 
         for (Goal g : entity.getGoals()) {
             if (entity.getHomeTeam().equals(
-                    teamDAO.findTeamByPlayer(g.getScorePlayer()))) {
+                    //teamDAO.findTeamByPlayer(g.getScorePlayer()))) {
+                    g.getScorePlayer().getTeam())){
 
                 homeGoals++;
             } else {

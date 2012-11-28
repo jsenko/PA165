@@ -53,7 +53,7 @@
                 </tr>
             </c:forEach>
         </table>
-                
+
         <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean">
             <fieldset><legend><s:label name="player.newPlayer"/></legend>
                 <%@include file="forms/playerForm.jsp"%>

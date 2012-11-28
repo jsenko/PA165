@@ -4,15 +4,15 @@
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
 <s:layout-render name="/cover.jsp" nadpis="Edit team">
     <s:layout-component name="content">
-       <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" var="actionBean"/>
- 
-       <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean">
-           <s:hidden name="team.id"/>
+        <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" var="actionBean"/>
+
+        <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean">
+            <s:hidden name="team.id"/>
             <fieldset><legend>Edit data</legend>
                 <%@include file="/forms/teamForm.jsp"%>
-            <s:submit name="save">Save</s:submit>
-            </fieldset>
+                <s:submit name="save">Save</s:submit>
+                </fieldset>
         </s:form>
- 
+
     </s:layout-component>
 </s:layout-render>

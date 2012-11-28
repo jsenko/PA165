@@ -44,7 +44,7 @@
             <fieldset><legend><s:label name="table.newTeam"/></legend>
                 <%@include file="forms/teamForm.jsp"%>
                 <s:submit value="table.createNewTeam" name="add"/>
-                </fieldset>
+            </fieldset>
         </s:form>
     </s:layout-component>
 </s:layout-render>

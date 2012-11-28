@@ -25,15 +25,14 @@ import cz.muni.fi.pa165.fast.service.PlayerOrderBy;
 import cz.muni.fi.pa165.fast.service.PlayerService;
 
 /**
- * 
+ *
  * @author Jakub Senko
  *
  */
 @UrlBinding("/goals/{$event}")
-public class GoalActionBean implements ActionBean{
-    
+public class GoalActionBean implements ActionBean {
+
     private ActionBeanContext context;
-    
     @EJBBean("java:global/myapp/MatchServiceImpl!cz.muni.fi.pa165.fast.service.MatchService")
     protected MatchService matchService;
     @EJBBean("java:global/myapp/GoalServiceImpl!cz.muni.fi.pa165.fast.service.GoalService")
@@ -42,94 +41,89 @@ public class GoalActionBean implements ActionBean{
     protected PlayerService playerService;
     //@EJBBean("java:global/myapp/TeamServiceImpl!cz.muni.fi.pa165.fast.service.TeamService")
     //protected TeamService teamService;
-    
-    
     private GoalDTO goalDTO; //todo process date
     private Long matchId;
-    
+
     @DefaultHandler
     public Resolution all() {
 
-        return new ForwardResolution("/goal/all.jsp?matchId="+matchId);
+        return new ForwardResolution("/goal/all.jsp?matchId=" + matchId);
     }
-    
-    public List<GoalDTO> getGoals()
-    {
-        return goalService.findByMatch(matchId.longValue());
+
+    public List<GoalDTO> getGoals() {
+        System.out.println("matchid: " + matchId);
+        List<GoalDTO> list = goalService.findByMatch(goalDTO.getMatchId());
+        System.out.println("GoalList: " + list);
+        return list;
     }
+
     public List<MatchDTO> getMatches() {
         return matchService.findAll();
     }
+
     public List<PlayerDTO> getPlayers() {
 
 
         return playerService.findAll(PlayerOrderBy.NAME);
     }
+
     public Long getMatchId() {
-		return matchId;
-	}
+        return matchId;
+    }
 
-	public void setMatchId(Long matchId) {
-		this.matchId = matchId;
-	}
+    public void setMatchId(Long matchId) {
+        this.matchId = matchId;
+    }
 
-	@Before(stages = LifecycleStage.BindingAndValidation)
+    @Before(stages = LifecycleStage.BindingAndValidation)
     public void loadGoalFromDatabase() {
-    	
+
         String ids = context.getRequest().getParameter("goalDTO.id");
         if (ids == null) {
             return;
         }
-        
-        
+
+
         goalDTO = goalService.getById(Long.parseLong(ids));
 
     }
-    
-    public Resolution create()
-    {
-    	return new ForwardResolution("/goal/create.jsp?matchId="+matchId);
+
+    public Resolution create() {
+        return new ForwardResolution("/goal/create.jsp?matchId=" + matchId);
     }
 
-    
-    public Resolution add()
-    {
-    
-    	
-    	goalService.create(goalDTO);
-    	System.out.println(goalDTO);
+    public Resolution add() {
+        goalService.create(goalDTO);
+        System.out.println(goalDTO);
         return new ForwardResolution(this.getClass(), "all");
     }
 
-    
     public Resolution delete() {
-    	goalService.delete(goalDTO);
+        goalService.delete(goalDTO);
         return new RedirectResolution(this.getClass(), "all");
     }
 
-    
     public Resolution edit() {
 
-        return new RedirectResolution("/goal/edit.jsp?matchId="+matchId + "&goalDTO.id="+goalDTO.getId());
+        return new RedirectResolution("/goal/edit.jsp?matchId=" + matchId + "&goalDTO.id=" + goalDTO.getId());
     }
-    
+
     public Resolution save() {
-    	
-    	goalService.update(goalDTO);
+
+        goalService.update(goalDTO);
         return new RedirectResolution(this.getClass(), "all");
     }
 
-	public GoalDTO getGoalDTO() {
-		return goalDTO;
-	}
+    public GoalDTO getGoalDTO() {
+        return goalDTO;
+    }
 
-	public void setGoalDTO(GoalDTO goalDTO) {
-		
-		this.goalDTO = goalDTO;
-	}
+    public void setGoalDTO(GoalDTO goalDTO) {
 
+        this.goalDTO = goalDTO;
+    }
 
-	@Override
+    @Override
     public void setContext(ActionBeanContext context) {
         this.context = context;
     }
@@ -138,5 +132,4 @@ public class GoalActionBean implements ActionBean{
     public ActionBeanContext getContext() {
         return context;
     }
-    
 }
