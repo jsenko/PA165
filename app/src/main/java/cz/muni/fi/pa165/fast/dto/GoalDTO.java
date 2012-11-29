@@ -1,7 +1,5 @@
 package cz.muni.fi.pa165.fast.dto;
 
-import java.util.Date;
-
 public class GoalDTO {
 
     private long id;
@@ -10,15 +8,15 @@ public class GoalDTO {
     private long assistPlayerId;
     private String assistPlayerName;
     private boolean isHomeTeam;
-    private Date goalTime;
+    private int goalMinute;
     private long matchId;
 
-    public Date getGoalTime() {
-        return goalTime;
+    public int getGoalMinute() {
+        return goalMinute;
     }
 
-    public void setGoalTime(Date goalTime) {
-        this.goalTime = goalTime;
+    public void setGoalMinute(int goalMinute) {
+        this.goalMinute = goalMinute;
     }
 
     public long getMatchId() {
@@ -101,6 +99,6 @@ public class GoalDTO {
 
     @Override
     public String toString() {
-        return "GoalDTO{" + "id=" + id + ", scoredPlayerId=" + scoredPlayerId + ", assistPlayerId=" + assistPlayerId + ", isHomeTeam=" + isHomeTeam + ", goalTime=" + goalTime + ", matchId=" + matchId + '}';
+        return "GoalDTO{" + "id=" + id + ", scoredPlayerId=" + scoredPlayerId + ", assistPlayerId=" + assistPlayerId + ", isHomeTeam=" + isHomeTeam + ", goalMinute=" + goalMinute + ", matchId=" + matchId + '}';
     }
 }

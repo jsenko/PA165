@@ -15,8 +15,7 @@ public class Goal implements Serializable
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date goalTime;
+    private int goalMinute;
     @OneToOne
     private Player scorePlayer;
     @OneToOne
@@ -32,12 +31,12 @@ public class Goal implements Serializable
         this.id = id;
     }
 
-    public Date getGoalTime() {
-        return goalTime;
+    public int getGoalMinute() {
+        return goalMinute;
     }
 
-    public void setGoalTime(Date goalTime) {
-        this.goalTime = goalTime;
+    public void setGoalMinute(int goalMinute) {
+        this.goalMinute = goalMinute;
     }
 
     public Player getScorePlayer() {
@@ -90,6 +89,6 @@ public class Goal implements Serializable
 
     @Override
     public String toString() {
-        return "Goal{" + "id=" + id + ", goalTime=" + goalTime + ", scorePlayer=" + scorePlayer + ", assistPlayer=" + assistPlayer + "match=" + match + '}';
+        return "Goal{" + "id=" + id + ", goalMinute=" + goalMinute + ", scorePlayer=" + scorePlayer + ", assistPlayer=" + assistPlayer + "match=" + match + '}';
     }
 }

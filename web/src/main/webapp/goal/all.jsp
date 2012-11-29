@@ -25,6 +25,7 @@
                     <!-- <td><c:out value="${loop.index + 1}"/>.</td>-->
                     <c:if test="${goalDTO.isHomeTeam}">
                         <c:set var="home" value="${home + 1}" scope="page" />
+                        <td><c:out value="${goalDTO.goalMinute}\'"/></td>
                         <td><c:out value="${goalDTO.scoredPlayerName}"/> (<c:out value="${goalDTO.assistPlayerName}"/>)</td>
                         <td>${home} : ${away}</td>
                     </c:if>
@@ -33,6 +34,7 @@
                         <c:set var="away" value="${away + 1}" scope="page" />
                         <td>${home} : ${away}</td>
                         <td><c:out value="${goalDTO.scoredPlayerName}"/> (<c:out value="${goalDTO.assistPlayerName}"/>)</td>
+                        <td><c:out value="${goalDTO.goalMinute}\'"/></td>
                     </c:if>
 
                     <td><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.GoalActionBean" event="delete">

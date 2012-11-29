@@ -12,6 +12,10 @@
             </s:select></td>
     </tr>
     <tr>
+        <th><s:label for="g4" name="Minute" /></th>
+        <th><s:text name="goalDTO.goalMinute" id="g4" /></th>
+    </tr>
+    <tr>
         <th><s:label for="g2"  name="Scoring player" /></th>
         <td><s:select name="goalDTO.scoredPlayerId" id="g2">
                 <s:options-collection collection="${actionBean.players}"

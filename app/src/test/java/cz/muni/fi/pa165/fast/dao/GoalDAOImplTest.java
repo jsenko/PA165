@@ -85,14 +85,14 @@ public class GoalDAOImplTest {
 
         em.persist(goal);
 
-        long milis = 895465778;
-        goal.setGoalTime(new Date(milis));
+        int minute = 12;
+        goal.setGoalMinute(minute);
 
         gdaoi.update(goal);
 
         Goal goalFromDB = em.find(Goal.class, goal.getId());
 
-        assertEquals(milis, goalFromDB.getGoalTime().getTime());
+        assertEquals(minute, goalFromDB.getGoalMinute());
 
         em.remove(goal);
     }
@@ -123,12 +123,12 @@ public class GoalDAOImplTest {
 
         Goal g = new Goal();
 
-        g.setGoalTime(new Date(r.nextInt(15000)));
+        g.setGoalMinute(r.nextInt(100));
         list.add(g);
         em.persist(g);
 
         Goal g2 = new Goal();
-        g2.setGoalTime(new Date(r.nextInt(15000)));
+        g2.setGoalMinute(r.nextInt(100));
         list.add(g2);
         em.persist(g2);
 

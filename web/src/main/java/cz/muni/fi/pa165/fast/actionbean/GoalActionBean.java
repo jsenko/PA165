@@ -1,6 +1,5 @@
 package cz.muni.fi.pa165.fast.actionbean;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.stripes.action.ActionBean;
@@ -18,11 +17,12 @@ import com.samaxes.stripejb3.EJBBean;
 import cz.muni.fi.pa165.fast.dto.GoalDTO;
 import cz.muni.fi.pa165.fast.dto.MatchDTO;
 import cz.muni.fi.pa165.fast.dto.PlayerDTO;
-import cz.muni.fi.pa165.fast.dto.TeamDTO;
 import cz.muni.fi.pa165.fast.service.GoalService;
 import cz.muni.fi.pa165.fast.service.MatchService;
 import cz.muni.fi.pa165.fast.service.PlayerOrderBy;
 import cz.muni.fi.pa165.fast.service.PlayerService;
+import net.sourceforge.stripes.validation.Validate;
+import net.sourceforge.stripes.validation.ValidateNestedProperties;
 
 /**
  *
@@ -39,9 +39,11 @@ public class GoalActionBean implements ActionBean {
     protected GoalService goalService;
     @EJBBean("java:global/myapp/PlayerServiceImpl!cz.muni.fi.pa165.fast.service.PlayerService")
     protected PlayerService playerService;
-    //@EJBBean("java:global/myapp/TeamServiceImpl!cz.muni.fi.pa165.fast.service.TeamService")
-    //protected TeamService teamService;
-    private GoalDTO goalDTO; //todo process date
+    @ValidateNestedProperties(value = {
+        @Validate(on = {"add", "save"}, field = "scoredPlayerId", required = true, minvalue = 1),
+        @Validate(on = {"add", "save"}, field = "assistPlayerId", required = true, minvalue = 1),
+        @Validate(on = {"add", "save"}, field = "goalMinute", required = true, minvalue = 1)})
+    private GoalDTO goalDTO;
     private Long matchId;
 
     @DefaultHandler

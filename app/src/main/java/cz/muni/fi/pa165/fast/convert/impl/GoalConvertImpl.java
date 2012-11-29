@@ -38,7 +38,7 @@ public class GoalConvertImpl implements GoalConvert {
         goalDTO.setAssistPlayerId(entity.getAssistPlayer().getId());
         goalDTO.setAssistPlayerName(entity.getAssistPlayer().getName());
         goalDTO.setMatchId(entity.getMatch().getId());
-        goalDTO.setGoalTime(entity.getGoalTime());
+        goalDTO.setGoalMinute(entity.getGoalMinute());
         
         Team homeTeam = entity.getMatch().getHomeTeam();
         Team scoringPlayerTeam = entity.getScorePlayer().getTeam();
@@ -87,7 +87,7 @@ public class GoalConvertImpl implements GoalConvert {
             goal.setMatch(matchDAO.getById(dto.getMatchId()));
         }
         
-        goal.setGoalTime(dto.getGoalTime());
+        goal.setGoalMinute(dto.getGoalMinute());
         
         System.out.println("In convert: Goal output: " + goal);
         return goal;
