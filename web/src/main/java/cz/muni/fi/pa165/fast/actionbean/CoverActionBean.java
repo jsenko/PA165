@@ -24,13 +24,7 @@ public class CoverActionBean implements ActionBean {
    
     public Resolution sk(){
         System.out.println("this is request url" + context.getRequest().getRequestURL());
-        return new Resolution() {
-
-            @Override
-            public void execute(HttpServletRequest hsr, HttpServletResponse hsr1) throws Exception {
-                
-            }
-        };
+        return new RedirectResolution("/");
     }
     
     @Override
