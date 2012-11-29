@@ -17,32 +17,31 @@ import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 
 @UrlBinding("/teams/{$event}")
-public class TeamActionBean implements ActionBean{
-    
+public class TeamActionBean implements ActionBean {
+
     private ActionBeanContext context;
     @ValidateNestedProperties(value = {
-            @Validate(on = {"add", "save"}, field = "name", required = true)
+        @Validate(on = {"add", "save"}, field = "name", required = true)
     })
     private TeamDTO team;
-    
     @EJBBean("java:global/myapp/TeamServiceImpl!cz.muni.fi.pa165.fast.service.TeamService")
     protected TeamService teamService;
-    
+
     @DefaultHandler
     public Resolution all() {
         return new ForwardResolution("/table.jsp");
     }
-    
+
     public Resolution add() {
         teamService.create(team);
         return new RedirectResolution(this.getClass(), "all");
     }
-    
+
     public Resolution delete() {
         teamService.delete(team);
         return new RedirectResolution(this.getClass(), "all");
     }
-    
+
     @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
     public void loadTeamFromDatabase() {
         String ids = context.getRequest().getParameter("team.id");
@@ -51,24 +50,24 @@ public class TeamActionBean implements ActionBean{
         }
         team = teamService.getById(new Long(Integer.parseInt(ids)));
     }
- 
+
     public Resolution edit() {
         return new ForwardResolution("/edit/teamEdit.jsp");
     }
- 
+
     public Resolution save() {
         teamService.update(team);
         return new RedirectResolution(this.getClass(), "all");
     }
-    
-    public TeamDTO getTeam(){
+
+    public TeamDTO getTeam() {
         return team;
     }
-    
-    public void setTeam(TeamDTO team){
+
+    public void setTeam(TeamDTO team) {
         this.team = team;
     }
-    
+
     public List<TeamDTO> getTeams() {
         return teamService.findAll();
     }
@@ -82,5 +81,4 @@ public class TeamActionBean implements ActionBean{
     public ActionBeanContext getContext() {
         return context;
     }
-    
 }

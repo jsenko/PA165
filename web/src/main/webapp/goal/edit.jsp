@@ -3,24 +3,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <s:layout-render name="/cover.jsp">
-	<s:layout-component name="content">
+    <s:layout-component name="content">
 
-		<s:useActionBean
-			beanclass="cz.muni.fi.pa165.fast.actionbean.GoalActionBean"
-			var="actionBean" />
+        <s:useActionBean
+            beanclass="cz.muni.fi.pa165.fast.actionbean.GoalActionBean"
+            var="actionBean" />
 
-		<h1>Edit Match</h1>
+        <h1>Edit Match</h1>
 
-		<s:form beanclass="cz.muni.fi.pa165.fast.actionbean.GoalActionBean">
-			<fieldset>
-				<s:errors />
-				<s:hidden name="goalDTO.id"/>
-			<%@include file="/goal/form.jsp"%>
-				
-				<s:submit name="save">Save</s:submit>
-			</fieldset>
-		</s:form>
+        <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.GoalActionBean">
+            <fieldset>
+                <s:errors />
+                <s:hidden name="goalDTO.id"/>
+                <%@include file="/goal/form.jsp"%>
 
-	</s:layout-component>
+                <s:submit name="save">Save</s:submit>
+                </fieldset>
+        </s:form>
+
+    </s:layout-component>
 </s:layout-render>
 

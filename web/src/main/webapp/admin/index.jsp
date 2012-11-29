@@ -4,9 +4,9 @@
 
 <s:layout-render name="/cover.jsp">
     <s:layout-component name="content">
-    <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.AdminActionBean" var="actionBean"/>
-    <h1><s:label name="admin.signIn"/></h1>
-        
+        <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.AdminActionBean" var="actionBean"/>
+        <h1><s:label name="admin.signIn"/></h1>
+
         <s:errors/>
         <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.AdminActionBean" class="form-horizontal" action="admin">
             <p>
@@ -17,8 +17,8 @@
             </p>
             <p>
                 <s:submit class="btn" name="login" title="Sign in">Sign in</s:submit>
-            </p>
+                </p>
         </s:form>
-        
+
     </s:layout-component>
 </s:layout-render>

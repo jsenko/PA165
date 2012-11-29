@@ -17,12 +17,12 @@ public class PlayerActionBeanContext extends ActionBeanContext {
         TeamDTO dto = new TeamDTO();
         return get(SELECTED_TEAM, dto);
     }
-    
-    public void setOrder(PlayerOrderBy order){
+
+    public void setOrder(PlayerOrderBy order) {
         set(ORDER, order);
     }
-    
-    public PlayerOrderBy getOrder(){
+
+    public PlayerOrderBy getOrder() {
         PlayerOrderBy order = PlayerOrderBy.NAME;
         return get(ORDER, order);
     }

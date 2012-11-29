@@ -43,8 +43,8 @@
         <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean">
             <fieldset><legend><s:label name="table.newTeam"/></legend>
                 <%@include file="forms/teamForm.jsp"%>
-                <s:submit name="table.createNewTeam"></s:submit>
-                </fieldset>
+                <s:submit value="table.createNewTeam" name="add" class="btn btn-info"/>
+            </fieldset>
         </s:form>
     </s:layout-component>
 </s:layout-render>

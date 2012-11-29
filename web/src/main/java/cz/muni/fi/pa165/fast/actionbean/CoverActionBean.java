@@ -17,7 +17,6 @@ import org.apache.log4j.Logger;
  *
  * @author Stefan
  */
-
 public class CoverActionBean implements ActionBean {
 
     private ActionBeanContext context;
@@ -26,7 +25,7 @@ public class CoverActionBean implements ActionBean {
         System.out.println("this is request url" + context.getRequest().getRequestURL());
         return new RedirectResolution("/");
     }
-    
+
     @Override
     public void setContext(ActionBeanContext abc) {
         this.context = abc;
@@ -36,5 +35,4 @@ public class CoverActionBean implements ActionBean {
     public ActionBeanContext getContext() {
         return this.context;
     }
-    
 }

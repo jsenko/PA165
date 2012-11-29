@@ -19,46 +19,39 @@ import net.sourceforge.stripes.validation.ValidateNestedProperties;
  * @author Lauro
  */
 @UrlBinding("/admin/{$event}")
-public class AdminActionBean implements ActionBean{
-    
+public class AdminActionBean implements ActionBean {
+
     private ActionBeanContext context;
-    
     @ValidateNestedProperties(value = {
-            @Validate(on = {"login"}, field = "name", required = true, expression="admin"),
-            @Validate(on = {"login"}, field = "password", required = true)
+        @Validate(on = {"login"}, field = "name", required = true, expression = "admin"),
+        @Validate(on = {"login"}, field = "password", required = true)
     })
     private Admin admin;
-    
-    
-    public Resolution login()
-    {
-        if(admin.getName().equals("admin") && admin.getPassword().equals("admin"))
-        {
+
+    public Resolution login() {
+        if (admin.getName().equals("admin") && admin.getPassword().equals("admin")) {
             HttpSession session = context.getRequest().getSession();
-            Long adminSession = (Long)session.getAttribute("session");
-            if(adminSession==null)
-            {
+            Long adminSession = (Long) session.getAttribute("session");
+            if (adminSession == null) {
                 Long newSession = 1l;
                 session.setAttribute("session", newSession);
             }
 
             return new RedirectResolution("");
-        }
-        else{
+        } else {
             return new RedirectResolution("/admin/invalid.jsp");
         }
-        
+
     }
-    
+
     public Admin getAdmin() {
         return admin;
     }
- 
+
     public void setAdmin(Admin admin) {
         this.admin = admin;
     }
-    
-   
+
     @Override
     public void setContext(ActionBeanContext context) {
         this.context = context;
@@ -68,5 +61,4 @@ public class AdminActionBean implements ActionBean{
     public ActionBeanContext getContext() {
         return context;
     }
-    
 }

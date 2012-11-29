@@ -11,7 +11,7 @@
             <s:select name="team.id">
                 <s:options-collection collection="${actionBean.teams}" label="name" value="id"/>             
             </s:select>
-            <s:submit class="btn btn-info team-show" name="player.show"></s:submit>
+            <s:submit class="btn btn-info team-show" name="selectTeam"></s:submit>
         </s:form>
 
         <div class="btn-group">
@@ -27,9 +27,10 @@
                 <li><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="order"><s:param name="order" value="4"/><s:label name="player.height"/></s:link></li>
             </ul>
         </div>
-        <table>
+            
+        <table id="players_table">
             <tr>
-                <td>No.</td>
+                <td><s:label name="player.no"/></td>
                 <td><s:label name="player.name"/></td>
                 <td><s:label name="player.goals"/></td>
                 <td><s:label name="player.assistances"/></td>
@@ -42,9 +43,9 @@
             <c:forEach items="${actionBean.players}" var="player" varStatus="loop">
                 <tr>
                     <td><c:out value="${loop.index + 1}"/>.</td>
-                    <td>this<c:out value="${player.name}"/> <c:out value="${player.surname}"/></td>
-                    <td>this<c:out value="${player.goals}"/></td>
-                    <td>this<c:out value="${player.assists}"/></td>
+                    <td><c:out value="${player.name}"/> <c:out value="${player.surname}"/></td>
+                    <td><c:out value="${player.goals}"/></td>
+                    <td><c:out value="${player.assists}"/></td>
                     <td><c:out value="${player.age}"/></td>
                     <td><c:out value="${player.weight}"/></td>
                     <td><c:out value="${player.height}"/></td>
@@ -53,12 +54,12 @@
                 </tr>
             </c:forEach>
         </table>
-                
+
         <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean">
             <fieldset><legend><s:label name="player.newPlayer"/></legend>
                 <%@include file="forms/playerForm.jsp"%>
                 <%--<s:submit name="add"><s:label name="player.createNewPlayer"/></s:submit>--%>
-                <s:submit name="player.createNewPlayer"/>
+                <s:submit value="player.createNewPlayer" name="add" class="btn btn-info"/>
             </fieldset>
         </s:form>
     </s:layout-component>
