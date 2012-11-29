@@ -94,6 +94,11 @@ body
 {
     background: #6494a7;
 }
+#league_table
+{
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
 #league_table tr:first-child 	
 {
     background: #fff;
@@ -126,6 +131,22 @@ body
 .team-show
 {
     margin-bottom: 10px;
+}
+
+#players_table
+{
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+#players_table tr:first-child
+{
+    background: #fff;
+}
+
+.btn-group > .btn + .dropdown-toggle
+{
+    height:30px;
 }
 
 .footer

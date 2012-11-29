@@ -27,9 +27,10 @@
                 <li><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="order"><s:param name="order" value="4"/><s:label name="player.height"/></s:link></li>
             </ul>
         </div>
-        <table>
+            
+        <table id="players_table">
             <tr>
-                <td>No.</td>
+                <td><s:label name="player.no"/></td>
                 <td><s:label name="player.name"/></td>
                 <td><s:label name="player.goals"/></td>
                 <td><s:label name="player.assistances"/></td>
@@ -58,7 +59,7 @@
             <fieldset><legend><s:label name="player.newPlayer"/></legend>
                 <%@include file="forms/playerForm.jsp"%>
                 <%--<s:submit name="add"><s:label name="player.createNewPlayer"/></s:submit>--%>
-                <s:submit value="player.createNewPlayer" name="add"/>
+                <s:submit value="player.createNewPlayer" name="add" class="btn btn-info"/>
             </fieldset>
         </s:form>
     </s:layout-component>
