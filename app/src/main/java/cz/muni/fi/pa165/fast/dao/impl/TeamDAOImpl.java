@@ -92,7 +92,7 @@ public class TeamDAOImpl implements TeamDAO {
         Query q = em.createNamedQuery("Team.findTeamByPlayer").setParameter("player", player.getId());
         System.out.println(q.unwrap(org.hibernate.Query.class).getQueryString());
         Team team = (Team) q.getSingleResult();
-
+        System.out.println("============" + team);
         return team;
     }
 

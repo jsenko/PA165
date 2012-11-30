@@ -1,7 +1,7 @@
 package cz.muni.fi.pa165.fast.actionbean;
 
 import java.util.List;
-
+import java.util.Collections;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.Before;
@@ -21,8 +21,10 @@ import cz.muni.fi.pa165.fast.service.GoalService;
 import cz.muni.fi.pa165.fast.service.MatchService;
 import cz.muni.fi.pa165.fast.service.PlayerOrderBy;
 import cz.muni.fi.pa165.fast.service.PlayerService;
+import java.util.ArrayList;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
+
 
 /**
  *
@@ -64,9 +66,8 @@ public class GoalActionBean implements ActionBean {
     }
 
     public List<PlayerDTO> getPlayers() {
-
-
-        return playerService.findAll(PlayerOrderBy.NAME);
+        List<PlayerDTO> allPlayers = playerService.findAll(PlayerOrderBy.TEAM);
+        return allPlayers;
     }
 
     public Long getMatchId() {
