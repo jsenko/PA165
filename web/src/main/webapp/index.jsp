@@ -8,40 +8,56 @@
         <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean" var="actionBean"/>
 
         <h1><s:label name="index.matches"/></h1>
+        
+        <c:forEach var="round" begin="1" end="${actionBean.rounds}" step="1" varStatus="status" >
+            <table>
+                <h1>Round <c:out value="${round}" /></h1>
+                <c:forEach items="${actionBean.matches}" var="matchDTO" varStatus="loop">
+                    <c:if test="${matchDTO.round eq round}">
+                        <tr>
+                            <!-- <td><c:out value="${loop.index + 1}"/>.</td>-->
+                            
+                            <td>
+                                <c:out value="${matchDTO.round}"/>
+                            </td>
+                            
+                            <td>
+                                <c:out value="${matchDTO.date}"/>
+                            </td>
 
-        <table>
-            <tr>
-                <td><s:label name="index.round"/></td>
-                <td><s:label name="index.date"/></td>
-                <td><s:label name="index.homeTeam"/></td>
-                <td><s:label name="index.result"/></td>
-                <td><s:label name="index.awayTeam"/></td>
-            </tr>
-            <c:forEach items="${actionBean.matches}" var="matchDTO" varStatus="loop">
-                <tr>
-                    <!-- <td><c:out value="${loop.index + 1}"/>.</td>-->
-                    <td><c:out value="${matchDTO.round}"/></td>
-                    <td><c:out value="${matchDTO.date}"/></td>
+                            <td>
+                                <c:out value="${matchDTO.homeTeamName}"/>
+                            </td>
+                            
+                            <td>
+                                <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.GoalActionBean" event="all">
+                                    <s:param name="goalDTO.matchId" value="${matchDTO.id}"/>
+                                    <c:out value="${matchDTO.homeTeamGoals}"/> : <c:out value="${matchDTO.awayTeamGoals}"/>
+                                </s:link>
+                            </td>
+                            
+                            <td>
+                                <c:out value="${matchDTO.awayTeamName}"/>
+                            </td>
+                            
+                            <td>
+                                <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean" onclick="return confirm('Delete ${matchDTO.homeTeamName} vs. ${matchDTO.awayTeamName}?');" event="delete">
+                                    <s:param name="matchDTO.id" value="${matchDTO.id}"/><i class="icon-remove"></i>
+                                </s:link>
+                            </td>
+                            
+                            <td>
+                                <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean" event="edit">
+                                    <s:param name="matchDTO.id" value="${matchDTO.id}"/><i class="icon-pencil"></i>
+                                </s:link>
+                            </td>
 
-                    <td><c:out value="${matchDTO.homeTeamName}"/></td>
-                    <td>
+                        </tr>
+                    </c:if>
+                </c:forEach>
 
-                        <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.GoalActionBean" event="all">
-                            <s:param name="goalDTO.matchId" value="${matchDTO.id}"/>
-                            <c:out value="${matchDTO.homeTeamGoals}"/> : <c:out value="${matchDTO.awayTeamGoals}"/>
-                        </s:link>
-
-                    </td>
-                    <td><c:out value="${matchDTO.awayTeamName}"/></td>
-                    <td><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean" event="delete">
-                            <s:param name="matchDTO.id" value="${matchDTO.id}"/><i class="icon-remove"></i></s:link></td>
-                    <td><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean" event="edit">
-                            <s:param name="matchDTO.id" value="${matchDTO.id}"/><i class="icon-pencil"></i></s:link> </td>
-
-                    </tr>
-            </c:forEach>
-        </table>
-
+            </table>
+        </c:forEach>
         <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean"
                 event="create">novy zapas</s:link>
 

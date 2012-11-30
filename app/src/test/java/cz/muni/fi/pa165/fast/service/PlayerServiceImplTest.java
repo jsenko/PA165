@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.fast.convert.PlayerConvert;
 import cz.muni.fi.pa165.fast.convert.impl.PlayerConvertImpl;
 import cz.muni.fi.pa165.fast.dao.GoalDAO;
 import cz.muni.fi.pa165.fast.dao.PlayerDAO;
+import cz.muni.fi.pa165.fast.dao.TeamDAO;
 import cz.muni.fi.pa165.fast.dto.PlayerDTO;
 import cz.muni.fi.pa165.fast.model.Player;
 import cz.muni.fi.pa165.fast.service.impl.PlayerServiceImpl;
@@ -30,6 +31,8 @@ public class PlayerServiceImplTest {
     
     private GoalDAO goalDao;
     
+    private TeamDAO teamDao;
+    
     private PlayerConvert convert;
     
     private PlayerService service;
@@ -42,16 +45,19 @@ public class PlayerServiceImplTest {
         
         playerDao = mData.getPlayerDAOMock();
         goalDao = mData.getGoalDAOMock();
+        teamDao = mData.getTeamDAOMock();
         
         JavaEEGloss gloss = new JavaEEGloss();
         gloss.addEJB(playerDao);
         gloss.addEJB(goalDao);
+        gloss.addEJB(teamDao);
         
         convert = gloss.make(PlayerConvertImpl.class);
         
         gloss = new JavaEEGloss();
         gloss.addEJB(playerDao);
         gloss.addEJB(goalDao);
+        gloss.addEJB(teamDao);
         gloss.addEJB(convert);
         
         service = gloss.make(PlayerServiceImpl.class);

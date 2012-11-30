@@ -48,6 +48,17 @@ public class MatchActionBean implements ActionBean {
     public List<MatchDTO> getMatches() {
         return matchService.findAll();
     }
+    
+    public int getRounds()
+    {
+        List<MatchDTO> allMatches = matchService.findAll();
+        int maxRound = 0;
+        for(MatchDTO match : allMatches)
+        {
+            if(maxRound < match.getRound()) maxRound = match.getRound();
+        }
+        return maxRound;
+    }
 
     public List<TeamDTO> getTeams() {
         return teamService.findAll();
