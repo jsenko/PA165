@@ -68,9 +68,12 @@
                 </c:forEach>
             </c:otherwise>
         </c:choose>
-            <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean" event="create">
-                <s:label class="btn btn-info" name="match.newMatch" />
-            </s:link>
+
+        <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean"
+                event="create"><s:label class="btn btn-info" name="match.newMatch"/></s:link>
+        <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean"
+                event="generate"><s:label class="btn btn-info" name="Generuj zapasy"/></s:link>
+
 
     </s:layout-component>
 </s:layout-render>

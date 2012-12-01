@@ -53,19 +53,20 @@ public class GoalActionBean implements ActionBean {
         @Validate(on = {"add", "save"}, field = "assistPlayerId", required = true, minvalue = 1),
         @Validate(on = {"add", "save"}, field = "goalMinute", required = true, minvalue = 1)})
     private GoalDTO goalDTO;
-    private Long matchId;
-
+    
+    //private Long matchId;
+    
     @DefaultHandler
     public Resolution all() {
 
-        return new ForwardResolution("/goal/all.jsp?matchId=" + matchId);
+        return new ForwardResolution("/goal/all.jsp?goalDTO.matchId=" + goalDTO.getMatchId());
     }
 
     public List<GoalDTO> getGoals() {
-        System.out.println("matchid: " + matchId);
-        System.out.println("In getGoals -> goalDTO: " + goalDTO);
+        //System.out.println("matchid: " + goalDTO.getMatchId());
+        //System.out.println("In getGoals -> goalDTO: " + goalDTO);
         List<GoalDTO> list = goalService.findByMatch(goalDTO.getMatchId());
-        System.out.println("GoalList: " + list);
+        //System.out.println("GoalList: " + list);
         return list;
     }
 
@@ -78,51 +79,48 @@ public class GoalActionBean implements ActionBean {
         return allPlayers;
     }
 
-    public Long getMatchId() {
-        return matchId;
-    }
 
-    public void setMatchId(Long matchId) {
-        this.matchId = matchId;
-    }
-
-    @Before(stages = LifecycleStage.BindingAndValidation)
+    @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
     public void loadGoalFromDatabase() {
 
         String ids = context.getRequest().getParameter("goalDTO.id");
         if (ids == null) {
             return;
         }
-
-
+        
         goalDTO = goalService.getById(Long.parseLong(ids));
-
     }
 
     public Resolution create() {
-        return new ForwardResolution("/goal/create.jsp?matchId=" + matchId);
+        return new ForwardResolution("/goal/create.jsp?goalDTO.matchId=" + goalDTO.getMatchId());
     }
 
-    public Resolution add() {
+    public Resolution add()
+    {
+
+        
         goalService.create(goalDTO);
-        System.out.println(goalDTO);
+        
+        //System.out.println(goalDTO);
         return new ForwardResolution(this.getClass(), "all");
     }
 
     public Resolution delete() {
+        
         goalService.delete(goalDTO);
-        return new RedirectResolution(this.getClass(), "all");
+        return new ForwardResolution(this.getClass(), "all");
     }
 
     public Resolution edit() {
 
-        return new RedirectResolution("/goal/edit.jsp?matchId=" + matchId + "&goalDTO.id=" + goalDTO.getId());
+        return new RedirectResolution("/goal/edit.jsp?goalDTO.matchId=" + goalDTO.getMatchId() + "&goalDTO.id=" + goalDTO.getId());
     }
 
     public Resolution save() {
 
         goalService.update(goalDTO);
-        return new RedirectResolution(this.getClass(), "all");
+        return new ForwardResolution(this.getClass(), "all");
+
     }
 
     public GoalDTO getGoalDTO() {
