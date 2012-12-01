@@ -21,6 +21,9 @@ public class CustomLocalePicker extends DefaultLocalePicker {
     @Override
     public Locale pickLocale(HttpServletRequest request) {
 
+        System.out.println("------------------------");
+        System.out.println("call from locale picker");
+        
         HttpSession session = request.getSession();
         String requestLocaleAttr = (String) request.getParameter(LOCALE);
         if (requestLocaleAttr != null) {

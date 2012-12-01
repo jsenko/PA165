@@ -72,8 +72,10 @@
         <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean"
                 event="create"><s:label class="btn btn-info" name="match.newMatch"/></s:link>
         <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean"
-                event="generate"><s:label class="btn btn-info" name="Generuj zapasy"/></s:link>
-
+                event="generate"><s:label class="btn btn-info" name="index.generateMatches"/></s:link>
+        <br/>
+        <c:out value="${actionBean.warning}"/>
+       
 
     </s:layout-component>
 </s:layout-render>

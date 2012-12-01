@@ -41,13 +41,10 @@
         </table> 
         
                    <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean"
-                event="create">New team</s:link>              
+                           event="create"><s:label name="team.newTeam"/></s:link>              
                 
         <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean"
-                event="generate">Generuj Timy</s:link>  
-                
-        <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean"
-                event="writeOut">Write out</s:link>   
+                event="generate"><s:label name="team.generateTeams"/></s:link>   
         
     </s:layout-component>
 </s:layout-render>
