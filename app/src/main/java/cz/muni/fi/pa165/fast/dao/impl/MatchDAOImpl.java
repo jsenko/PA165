@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.fast.dao.impl;
 
 import cz.muni.fi.pa165.fast.dao.MatchDAO;
+import cz.muni.fi.pa165.fast.model.Goal;
 import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Team;
 import java.util.List;
@@ -65,6 +66,15 @@ public class MatchDAOImpl implements MatchDAO
 
 		Match managed = em.merge(match);
 		
+                List<Goal> goals = em.createQuery("select g from Goal g where g.match = :match")
+			.setParameter("match", managed)
+			.getResultList();
+                
+                System.out.println("Goals: " + goals);
+                for(Goal g:goals){
+                    em.remove(g);
+                }
+                
 		em.remove(managed);		
 	}
 
