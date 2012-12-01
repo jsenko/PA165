@@ -82,6 +82,7 @@ public class MatchServiceImpl implements MatchService
 			dtos.add(convert.fromEntityToDTO(m));
 		}
 		Collections.sort(dtos);
+                System.out.println("In MatchServiceImpl -> dtos: " + dtos);
 		return dtos;
             }catch(Exception ex){
                 throw new RuntimeException("Error while retrieving matches.", ex);

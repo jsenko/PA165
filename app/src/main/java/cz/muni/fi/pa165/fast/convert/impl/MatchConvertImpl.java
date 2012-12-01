@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.fast.convert.impl;
 
 import cz.muni.fi.pa165.fast.convert.MatchConvert;
+import cz.muni.fi.pa165.fast.dao.GoalDAO;
 import cz.muni.fi.pa165.fast.dao.TeamDAO;
 import cz.muni.fi.pa165.fast.dto.MatchDTO;
 import cz.muni.fi.pa165.fast.model.Goal;
@@ -21,6 +22,9 @@ public class MatchConvertImpl implements MatchConvert {
 
     @EJB
     TeamDAO teamDAO;
+    
+    @EJB
+    GoalDAO goalDAO;
 
     @Override
     public MatchDTO fromEntityToDTO(Match entity) {
@@ -49,10 +53,10 @@ public class MatchConvertImpl implements MatchConvert {
         int homeGoals = 0;
         int awayGoals = 0;
 
-        for (Goal g : entity.getGoals()) {
+        for (Goal g : goalDAO.findByMatch(entity)) {
             if (entity.getHomeTeam().equals(
-                    //teamDAO.findTeamByPlayer(g.getScorePlayer()))) {
-                    g.getScorePlayer().getTeam())){
+                    teamDAO.findTeamByPlayer(g.getScorePlayer()))) {
+                    //g.getScorePlayer().getTeam())){
 
                 homeGoals++;
             } else {

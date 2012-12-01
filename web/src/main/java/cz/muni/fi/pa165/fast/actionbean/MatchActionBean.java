@@ -65,7 +65,9 @@ public class MatchActionBean implements ActionBean {
         int maxRound = 0;
         for(MatchDTO match : allMatches)
         {
-            if(maxRound < match.getRound()) maxRound = match.getRound();
+            if(maxRound < match.getRound()) {
+                maxRound = match.getRound();
+            }
         }
         return maxRound;
     }

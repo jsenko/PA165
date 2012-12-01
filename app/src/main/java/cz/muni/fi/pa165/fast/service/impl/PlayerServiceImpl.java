@@ -136,6 +136,8 @@ public class PlayerServiceImpl implements PlayerService{
             dtoPlayers.add(dtoPlayer);
         }
         
+        System.out.println("In PlayerServiceImpl -> dtoPlayers: " + dtoPlayers);
+        
         switch(orderBy)
         {
             
