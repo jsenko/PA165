@@ -53,6 +53,7 @@ public class TeamActionBean implements ActionBean {
     
     public Resolution generate() {
         teamService.generate();
+        facade.generatePlayers();
         return new RedirectResolution(this.getClass(), "all");
     }
     
