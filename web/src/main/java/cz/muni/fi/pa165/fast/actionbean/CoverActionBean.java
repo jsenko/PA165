@@ -20,8 +20,8 @@ import org.apache.log4j.Logger;
 public class CoverActionBean implements ActionBean {
 
     private ActionBeanContext context;
-
-    public Resolution sk() {
+   
+    public Resolution sk(){
         System.out.println("this is request url" + context.getRequest().getRequestURL());
         return new RedirectResolution("/");
     }

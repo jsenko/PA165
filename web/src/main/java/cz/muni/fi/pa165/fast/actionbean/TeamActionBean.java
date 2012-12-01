@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.fast.actionbean;
 
 import com.samaxes.stripejb3.EJBBean;
 import cz.muni.fi.pa165.fast.dto.TeamDTO;
+import cz.muni.fi.pa165.fast.service.MatchGeneratorFacade;
 import cz.muni.fi.pa165.fast.service.TeamService;
 import java.util.List;
 import net.sourceforge.stripes.action.ActionBean;
@@ -26,7 +27,9 @@ public class TeamActionBean implements ActionBean {
     private TeamDTO team;
     @EJBBean("java:global/myapp/TeamServiceImpl!cz.muni.fi.pa165.fast.service.TeamService")
     protected TeamService teamService;
-
+    @EJBBean("java:global/myapp/MatchGeneratorFacadeImpl!cz.muni.fi.pa165.fast.service.MatchGeneratorFacade")
+    protected MatchGeneratorFacade facade;
+    
     @DefaultHandler
     public Resolution all() {
         return new ForwardResolution("/table.jsp");
@@ -41,6 +44,13 @@ public class TeamActionBean implements ActionBean {
         teamService.delete(team);
         return new RedirectResolution(this.getClass(), "all");
     }
+    
+    public Resolution generate() {
+        //facade.generateTeams();
+        teamService.generate();
+        return new RedirectResolution(this.getClass(), "all");
+    }
+    
 
     @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
     public void loadTeamFromDatabase() {

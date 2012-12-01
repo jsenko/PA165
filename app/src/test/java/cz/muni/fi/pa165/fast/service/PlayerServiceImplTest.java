@@ -61,6 +61,7 @@ public class PlayerServiceImplTest {
         gloss.addEJB(convert);
         
         service = gloss.make(PlayerServiceImpl.class);
+        
     }
     
     @After

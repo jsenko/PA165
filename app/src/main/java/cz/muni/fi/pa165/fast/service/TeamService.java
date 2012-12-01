@@ -43,4 +43,8 @@ public interface TeamService {
      * @return team data transfer object
      */
     public TeamDTO findByPlayer(long playerId);
+    
+    
+    public void generate();
+    
 }
