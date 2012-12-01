@@ -14,10 +14,13 @@
 <br />
 <s:label for="p5" name="player.height"/>
 <s:text id="p5" name="player.height"/>
-<br />
-<s:label for="p6" name="player.teamId"/>
+
+
+<%--
+<s:hidden name="player.teamId" />
 <s:select name="player.teamId" id="p6">
     
-    <s:options-collection collection="${actionBean.teams}" label="name" value="id"/>             
-
-</s:select><br />
+    <s:options-collection collection="${actionBean.teams}" label="name" value="id"/>  
+    </s:select>           
+--%>
+<br />

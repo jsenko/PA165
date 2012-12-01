@@ -35,8 +35,7 @@
                 <div id="menu">
                     <ul>
                         <li><s:link href="${pageContext.request.contextPath}/index.jsp"><s:label name="home"/></s:link></li>
-                        <li><s:link href="${pageContext.request.contextPath}/table.jsp"><s:label name="table"/></s:link></li>
-                        <li><s:link href="${pageContext.request.contextPath}/players.jsp"><s:label name="players"/></s:link></li>
+                        <li><s:link href="${pageContext.request.contextPath}/team/all.jsp"><s:label name="teams"/></s:link></li>
                     </ul>
                 </div>
 

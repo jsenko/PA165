@@ -39,14 +39,9 @@
 
             </c:forEach>
         </table> 
-
-        <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean">
-            <fieldset><legend><s:label name="table.newTeam"/></legend>
-                <%@include file="forms/teamForm.jsp"%>
-                <s:submit name="add" class="btn btn-info"/>
-            </fieldset>
-        </s:form>
-                
+        
+                   <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean"
+                event="create">New team</s:link>              
                 
         <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean"
                 event="generate">Generuj Timy</s:link>  

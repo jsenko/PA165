@@ -6,14 +6,14 @@
     <s:layout-component name="content">
         <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" var="actionBean"/>
         <h1><s:label name="player.header"/></h1>
-
+<%-- 
         <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean">
             <s:select name="team.id">
                 <s:options-collection collection="${actionBean.teams}" label="name" value="id"/>             
             </s:select>
             <s:submit class="btn btn-info team-show" name="selectTeam"/>
         </s:form>
-
+--%>
         <div class="btn-group">
             <button class="btn btn-primary"><s:label name="player.sortBy"/></button>
             <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
@@ -55,13 +55,10 @@
             </c:forEach>
         </table>
 
-        <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean">
-            <fieldset><legend><s:label name="player.newPlayer"/></legend>
-                <%@include file="forms/playerForm.jsp"%>
-                <%--<s:submit name="add"><s:label name="player.createNewPlayer"/></s:submit>--%>
-                <s:submit name="add" class="btn btn-info"/>
-            </fieldset>
-        </s:form>
+ 		<s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean"
+                event="create">New player</s:link> 
+ 
+ 
     </s:layout-component>
 </s:layout-render>
 

@@ -32,7 +32,7 @@ public class TeamActionBean implements ActionBean {
     
     @DefaultHandler
     public Resolution all() {
-        return new ForwardResolution("/table.jsp");
+        return new ForwardResolution("/team/all.jsp");
     }
 
     public Resolution add() {
@@ -67,12 +67,16 @@ public class TeamActionBean implements ActionBean {
     }
 
     public Resolution edit() {
-        return new ForwardResolution("/edit/teamEdit.jsp");
+        return new ForwardResolution("/team/edit.jsp");
     }
 
     public Resolution save() {
         teamService.update(team);
         return new RedirectResolution(this.getClass(), "all");
+    }
+    
+    public Resolution create() {
+        return new ForwardResolution("/team/create.jsp");
     }
 
     public TeamDTO getTeam() {
