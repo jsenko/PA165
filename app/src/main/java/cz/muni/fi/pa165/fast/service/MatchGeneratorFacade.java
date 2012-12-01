@@ -14,4 +14,6 @@ public interface MatchGeneratorFacade
         public void generateTeams();
         
         public void generateGoals();
+        
+        public void writeOutTeams();
 }

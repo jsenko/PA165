@@ -49,7 +49,10 @@
                 
                 
         <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean"
-                event="generate">Generuj Timy</s:link>        
+                event="generate">Generuj Timy</s:link>  
+                
+        <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean"
+                event="writeOut">Write out</s:link>   
         
     </s:layout-component>
 </s:layout-render>
