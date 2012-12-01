@@ -9,14 +9,14 @@
             beanclass="cz.muni.fi.pa165.fast.actionbean.GoalActionBean"
             var="actionBean" />
 
-        <h1>Create new goal</h1>
+        <h1><s:label name="goal.createNewGoal"/></h1>
 
         <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.GoalActionBean">
             <fieldset>
                 <s:errors />
                 <%@include file="/goal/form.jsp"%>
 
-                <s:submit name="add">Create</s:submit>
+                <s:submit name="add"/>
             </fieldset>
         </s:form>
 

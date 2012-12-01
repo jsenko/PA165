@@ -11,7 +11,7 @@
             <s:select name="team.id">
                 <s:options-collection collection="${actionBean.teams}" label="name" value="id"/>             
             </s:select>
-            <s:submit class="btn btn-info team-show" name="selectTeam"></s:submit>
+            <s:submit class="btn btn-info team-show" name="selectTeam"/>
         </s:form>
 
         <div class="btn-group">
@@ -30,7 +30,7 @@
             
         <table id="players_table">
             <tr>
-                <td><s:label name="player.no"/></td>
+                <td><s:label name="global.no"/></td>
                 <td><s:label name="player.name"/></td>
                 <td><s:label name="player.goals"/></td>
                 <td><s:label name="player.assistances"/></td>
@@ -59,7 +59,7 @@
             <fieldset><legend><s:label name="player.newPlayer"/></legend>
                 <%@include file="forms/playerForm.jsp"%>
                 <%--<s:submit name="add"><s:label name="player.createNewPlayer"/></s:submit>--%>
-                <s:submit value="player.createNewPlayer" name="add" class="btn btn-info"/>
+                <s:submit name="add" class="btn btn-info"/>
             </fieldset>
         </s:form>
     </s:layout-component>

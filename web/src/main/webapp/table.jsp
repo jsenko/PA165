@@ -9,8 +9,8 @@
 
         <table id="league_table">
             <tr>
-                <td>No.</td>
-                <td class="name">Name</td>
+                <td><s:label name="global.no"/></td>
+                <td class="name"><s:label name="team.name"/></td>
                 <td><s:label name="table.gamesPlayed"/></td>
                 <td><s:label name="table.wins"/></td>
                 <td><s:label name="table.losses"/></td>
@@ -43,7 +43,7 @@
         <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean">
             <fieldset><legend><s:label name="table.newTeam"/></legend>
                 <%@include file="forms/teamForm.jsp"%>
-                <s:submit value="table.createNewTeam" name="add" class="btn btn-info"/>
+                <s:submit name="add" class="btn btn-info"/>
             </fieldset>
         </s:form>
     </s:layout-component>

@@ -7,13 +7,13 @@
 
         <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.GoalActionBean" var="actionBean"/>
 
-        <h1>Goals</h1>
+        <h1><s:label name="goal.goals"/></h1>
 
         <table>
             <tr>
-                <td>Home Team</td>
-                <td>Result</td>
-                <td>Away Team</td>
+                <td><s:label name="goal.homeTeam"/></td>
+                <td><s:label name="goal.result"/></td>
+                <td><s:label name="goal.awayTeam"/></td>
                 <td></td>
                 <td></td>
             </tr>
@@ -46,7 +46,7 @@
         </table>
 
         <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.GoalActionBean"
-                event="create">novy gol</s:link>
+                event="create"><s:label name="goal.newGoal"/></s:link>
 
     </s:layout-component>
 </s:layout-render>

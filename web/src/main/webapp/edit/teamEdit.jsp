@@ -10,7 +10,7 @@
             <s:hidden name="team.id"/>
             <fieldset><legend>Edit data</legend>
                 <%@include file="/forms/teamForm.jsp"%>
-                <s:submit name="save">Save</s:submit>
+                <s:submit name="save"/>
                 </fieldset>
         </s:form>
 

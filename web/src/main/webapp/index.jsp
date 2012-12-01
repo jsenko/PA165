@@ -12,7 +12,7 @@
         
         <c:forEach var="round" begin="1" end="${actionBean.rounds}" step="1" varStatus="status" >
             <table>
-                <h1>Round <c:out value="${round}" /></h1>
+                <h1><s:label name="match.round"/> <c:out value="${round}" /></h1>
                 <c:forEach items="${actionBean.matches}" var="matchDTO" varStatus="loop">
                     <c:if test="${matchDTO.round eq round}">
                         <tr>
@@ -60,7 +60,7 @@
             </table>
         </c:forEach>
         <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean"
-                event="create">novy zapas</s:link>
+                event="create"><s:label name="match.newMatch"/></s:link>
 
     </s:layout-component>
 </s:layout-render>
