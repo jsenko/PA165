@@ -7,14 +7,14 @@
         <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" var="actionBean"/>
         
         
-        <h1>Create new player</h1>
+        <s:label class="header1 text-info" name="player.createNewPlayer" />
 
-        <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean">
-            <fieldset><legend><s:label name="player.newPlayer"/></legend>
+            <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" class="form-horizontal">
+            
                 <%@include file="/player/form.jsp"%>
                 <%--<s:submit name="add"><s:label name="player.createNewPlayer"/></s:submit>--%>
                 <s:submit name="add" class="btn btn-info"/>
-            </fieldset>
+
         </s:form>
     </s:layout-component>
 </s:layout-render>

@@ -7,7 +7,7 @@
         <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" var="actionBean"/>
         <h1><s:label name="table.header"/></h1>
 
-        <table id="league_table">
+        <table id="team_table">
             <tr>
                 <td><s:label name="global.no"/></td>
                 <td class="name"><s:label name="team.name"/></td>
@@ -17,9 +17,7 @@
                 <td><s:label name="table.tosses"/></td>
                 <td><s:label name="table.score"/></td>
                 <td><s:label name="table.points"/></td>
-                <!--<td>Trend</td>-->
-                <td></td>
-                <td></td>
+               
             </tr>
             <c:forEach items="${actionBean.teams}" var="team" varStatus="loop">
 
@@ -31,20 +29,20 @@
                     <td><c:out value="${team.lost}"/></td>
                     <td><c:out value="${team.draw}"/></td>
                     <td><c:out value="${team.goalsFor}"/>:<c:out value="${team.goalsAgainst}"/></td>
-                    <td><c:out value="${team.points}"/></td>
+                    <th><c:out value="${team.points}"/></th>
                     <!--<td></td>-->
-                    <td><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" onclick="return confirm('Delete ${team.name}?');" event="delete"><s:param name="team.id" value="${team.id}"/><i class="icon-remove"></i></s:link></td>
-                    <td><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" event="edit"><s:param name="team.id" value="${team.id}"/><i class="icon-pencil"></i></s:link> </td>
+                    <td class="admin_section"><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" onclick="return confirm('Delete ${team.name}?');" event="delete"><s:param name="team.id" value="${team.id}"/><i class="icon-remove"></i></s:link></td>
+                    <td class="admin_section"><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" event="edit"><s:param name="team.id" value="${team.id}"/><i class="icon-pencil"></i></s:link> </td>
                 </tr>
 
             </c:forEach>
         </table> 
         
-                   <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean"
-                           event="create"><s:label name="team.newTeam"/></s:link>              
+                <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" event="create"><s:label class="btn btn-info" name="team.newTeam"/></s:link>              
                 
-        <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean"
-                event="generate"><s:label name="team.generateTeams"/></s:link>   
+                <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" event="generate"><s:label class="btn btn-info" name="team.generateTeams" /></s:link>  
+                
+                <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" event="writeOut"><s:label class="btn btn-info" name="team.writeOut" /></s:link>   
         
     </s:layout-component>
 </s:layout-render>

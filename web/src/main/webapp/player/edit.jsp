@@ -6,16 +6,19 @@
     <s:layout-component name="content">
         <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" var="actionBean"/>
 
-        <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean">
+        <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" class="form-horizontal">
             <s:hidden name="player.id"/>
             <fieldset><legend>Edit data</legend>
                 <%@include file="/player/form.jsp"%>
-                <br />
-                <s:select name="player.teamId" id="p6">
-    
-    <s:options-collection collection="${actionBean.teams}" label="name" value="id"/>  
-    </s:select>   
-                <s:submit name="save"/>
+                <div class="control-group">
+                    <s:label class="control-label" name="Team" />
+                    <div class="controls">
+                        <s:select name="player.teamId" id="p6">
+                            <s:options-collection collection="${actionBean.teams}" label="name" value="id"/>  
+                        </s:select>
+                    </div>
+                </div>
+                <s:submit class="btn btn-warning" name="save"/>
                 </fieldset>
         </s:form>
 
