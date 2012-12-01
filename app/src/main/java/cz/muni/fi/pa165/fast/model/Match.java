@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 public class Match implements Comparable<Match>, Serializable
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
     @Temporal(TemporalType.TIMESTAMP)
     private Date matchDate;

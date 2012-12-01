@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class Player implements Serializable
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
     
     private String name;

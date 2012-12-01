@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.fast.model;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.*;
 
 /**
@@ -13,7 +12,7 @@ import javax.persistence.*;
 public class Goal implements Serializable
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
     private int goalMinute;
     @OneToOne
