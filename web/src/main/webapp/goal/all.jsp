@@ -37,8 +37,10 @@
                         <td><c:out value="${goalDTO.goalMinute}\'"/></td>
                     </c:if>
 
-                    <td><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.GoalActionBean" onclick="return confirm('Delete goal by ${goalDTO.scoredPlayerName} in ${goalDTO.goalMinute}\'?');" event="delete">
-                            <s:param name="goalDTO.id" value="${goalDTO.id}"/><i class="icon-remove"></i></s:link></td>
+                    <td><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.GoalActionBean" onclick="return confirm('Delete goal by ${goalDTO.scoredPlayerName} in ${goalDTO.goalMinute} minute?');" event="delete">
+                            <s:param name="goalDTO.id" value="${goalDTO.id}"/>
+                            <s:param name="goalDTO.matchId" value="${goalDTO.matchId}"/>
+                            <i class="icon-remove"></i></s:link></td>
                     <td><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.GoalActionBean" event="edit">
                             <s:param name="goalDTO.id" value="${goalDTO.id}"/><i class="icon-pencil"></i></s:link> </td>
                     </tr>
@@ -46,7 +48,7 @@
         </table>
 
         <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.GoalActionBean"
-                event="create"><s:label name="goal.newGoal"/></s:link>
+                event="create"><s:param name="goalDTO.matchId" value="${actionBean.goalDTO.matchId}"/><s:label name="goal.newGoal"/></s:link>
 
     </s:layout-component>
 </s:layout-render>

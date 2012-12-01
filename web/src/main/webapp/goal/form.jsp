@@ -4,13 +4,17 @@
 
 
 <table>
+<s:hidden name="goalDTO.matchId"/>
+<%--
     <tr>
         <th><s:label for="g1" name="goal.match" /></th>
+        
         <td><s:select name="goalDTO.matchId" id="g1">
                 <s:options-collection collection="${actionBean.matches}"
                                       label="id" value="id" />
             </s:select></td>
-    </tr>
+            
+    </tr>--%>
     <tr>
         <th><s:label for="g4" name="goal.minute" /></th>
         <th><s:text name="goalDTO.goalMinute" id="g4" /></th>
