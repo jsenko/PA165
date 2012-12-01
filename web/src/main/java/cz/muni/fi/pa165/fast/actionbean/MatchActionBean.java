@@ -3,9 +3,9 @@ package cz.muni.fi.pa165.fast.actionbean;
 import com.samaxes.stripejb3.EJBBean;
 import cz.muni.fi.pa165.fast.dto.MatchDTO;
 import cz.muni.fi.pa165.fast.dto.TeamDTO;
+import cz.muni.fi.pa165.fast.service.MatchGeneratorFacade;
 import cz.muni.fi.pa165.fast.service.MatchService;
 import cz.muni.fi.pa165.fast.service.TeamService;
-
 import java.util.List;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
@@ -32,6 +32,10 @@ public class MatchActionBean implements ActionBean {
     protected MatchService matchService;
     @EJBBean("java:global/myapp/TeamServiceImpl!cz.muni.fi.pa165.fast.service.TeamService")
     protected TeamService teamService;
+    @EJBBean("java:global/myapp/MatchGeneratorFacadeImpl!cz.muni.fi.pa165.fast.service.MatchGeneratorFacade")
+    protected MatchGeneratorFacade facade;
+    
+    
     @ValidateNestedProperties(value = {
         @Validate(on = {"add", "save"}, field = "round", required = true),
         @Validate(on = {"add", "save"}, field = "homeTeamId", required = true, minvalue = 1),

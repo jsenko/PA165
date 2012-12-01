@@ -80,14 +80,14 @@ public class TeamServiceImplTest {
         verify(teamDaoMock).create(entity);
         verifyNoMoreInteractions(teamDaoMock);
     }
-    
+
     @Test
-    public void createTeamInvalid(){
+    public void createTeamInvalid() {
         doThrow(new IllegalArgumentException()).when(teamDaoMock).create(null);
-        try{
+        try {
             service.create(null);
             fail();
-        }catch(Exception ex){
+        } catch (Exception ex) {
             //OK
         }
     }
@@ -104,14 +104,14 @@ public class TeamServiceImplTest {
         verify(teamDaoMock).update(entity);
         verifyNoMoreInteractions(teamDaoMock);
     }
-    
+
     @Test
-    public void updateTeamInvalid(){
+    public void updateTeamInvalid() {
         doThrow(new IllegalArgumentException()).when(teamDaoMock).update(null);
-        try{
+        try {
             service.update(null);
             fail();
-        }catch(RuntimeException ex){
+        } catch (RuntimeException ex) {
             //OK
         }
     }
@@ -128,14 +128,14 @@ public class TeamServiceImplTest {
         verify(teamDaoMock).delete(entity);
         verifyNoMoreInteractions(teamDaoMock);
     }
-    
+
     @Test
-    public void deleteTeamInvalid(){
+    public void deleteTeamInvalid() {
         doThrow(new IllegalArgumentException()).when(teamDaoMock).delete(null);
-        try{
+        try {
             service.delete(null);
             fail();
-        }catch(RuntimeException ex){
+        } catch (RuntimeException ex) {
             //OK
         }
     }
