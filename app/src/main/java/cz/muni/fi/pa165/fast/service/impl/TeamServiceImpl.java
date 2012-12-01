@@ -2,10 +2,12 @@ package cz.muni.fi.pa165.fast.service.impl;
 
 import cz.muni.fi.pa165.fast.convert.PlayerConvert;
 import cz.muni.fi.pa165.fast.convert.TeamConvert;
+import cz.muni.fi.pa165.fast.dao.MatchDAO;
 import cz.muni.fi.pa165.fast.dao.PlayerDAO;
 import cz.muni.fi.pa165.fast.dao.TeamDAO;
 import cz.muni.fi.pa165.fast.dto.PlayerDTO;
 import cz.muni.fi.pa165.fast.dto.TeamDTO;
+import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Player;
 import cz.muni.fi.pa165.fast.model.Team;
 import cz.muni.fi.pa165.fast.service.TeamService;
@@ -25,6 +27,9 @@ public class TeamServiceImpl implements TeamService {
     private PlayerDAO playerDao;
     @EJB
     private TeamConvert teamConvert;
+    
+    @EJB
+    private MatchDAO matchDao;
 
     @Override
     public void create(TeamDTO dto) {
@@ -58,8 +63,32 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public void delete(TeamDTO dto) {
         try {
+            
+            
             Team team = teamConvert.fromDTOToEntity(dto);
-
+            //delete players
+            List<Player> players = playerDao.findPlayersByTeam(team);
+            for(Player p: players)
+            {
+                playerDao.delete(p);
+            }
+            // delete matches
+            List<Match> matches = matchDao.findByAwayTeam(team);
+            if(matches != null)
+            {
+            for(Match m: matches)
+            {
+                matchDao.delete(m);
+            }
+            }
+            matches = matchDao.findByHomeTeam(team);
+            if(matches != null)
+            {
+            for(Match m: matches)
+            {
+                matchDao.delete(m);
+            }
+            }
             teamDao.delete(team);
         } catch (Exception ex) {
             throw new RuntimeException("Delete operation failed.", ex);
