@@ -39,6 +39,8 @@ public class MatchActionBean implements ActionBean {
     @EJBBean("java:global/myapp/MatchGeneratorFacadeImpl!cz.muni.fi.pa165.fast.service.MatchGeneratorFacade")
     protected MatchGeneratorFacade facade;
     
+    private String warning;
+    
     
     @ValidateNestedProperties(value = {
         @Validate(on = {"add", "save"}, field = "round", required = true),
@@ -67,6 +69,11 @@ public class MatchActionBean implements ActionBean {
         }
         return maxRound;
     }
+    
+    public String getWarning(){
+        return warning;
+    }
+    
 
     public List<TeamDTO> getTeams() {
         return teamService.findAll();
@@ -85,7 +92,14 @@ public class MatchActionBean implements ActionBean {
     }
     
      public Resolution generate() {
-         facade.generateMatches();
+         
+         System.out.println("------------------------");
+         int teamsAmount = teamService.findAll().size();
+         if((teamsAmount==0)||(teamsAmount%2!=0)) this.warning = "You have wrong amount of teams, the amount must be event and higher than 0";
+         else{
+             facade.drop();
+             facade.generateMatches();
+         }
          return new ForwardResolution(this.getClass(), "all");
      }
     

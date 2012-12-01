@@ -22,7 +22,12 @@ public class CoverActionBean implements ActionBean {
     private ActionBeanContext context;
    
     public Resolution sk(){
-        System.out.println("this is request url" + context.getRequest().getRequestURL());
+        System.out.println("prepnutie do slovenciny");
+        return new RedirectResolution("/");
+    }
+    
+    public Resolution en(){
+        System.out.println("switch to english");
         return new RedirectResolution("/");
     }
 

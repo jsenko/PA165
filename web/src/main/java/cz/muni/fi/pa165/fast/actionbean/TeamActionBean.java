@@ -45,11 +45,6 @@ public class TeamActionBean implements ActionBean {
         return new RedirectResolution(this.getClass(), "all");
     }
     
-    public Resolution writeOut(){
-        System.out.println("write out teams was called");
-        facade.writeOutTeams();
-        return new RedirectResolution(this.getClass(), "all");
-    }
     
     public Resolution generate() {
         teamService.generate();

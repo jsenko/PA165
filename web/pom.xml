@@ -193,7 +193,7 @@
                     <port>8080</port>
                     <contextRoot>pa165</contextRoot>
                     <name>${name}</name>
-                    <!--<configFile>${basedir}/domain.xml</configFile>-->
+                    <configFile>${basedir}/src/main/resources/domain.xml</configFile>
                 </configuration>
                 <executions>
                     <execution>
