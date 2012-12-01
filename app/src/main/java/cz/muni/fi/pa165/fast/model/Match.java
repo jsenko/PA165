@@ -25,7 +25,7 @@ import javax.persistence.TemporalType;
 public class Match implements Comparable<Match>, Serializable
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Temporal(TemporalType.TIMESTAMP)
     private Date matchDate;
@@ -33,7 +33,7 @@ public class Match implements Comparable<Match>, Serializable
     private Team homeTeam;
     @ManyToOne
     private Team awayTeam;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "match")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "match", orphanRemoval=true)
     private Collection<Goal> goals;
     
     private int round;

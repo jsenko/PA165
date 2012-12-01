@@ -36,17 +36,17 @@ public class Team implements Serializable
 {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     private String name;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "team")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "team", orphanRemoval=true)
     private List<Player> players;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "homeTeam")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "homeTeam", orphanRemoval=true)
     private List<Match> homeMatches;
    
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "awayTeam")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "awayTeam", orphanRemoval=true)
     private List<Match> awayMatches;
 
     public Long getId() {

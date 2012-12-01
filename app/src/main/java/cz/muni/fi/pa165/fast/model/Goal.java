@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class Goal implements Serializable
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int goalMinute;
     @OneToOne
