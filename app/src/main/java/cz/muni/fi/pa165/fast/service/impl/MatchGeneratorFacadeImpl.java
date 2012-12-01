@@ -36,16 +36,11 @@ public class MatchGeneratorFacadeImpl implements MatchGeneratorFacade {
     private Random rand = new Random();
 
     @Override
-    public void setTeamService(TeamService teamService) {
-        this.teamService = teamService;
-    }
-
-    @Override
     public void generateMatches() {
         List<TeamDTO> teams = teamService.findAll();
         int matchesPerRound = teams.size() / 2;
         int roundsCount = teams.size() - 1;
-
+        long millis = System.currentTimeMillis();
         TeamDTO fixedTeam = teams.get(0);
         teams.remove(0);
 
@@ -57,7 +52,7 @@ public class MatchGeneratorFacadeImpl implements MatchGeneratorFacade {
                     MatchDTO match = new MatchDTO();
                     match.setHomeTeamId(fixedTeam.getId());
                     match.setAwayTeamId(teams.get(teams.size() - 1).getId());
-                    match.setDate(new Date(System.currentTimeMillis()));
+                    match.setDate(new Date(millis));
                     match.setRound(r);
                     matchService.create(match);
                 } else {
@@ -65,19 +60,25 @@ public class MatchGeneratorFacadeImpl implements MatchGeneratorFacade {
                     MatchDTO match = new MatchDTO();
                     match.setHomeTeamId(teams.get(i - 1).getId());
                     match.setAwayTeamId(teams.get(teams.size() - (i + 1)).getId());
-                    match.setDate(new Date(System.currentTimeMillis()));
+                    match.setDate(new Date(millis));
                     match.setRound(r);
                     matchService.create(match);
                 }
             }
+            millis += 604800000;
             TeamDTO removed = teams.remove(0);
             teams.add(removed);
         }
+        
 
     }
 
     @Override
     public void drop() {
+        List<MatchDTO> allMatches = matchService.findAll();
+        for(MatchDTO m:allMatches){
+            matchService.delete(m);
+        }
     }
 
     @Override
@@ -86,17 +87,20 @@ public class MatchGeneratorFacadeImpl implements MatchGeneratorFacade {
         initializeNames();
 
         List<TeamDTO> list = teamService.findAll();
-
+        
+        Date date = new Date();
+ 
+        
         System.out.println("generate player was called");
         for (TeamDTO team : list) {
 
             for (int i = 0; i < 11; i++) {
                 PlayerDTO player = new PlayerDTO();
-                player.setAge(20);
+                player.setAge(20+rand.nextInt(12));
                 player.setName(getRandomName());
                 player.setSurname(getRandomSurname());
-                player.setWeight(70);
-                player.setHeight(180);
+                player.setWeight(60+rand.nextInt(25));
+                player.setHeight(170+rand.nextInt(20));
                 player.setTeamId(team.getId());
                 playerService.create(player);
             }
@@ -110,20 +114,6 @@ public class MatchGeneratorFacadeImpl implements MatchGeneratorFacade {
         teamService.generate();
     }
 
-    @Override
-    public void generateGoals() {
-    }
-
-    @Override
-    public void writeOutTeams() {
-
-        System.out.println("this are all teams");
-
-        List<TeamDTO> list = teamService.findAll();
-        for (TeamDTO t : list) {
-            System.out.println(t.getName());
-        }
-    }
 
     private void initializeNames() {
         names.add("Paul");

@@ -113,6 +113,8 @@ body
 {
     font-size: 16px;
     font-style: oblique;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
 .admin_section
@@ -120,6 +122,10 @@ body
     background: #bd362f;
     padding-left: 5px;
     padding-right: 5px;
+}
+.btn-group
+{
+    margin-bottom: 20px;
 }
 /* ==========MATCHES=========*/
 
@@ -158,64 +164,58 @@ body
     padding-left: 5px;
 }
 /* ==========MATCHES-END=========*/
-.team
+
+/* ==========GOALS, PLAYERS, TEAMS=========*/
+#goal_table tr, #player_table tr, #team_table tr
 {
-    width: 60px;
+    height: 30px;
+}
+
+#goal_table td,th, #player_table td, th, #team_table td, th
+{
     padding-left: 10px;
+    padding-right: 10px;
 }
 
-#league_table
+#goal_table tr:first-child td:first-child, #player_table tr:first-child td:first-child, #team_table tr:first-child td:first-child
 {
-    margin-bottom: 20px;
-    margin-top: 20px;
-}
-#league_table tr:first-child 	
-{
-    background: #fff;
-}
-#league_table td
-{
-    width:15px;
-    padding-left: 10px;
-}
-#league_table td:first-child 	
-{
-    text-align: right;
-    width: 7px;
-    padding-right: 8px;
-}
-.name
-{
-    padding-right: 50px;
+    border-radius: 10px 0 0 0;
 }
 
-.round
+#goal_table tr:first-child td:last-child, #player_table tr:first-child td:last-child, #team_table tr:first-child td:last-child
 {
-    padding-right: 10px
+    border-radius: 0 10px 0 0;
 }
 
-.team-show
+#goal_table tr:nth-child(2) td:last-child, #player_table tr:nth-child(2) td:last-child, #team_table tr:nth-child(2) td:last-child
 {
-    margin-bottom: 10px;
+    border-radius: 0 10px 0 0;
 }
 
-#players_table
+#goal_table tr:last-child td:first-child, #player_table tr:last-child td:first-child, #team_table tr:last-child td:first-child
 {
-    margin-bottom: 10px;
-    margin-top: 10px;
+    border-radius: 0 0 0 10px;
 }
 
-#players_table tr:first-child
+#goal_table tr:last-child td:last-child, #player_table tr:last-child td:last-child, #team_table tr:last-child td:last-child
 {
-    background: #fff;
+    border-radius: 0 0 10px 0;
 }
+/* ==========GOALS, PLAYERS, TEAMS-END=========*/
 
+/* ==========GOALS=========*/
+/* ==========GOALS-END=========*/
+
+/* ==========PLAYER=========*/
 .btn-group > .btn + .dropdown-toggle
 {
     height:30px;
 }
+/* ==========PLAYER-END=========*/
 
+/* ==========TEAMS=========*/
 
+/* ==========TEAMS-END=========*/
 /* ==========CONTENT-END=========*/
 /* ==========CONTAINER-END=========*/
 

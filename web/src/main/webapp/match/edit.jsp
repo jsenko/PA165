@@ -9,15 +9,15 @@
             beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean"
             var="actionBean" />
 
-        <h1><s:label name="match.editMatch"/></h1>
+        <s:label name="match.editMatch" class="text-info header1"/>
 
-        <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean">
+        <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean" class="form-horizontal">
             <fieldset>
                 <s:errors />
                 <s:hidden name="matchDTO.id"/>
                 <%@include file="/match/form.jsp"%>
 
-                <s:submit name="save"/>
+                <s:submit class="btn btn-warning" name="save"/>
             </fieldset>
         </s:form>
 
