@@ -9,7 +9,7 @@
             beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean"
             var="actionBean" />
 
-        <h1>Edit Match</h1>
+        <h1><s:label name="match.editMatch"/></h1>
 
         <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean">
             <fieldset>
@@ -17,7 +17,7 @@
                 <s:hidden name="matchDTO.id"/>
                 <%@include file="/match/form.jsp"%>
 
-                <s:submit name="save">Save</s:submit>
+                <s:submit name="save"/>
             </fieldset>
         </s:form>
 

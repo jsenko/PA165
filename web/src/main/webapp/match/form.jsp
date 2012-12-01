@@ -5,23 +5,23 @@
 
 <table>
     <tr>
-        <th><s:label for="m1" name="Round" /></th>
+        <th><s:label for="m1" name="match.round" /></th>
         <td><s:text id="m1" name="matchDTO.round" /></td>
     </tr>
     <tr>
-        <th><s:label for="m7"  name="Date" /></th>
+        <th><s:label for="m7"  name="match.date" /></th>
         <td><s:text name="matchDTO.date" formatPattern="MM/dd/yyyy" id="m7" class="m7"/></td>
     </tr>
 
     <tr>
-        <th><s:label for="m5" name="Home Team" /></th>
+        <th><s:label for="m5" name="match.hTeam" /></th>
         <td><s:select name="matchDTO.homeTeamId" id="m5">
                 <s:options-collection collection="${actionBean.teams}"
                                       label="name" value="id" />
             </s:select></td>
     </tr>
     <tr>
-        <th><s:label for="m6"  name="Away Team" /></th>
+        <th><s:label for="m6"  name="match.aTeam" /></th>
         <td><s:select name="matchDTO.awayTeamId" id="m6">
                 <s:options-collection collection="${actionBean.teams}"
                                       label="name" value="id" />
