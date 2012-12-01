@@ -32,7 +32,8 @@ public class PlayerActionBean implements ActionBean {
         @Validate(on = {"add", "save"}, field = "age", required = true, minvalue = 16),
         @Validate(on = {"add", "save"}, field = "height", required = true, minvalue = 50),
         @Validate(on = {"add", "save"}, field = "weight", required = true, minvalue = 100),
-        @Validate(on = {"add", "save"}, field = "teamId", required = true, minvalue = 1)})
+        //@Validate(on = {"add", "save"}, field = "teamId", required = true, minvalue = 1)
+        })
     private PlayerDTO player;
     private TeamDTO team;
     private int order;
@@ -45,9 +46,9 @@ public class PlayerActionBean implements ActionBean {
 
     @DefaultHandler
     public Resolution all() {
-        return new ForwardResolution("/players.jsp");
+        return new ForwardResolution("/player/all.jsp");
     }
-
+    
     public Resolution selectTeam() {
         if (team == null || team.getId() == 0) {
             System.out.println("No team or no team id");
@@ -65,7 +66,8 @@ public class PlayerActionBean implements ActionBean {
     }
 
     public Resolution add() {
-        System.out.println(player);
+        //System.out.println(">>>>>>>>>"+player);
+        player.setTeamId(getContext().getSelectedTeam().getId());
         playerService.create(player);
         return new RedirectResolution(this.getClass(), "all");
     }
@@ -85,7 +87,7 @@ public class PlayerActionBean implements ActionBean {
     }
 
     public Resolution edit() {
-        return new ForwardResolution("/edit/playerEdit.jsp");
+        return new ForwardResolution("/player/edit.jsp");
     }
 
     public Resolution save() {
@@ -157,6 +159,11 @@ public class PlayerActionBean implements ActionBean {
         }
 
         return playerService.findPlayersByTeam(utTeam.getId(), getContext().getOrder());
+    }
+    
+    public Resolution create() {
+        
+        return new ForwardResolution("/player/create.jsp");
     }
 
     @Override

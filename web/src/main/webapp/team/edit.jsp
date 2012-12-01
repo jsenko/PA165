@@ -9,7 +9,7 @@
         <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean">
             <s:hidden name="team.id"/>
             <fieldset><legend>Edit data</legend>
-                <%@include file="/forms/teamForm.jsp"%>
+                <%@include file="/team/form.jsp"%>
                 <s:submit name="save"/>
                 </fieldset>
         </s:form>
