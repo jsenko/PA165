@@ -25,7 +25,7 @@
 
                 <tr>
                     <td><c:out value="${loop.index + 1}"/>.</td>
-                    <td class="name"><c:out value="${team.name}"/></td>
+                    <td class="name"><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="selectTeam"><s:param name="team.id" value="${team.id}"/><c:out value="${team.name}"/></s:link></td>
                     <td><c:out value="${team.won + team.lost + team.draw}"/></td>
                     <td><c:out value="${team.won}"/></td>
                     <td><c:out value="${team.lost}"/></td>

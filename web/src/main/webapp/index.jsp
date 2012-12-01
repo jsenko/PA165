@@ -27,7 +27,7 @@
                             </td>
 
                             <td>
-                                <c:out value="${matchDTO.homeTeamName}"/>
+                                <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="selectTeam"><s:param name="team.id" value="${matchDTO.homeTeamId}"/><c:out value="${matchDTO.homeTeamName}"/></s:link>
                             </td>
                             
                             <td>
@@ -38,7 +38,7 @@
                             </td>
                             
                             <td>
-                                <c:out value="${matchDTO.awayTeamName}"/>
+                                <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="selectTeam"><s:param name="team.id" value="${matchDTO.awayTeamId}"/><c:out value="${matchDTO.awayTeamName}"/></s:link>
                             </td>
                             
                             <td>
