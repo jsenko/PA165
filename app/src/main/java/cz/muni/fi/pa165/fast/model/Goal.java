@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.fast.model;
 
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.*;
 
 /**

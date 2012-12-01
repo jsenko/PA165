@@ -224,8 +224,10 @@ public class TeamDAOTest {
         assertEquals("Home", res.getName());
         
         //cleanup
+        fem.removeM(m);
         fem.remove(t);
         fem.remove(tt);
+        
     }
 
     @Test
@@ -256,8 +258,10 @@ public class TeamDAOTest {
         assertEquals("Away", res.getName());
         
         //cleanup
+        fem.removeM(m);
         fem.remove(t);
         fem.remove(tt);
+        
     }
 
     @Stateless
@@ -268,6 +272,10 @@ public class TeamDAOTest {
 
         public void remove(Team t) {
             em.remove(em.find(Team.class, t.getId()));
+        }
+        
+        public void removeM(Match m) {
+            em.remove(em.find(Match.class, m.getId()));
         }
 
         public void persist(Object o) {
