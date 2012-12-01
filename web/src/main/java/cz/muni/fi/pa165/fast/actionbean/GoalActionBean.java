@@ -21,9 +21,14 @@ import cz.muni.fi.pa165.fast.service.GoalService;
 import cz.muni.fi.pa165.fast.service.MatchService;
 import cz.muni.fi.pa165.fast.service.PlayerOrderBy;
 import cz.muni.fi.pa165.fast.service.PlayerService;
+import cz.muni.fi.pa165.fast.service.TeamService;
 import java.util.ArrayList;
+import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
+import net.sourceforge.stripes.validation.ValidationError;
+import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMethod;
 
 
 /**
@@ -41,6 +46,8 @@ public class GoalActionBean implements ActionBean {
     protected GoalService goalService;
     @EJBBean("java:global/myapp/PlayerServiceImpl!cz.muni.fi.pa165.fast.service.PlayerService")
     protected PlayerService playerService;
+    @EJBBean("java:global/myapp/TeamServiceImpl!cz.muni.fi.pa165.fast.service.TeamService")
+    protected TeamService teamService;
     @ValidateNestedProperties(value = {
         @Validate(on = {"add", "save"}, field = "scoredPlayerId", required = true, minvalue = 1),
         @Validate(on = {"add", "save"}, field = "assistPlayerId", required = true, minvalue = 1),
@@ -56,6 +63,7 @@ public class GoalActionBean implements ActionBean {
 
     public List<GoalDTO> getGoals() {
         System.out.println("matchid: " + matchId);
+        System.out.println("In getGoals -> goalDTO: " + goalDTO);
         List<GoalDTO> list = goalService.findByMatch(goalDTO.getMatchId());
         System.out.println("GoalList: " + list);
         return list;
@@ -124,6 +132,23 @@ public class GoalActionBean implements ActionBean {
     public void setGoalDTO(GoalDTO goalDTO) {
 
         this.goalDTO = goalDTO;
+    }
+    
+    @ValidationMethod(on = {"add", "save"})
+    public void checkPlayers(ValidationErrors errors){
+        if(goalDTO.getAssistPlayerId() == goalDTO.getScoredPlayerId()){
+            errors = getContext().getValidationErrors();
+            
+            ValidationError error = new LocalizableError("validation.goal.samePlayerId");
+            errors.addGlobalError(error);
+        }
+        
+        if(teamService.findByPlayer(goalDTO.getAssistPlayerId()).getId() != teamService.findByPlayer(goalDTO.getScoredPlayerId()).getId()){
+            errors = getContext().getValidationErrors();
+            
+            ValidationError error = new LocalizableError("validation.goal.playersFromDiffTeams");
+            errors.addGlobalError(error);
+        }
     }
 
     @Override

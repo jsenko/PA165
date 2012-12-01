@@ -122,7 +122,7 @@ public class MatchActionBean implements ActionBean {
         if(matchDTO.getAwayTeamId() == matchDTO.getHomeTeamId()){
             errors = getContext().getValidationErrors();
             
-            ValidationError error = new LocalizableError("validation.teamid.sameTeamId");
+            ValidationError error = new LocalizableError("validation.match.sameTeamId");
             errors.addGlobalError(error);
         }
     }

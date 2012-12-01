@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" %>
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <s:layout-render name="/cover.jsp">
     <s:layout-component name="content">
@@ -22,7 +23,7 @@
                             </td>
                             
                             <td>
-                                <c:out value="${matchDTO.date}"/>
+                                <f:formatDate type="date" dateStyle="short" value="${matchDTO.date}" />
                             </td>
 
                             <td>
