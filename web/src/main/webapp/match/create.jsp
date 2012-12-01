@@ -9,14 +9,14 @@
             beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean"
             var="actionBean" />
 
-        <h1><s:label name="match.createNewMatch"/></h1>
+        <s:label name="match.createNewMatch" class="text-info header1"/>
 
-        <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean">
+        <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean" class="form-horizontal">
             <fieldset>
                 <s:errors />
                 <%@include file="/match/form.jsp"%>
 
-                <s:submit name="add"/>
+                <s:submit class="btn btn-info" name="add"/>
             </fieldset>
         </s:form>
 

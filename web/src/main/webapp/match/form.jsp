@@ -3,30 +3,38 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
-<table>
-    <tr>
-        <th><s:label for="m1" name="match.round" /></th>
-        <td><s:text id="m1" name="matchDTO.round" /></td>
-    </tr>
-    <tr>
-        <th><s:label for="m7"  name="match.date" /></th>
-        <td><s:text name="matchDTO.date" formatPattern="MM/dd/yyyy" id="m7" class="m7"/></td>
-    </tr>
+<div class="control-group">
+    <s:label class="control-label" for="m1" name="match.round" />
+    <div class="controls">
+        <s:text id="m1" name="matchDTO.round" />
+    </div>
+</div>
 
-    <tr>
-        <th><s:label for="m5" name="match.hTeam" /></th>
-        <td><s:select name="matchDTO.homeTeamId" id="m5">
-                <s:options-collection collection="${actionBean.teams}"
-                                      label="name" value="id" />
-            </s:select></td>
-    </tr>
-    <tr>
-        <th><s:label for="m6"  name="match.aTeam" /></th>
-        <td><s:select name="matchDTO.awayTeamId" id="m6">
-                <s:options-collection collection="${actionBean.teams}"
-                                      label="name" value="id" />
-            </s:select></td>
-    </tr>
+<div class="control-group">
+    <s:label class="control-label" for="m7"  name="match.date" />
+    <div class="controls">
+        <s:text name="matchDTO.date" formatPattern="MM/dd/yyyy" id="m7" class="m7"/>
+    </div>
+</div>
+
+<div class="control-group">
+    <s:label class="control-label" for="m5" name="match.hTeam" />
+    <div class="controls">
+        <s:select name="matchDTO.homeTeamId" id="m5">
+            <s:options-collection collection="${actionBean.teams}" label="name" value="id" />
+        </s:select>
+    </div>
+</div>
+
+<div class="control-group">
+    <s:label class="control-label" for="m6"  name="match.aTeam" />
+    <div class="controls"> 
+        <s:select name="matchDTO.awayTeamId" id="m6">
+            <s:options-collection collection="${actionBean.teams}"  label="name" value="id" />
+        </s:select>
+    </div>
+</div>
+
     <script type="text/javascript">
         $(function() {
         $.datepicker.regional['sk'] = {clearText: 'Vyčistiť', clearStatus: 'Zmazať aktuálny dátum',
@@ -49,6 +57,6 @@
         $( "#m7" ).datepicker( $.datepicker.regional[ "${actionBean.context.locale}" ] );
     });
                                 </script>
-</table>
+
 
 

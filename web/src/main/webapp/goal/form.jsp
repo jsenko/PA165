@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 
-<table>
 <s:hidden name="goalDTO.matchId"/>
 <%--
     <tr>
@@ -15,24 +14,28 @@
             </s:select></td>
             
     </tr>--%>
-    <tr>
-        <th><s:label for="g4" name="goal.minute" /></th>
-        <th><s:text name="goalDTO.goalMinute" id="g4" /></th>
-    </tr>
-    <tr>
-        <th><s:label for="g2"  name="goal.sPlayer" /></th>
-        <td><s:select name="goalDTO.scoredPlayerId" id="g2">
-                <s:options-collection collection="${actionBean.players}"
-                                      label="name" value="id" group="teamId" />
-            </s:select></td>
-    </tr>
-    <tr>
-        <th><s:label for="g3"  name="goal.aPlayer" /></th>
-        <td><s:select name="goalDTO.assistPlayerId" id="g3">
-                <s:options-collection collection="${actionBean.players}"
-                                      label="name" value="id" group="teamId" />
-            </s:select></td>
-    </tr>
-</table>
+        <div class="control-group">
+            <s:label class="control-label" for="g4" name="goal.minute" />
+            <div class="controls">
+                <s:text name="goalDTO.goalMinute" id="g4" />
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <s:label class="control-label" for="g2"  name="goal.sPlayer" />
+            <div class="controls">
+                <s:select name="goalDTO.scoredPlayerId" id="g2">
+                    <s:options-collection collection="${actionBean.players}" label="name" value="id" group="teamId" />
+                </s:select>
+            </div>
+        </div>
+        <div class="control-group">
+            <s:label class="control-label" for="g3"  name="goal.aPlayer" />
+            <div class="controls">
+                <s:select name="goalDTO.assistPlayerId" id="g3">
+                    <s:options-collection collection="${actionBean.players}" label="name" value="id" group="teamId" />
+                </s:select>
+            </div>
+        </div>
 
 
