@@ -46,6 +46,10 @@ public class MockData
 		Team t3 = new Team();
 		t3.setId(3L);
 		t3.setName("Third Team");
+                
+                Team t4 = new Team();
+		t4.setId(4L);
+		t4.setName("Fourth Team");
 
 		// PLAYERS
 
@@ -83,6 +87,7 @@ public class MockData
                 p4.setWeight(171);
                 p4.setHeight(79);
                 p4.setAge(28);
+                p4.setTeam(t4);
 
                 Player p5 = new Player();
                 p5.setId(5L);
@@ -91,7 +96,8 @@ public class MockData
                 p5.setWeight(188);
                 p5.setHeight(65);
                 p5.setAge(22);
-
+                p5.setTeam(t4);
+                
                 Player p6 = new Player();
                 p6.setId(6L);
                 p6.setName("Gery");
@@ -99,7 +105,8 @@ public class MockData
                 p6.setWeight(176);
                 p6.setHeight(83);
                 p6.setAge(32);
-
+                p6.setTeam(t4);
+                
                 Player p7 = new Player();
                 p7.setId(7L);
                 p7.setName("Rymond");
@@ -107,6 +114,7 @@ public class MockData
                 p7.setWeight(167);
                 p7.setHeight(74);
                 p7.setAge(25);
+                p7.setTeam(t4);
 
                 Player p8 = new Player();
                 p8.setId(8L);
@@ -115,6 +123,7 @@ public class MockData
                 p8.setWeight(177);
                 p8.setHeight(81);
                 p8.setAge(17);
+                p8.setTeam(t4);
 
                 Player p9 = new Player();
                 p9.setId(9L);
@@ -123,6 +132,7 @@ public class MockData
                 p9.setWeight(182);
                 p9.setHeight(91);
                 p9.setAge(30);
+                p9.setTeam(t4);
 
 		// MATCHES - home team vs away team
 		Match m1vs2 = new Match(); // result 1:0, round 1, first
@@ -215,6 +225,9 @@ public class MockData
 
 		t3.setHomeMatches(list(new Match[]{ m3vs1, m3vs2 }));
 		t3.setAwayMatches(list(new Match[]{ m1vs3, m2vs3 }));
+                
+                t4.setHomeMatches(list(new Match[]{}));
+		t4.setAwayMatches(list(new Match[]{}));
 
 		m1vs2.setGoals(list(new Goal[]{ g1 }));
 		m1vs3.setGoals(list(new Goal[]{ g2, g3 }));
@@ -227,10 +240,17 @@ public class MockData
 		doReturn( t1 ).when(teamDAOMock).getById(1L);
 		doReturn( t2 ).when(teamDAOMock).getById(2L);
 		doReturn( t3 ).when(teamDAOMock).getById(3L);
-		doReturn(list(new Team[]{ t1, t2, t3 })).when(teamDAOMock).findAll();
+                doReturn( t4 ).when(teamDAOMock).getById(4L);
+		doReturn(list(new Team[]{ t1, t2, t3, t4 })).when(teamDAOMock).findAll();
 		doReturn( t1 ).when(teamDAOMock).findTeamByPlayer(p1);
 		doReturn( t2 ).when(teamDAOMock).findTeamByPlayer(p2);
 		doReturn( t3 ).when(teamDAOMock).findTeamByPlayer(p3);
+                doReturn( t4 ).when(teamDAOMock).findTeamByPlayer(p4);
+                doReturn( t4 ).when(teamDAOMock).findTeamByPlayer(p5);
+                doReturn( t4 ).when(teamDAOMock).findTeamByPlayer(p6);
+                doReturn( t4 ).when(teamDAOMock).findTeamByPlayer(p7);
+                doReturn( t4 ).when(teamDAOMock).findTeamByPlayer(p8);
+                doReturn( t4 ).when(teamDAOMock).findTeamByPlayer(p9);
 
 
 		doReturn( m1vs2 ).when(matchDAOMock).getById(1L);
@@ -246,9 +266,11 @@ public class MockData
 		doReturn(list(new Match[]{ m1vs2, m1vs3 })).when(matchDAOMock).findByHomeTeam(t1);
 		doReturn(list(new Match[]{ m2vs1, m2vs3 })).when(matchDAOMock).findByHomeTeam(t2);
 		doReturn(list(new Match[]{ m3vs1, m3vs2 })).when(matchDAOMock).findByHomeTeam(t3);
+                doReturn(list(new Match[]{})).when(matchDAOMock).findByHomeTeam(t4);
 		doReturn(list(new Match[]{ m2vs1, m3vs1 })).when(matchDAOMock).findByAwayTeam(t1);
 		doReturn(list(new Match[]{ m1vs2, m3vs2 })).when(matchDAOMock).findByAwayTeam(t2);
 		doReturn(list(new Match[]{ m1vs3, m2vs3 })).when(matchDAOMock).findByAwayTeam(t3);
+                doReturn(list(new Match[]{})).when(matchDAOMock).findByAwayTeam(t4);
                 
                 doReturn(list(new Match[]{m1vs2, m1vs3, m2vs1, m2vs3, m3vs1, m3vs2})).when(matchDAOMock).findAll();
                 
@@ -280,6 +302,13 @@ public class MockData
                 doReturn( list(new Goal[]{g6}) ).when(goalDAOMock).findByAssistPlayer(p7);
                 doReturn( list(new Goal[]{}) ).when(goalDAOMock).findByAssistPlayer(p8);
                 doReturn( list(new Goal[]{}) ).when(goalDAOMock).findByAssistPlayer(p9);
+                
+                doReturn( list(new Goal[]{g1}) ).when(goalDAOMock).findByMatch(m1vs2);
+                doReturn( list(new Goal[]{g2, g3}) ).when(goalDAOMock).findByMatch(m1vs3);
+                doReturn( list(new Goal[]{g4}) ).when(goalDAOMock).findByMatch(m2vs1);
+                doReturn( list(new Goal[]{g5}) ).when(goalDAOMock).findByMatch(m2vs3);
+                doReturn( list(new Goal[]{g6}) ).when(goalDAOMock).findByMatch(m3vs1);
+                doReturn( list(new Goal[]{}) ).when(goalDAOMock).findByMatch(m3vs2);
                 
                 doReturn(list(new Player[]{p1,p2,p3,p4,p5,p6,p7,p8,p9})).when(playerDAOMock).findAll();
 	}

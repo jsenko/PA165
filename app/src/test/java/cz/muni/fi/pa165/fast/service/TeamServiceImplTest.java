@@ -146,6 +146,7 @@ public class TeamServiceImplTest {
         Team teamA = new Team();
         Team teamB = new Team();
         Team teamC = new Team();
+        Team teamD = new Team();
 
         Match matchA1 = new Match();
         Match matchA2 = new Match();
@@ -166,7 +167,13 @@ public class TeamServiceImplTest {
         Player playerA = new Player();
         Player playerB = new Player();
         Player playerC = new Player();
-
+        Player playerD = new Player();
+        Player playerE = new Player();
+        Player playerF = new Player();
+        Player playerG = new Player();
+        Player playerH = new Player();
+        Player playerI = new Player();
+        
         teamA.setId(5l);
         teamA.setName("TeamA");
         teamA.setPlayers(new ArrayList<Player>());
@@ -202,8 +209,19 @@ public class TeamServiceImplTest {
         teamC.getAwayMatches().add(matchC3);
         teamC.getHomeMatches().add(matchC4);
         teamC.getHomeMatches().add(matchC5);
-
-
+        
+        teamD.setId(8l);
+        teamD.setName("TeamD");
+        teamD.setPlayers(new ArrayList<Player>());
+        teamD.getPlayers().add(playerD);
+        teamD.getPlayers().add(playerE);
+        teamD.getPlayers().add(playerF);
+        teamD.getPlayers().add(playerG);
+        teamD.getPlayers().add(playerH);
+        teamD.getPlayers().add(playerI);
+        teamD.setAwayMatches(new ArrayList<Match>());
+        teamD.setHomeMatches(new ArrayList<Match>());
+        
         Date matchDate = new Date(System.currentTimeMillis() - 50000);
 
         //2:1 won
@@ -417,12 +435,25 @@ public class TeamServiceImplTest {
         playerB.setTeam(teamB);
         playerC.setId(333l);
         playerC.setTeam(teamC);
+        playerD.setId(444l);
+        playerD.setTeam(teamD);
+        playerE.setId(555l);
+        playerE.setTeam(teamD);
+        playerF.setId(666l);
+        playerF.setTeam(teamD);
+        playerG.setId(777l);
+        playerG.setTeam(teamD);
+        playerH.setId(888l);
+        playerH.setTeam(teamD);
+        playerI.setId(999l);
+        playerI.setTeam(teamD);
 
 
         List<Team> teamList = new ArrayList<Team>();
         teamList.add(teamA);
         teamList.add(teamB);
         teamList.add(teamC);
+        teamList.add(teamD);
 
         List<Match> matchAAwayList = new ArrayList<Match>();
         matchAAwayList.add(matchA1);
@@ -438,6 +469,8 @@ public class TeamServiceImplTest {
         matchCAwayList.add(matchC1);
         matchCAwayList.add(matchC2);
         matchCAwayList.add(matchC3);
+        
+        List<Match> matchDAwayList = new ArrayList<Match>();
 
         List<Match> matchAHomeList = new ArrayList<Match>();
         matchAHomeList.add(matchA4);
@@ -450,12 +483,14 @@ public class TeamServiceImplTest {
         List<Match> matchCHomeList = new ArrayList<Match>();
         matchCHomeList.add(matchC4);
         matchCHomeList.add(matchC5);
+        
+         List<Match> matchDHomeList = new ArrayList<Match>();
 
         //********Actual testing********//
 
         when(teamDaoMock.findAll()).thenReturn(teamList);
-        when(matchDaoMock.findByAwayTeam(any(Team.class))).thenReturn(matchAAwayList, matchBAwayList, matchCAwayList);
-        when(matchDaoMock.findByHomeTeam(any(Team.class))).thenReturn(matchAHomeList, matchBHomeList, matchCHomeList);
+        when(matchDaoMock.findByAwayTeam(any(Team.class))).thenReturn(matchAAwayList, matchBAwayList, matchCAwayList, matchDAwayList);
+        when(matchDaoMock.findByHomeTeam(any(Team.class))).thenReturn(matchAHomeList, matchBHomeList, matchCHomeList, matchDHomeList);
 
         List<TeamDTO> dtos = service.findAll();
 
@@ -467,10 +502,12 @@ public class TeamServiceImplTest {
         order.verify(matchDaoMock).findByHomeTeam(teamB);
         order.verify(matchDaoMock).findByAwayTeam(teamC);
         order.verify(matchDaoMock).findByHomeTeam(teamC);
+        order.verify(matchDaoMock).findByAwayTeam(teamD);
+        order.verify(matchDaoMock).findByHomeTeam(teamD);
         verifyNoMoreInteractions(teamDaoMock);
         verifyNoMoreInteractions(matchDaoMock);
 
-        assertEquals(3, dtos.size());
+        assertEquals(4, dtos.size());
 
         TeamDTO team = dtos.get(0);
         assertEquals(7, team.getId());

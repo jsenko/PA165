@@ -9,6 +9,7 @@ import cz.muni.fi.pa165.fast.comparator.SortByPlayerGoals;
 import cz.muni.fi.pa165.fast.comparator.SortByPlayerHeight;
 import cz.muni.fi.pa165.fast.comparator.SortByPlayerName;
 import cz.muni.fi.pa165.fast.comparator.SortByPlayerWeight;
+import cz.muni.fi.pa165.fast.comparator.SortByTeam;
 import cz.muni.fi.pa165.fast.convert.PlayerConvert;
 import cz.muni.fi.pa165.fast.dao.PlayerDAO;
 import cz.muni.fi.pa165.fast.dao.TeamDAO;
@@ -116,6 +117,8 @@ public class PlayerServiceImpl implements PlayerService{
             case HEIGHT:
                 Collections.sort(allDtoPlayers, new SortByPlayerHeight());
                 break;
+            case TEAM:
+                Collections.sort(allDtoPlayers, new SortByTeam());
         }
         
         return allDtoPlayers;

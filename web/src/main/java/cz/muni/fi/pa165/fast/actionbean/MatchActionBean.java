@@ -16,8 +16,12 @@ import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.controller.LifecycleStage;
+import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
+import net.sourceforge.stripes.validation.ValidationError;
+import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMethod;
 
 /**
  *
@@ -51,6 +55,17 @@ public class MatchActionBean implements ActionBean {
 
     public List<MatchDTO> getMatches() {
         return matchService.findAll();
+    }
+    
+    public int getRounds()
+    {
+        List<MatchDTO> allMatches = matchService.findAll();
+        int maxRound = 0;
+        for(MatchDTO match : allMatches)
+        {
+            if(maxRound < match.getRound()) maxRound = match.getRound();
+        }
+        return maxRound;
     }
 
     public List<TeamDTO> getTeams() {
@@ -104,6 +119,16 @@ public class MatchActionBean implements ActionBean {
     public void setMatchDTO(MatchDTO matchDTO) {
 
         this.matchDTO = matchDTO;
+    }
+    
+    @ValidationMethod(on = {"add", "save"})
+    public void checkTeams(ValidationErrors errors){
+        if(matchDTO.getAwayTeamId() == matchDTO.getHomeTeamId()){
+            errors = getContext().getValidationErrors();
+            
+            ValidationError error = new LocalizableError("validation.match.sameTeamId");
+            errors.addGlobalError(error);
+        }
     }
 
     @Override

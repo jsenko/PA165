@@ -19,14 +19,14 @@
         <th><s:label for="g2"  name="Scoring player" /></th>
         <td><s:select name="goalDTO.scoredPlayerId" id="g2">
                 <s:options-collection collection="${actionBean.players}"
-                                      label="name" value="id" />
+                                      label="name" value="id" group="teamId" />
             </s:select></td>
     </tr>
     <tr>
         <th><s:label for="g3"  name="assisting player" /></th>
         <td><s:select name="goalDTO.assistPlayerId" id="g3">
                 <s:options-collection collection="${actionBean.players}"
-                                      label="name" value="id" />
+                                      label="name" value="id" group="teamId" />
             </s:select></td>
     </tr>
 </table>

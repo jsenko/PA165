@@ -9,7 +9,6 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  * Implementation of the TeamDAO interface.
@@ -86,14 +85,25 @@ public class TeamDAOImpl implements TeamDAO {
             throw new IllegalArgumentException("player is null");
         }
         
-        System.out.println(player);
+        /*System.out.println(player);
 
         //Team team = (Team) em.createNamedQuery("Team.findTeamByPlayer").setParameter("player", player.getId()).getSingleResult();
         Query q = em.createNamedQuery("Team.findTeamByPlayer").setParameter("player", player.getId());
         System.out.println(q.unwrap(org.hibernate.Query.class).getQueryString());
         Team team = (Team) q.getSingleResult();
-
-        return team;
+        System.out.println("============" + team);
+        return team;*/
+        
+        ////////dirty hack//////
+        Collection<Team> teams = findAll();
+        
+        for(Team t : teams){
+            if(player.getTeam().getId().equals(t.getId())) {
+                return t;
+            }
+        }
+        
+        throw new IllegalArgumentException("player doesn't have a team");
     }
 
     @Override

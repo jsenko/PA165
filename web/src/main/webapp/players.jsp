@@ -49,7 +49,7 @@
                     <td><c:out value="${player.age}"/></td>
                     <td><c:out value="${player.weight}"/></td>
                     <td><c:out value="${player.height}"/></td>
-                    <td><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="delete"><s:param name="player.id" value="${player.id}"/><i class="icon-remove"></i></s:link></td>
+                    <td><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" onclick="return confirm('Delete ${player.name}?');" event="delete"><s:param name="player.id" value="${player.id}"/><i class="icon-remove"></i></s:link></td>
                     <td><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="edit"><s:param name="player.id" value="${player.id}"/><i class="icon-pencil"></i></s:link> </td>
                 </tr>
             </c:forEach>
