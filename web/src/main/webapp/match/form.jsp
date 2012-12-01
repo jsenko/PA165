@@ -8,19 +8,6 @@
         <th><s:label for="m1" name="Round" /></th>
         <td><s:text id="m1" name="matchDTO.round" /></td>
     </tr>
-    <!--<tr>
-        <th><s:label for="m2" name="Date [1-31]" /></th>
-        <td><s:text id="m2" name="date" /></td>
-    </tr>
-    <tr>
-        <th><s:label for="m3" name="Month [1-12]" /></th>
-        <td><s:text id="m3" name="month" /></td>
-    </tr>
-    <tr>
-        <th><s:label for="m4" name="Year" /></th>
-        <td><s:text id="m4" name="year" /></td>
-    </tr>-->
-
     <tr>
         <th><s:label for="m7"  name="Date" /></th>
         <td><s:text name="matchDTO.date" formatPattern="MM/dd/yyyy" id="m7" class="m7"/></td>
@@ -33,7 +20,6 @@
                                       label="name" value="id" />
             </s:select></td>
     </tr>
-
     <tr>
         <th><s:label for="m6"  name="Away Team" /></th>
         <td><s:select name="matchDTO.awayTeamId" id="m6">

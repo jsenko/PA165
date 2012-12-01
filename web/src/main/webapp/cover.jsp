@@ -8,9 +8,12 @@
             <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap-responsive.min.css" />
             <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css" />
             <link rel="stylesheet" type="text/css" href="http://code.jquery.com/ui/1.9.2/themes/base/jquery-ui.css" />
+            <!--these scripts must be loaded here because of calendar-->
+            <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+            <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
 
             
-            <link rel="shortcut icon" href="img/favicon.png" type="image/png">    
+            <link rel="shortcut icon" href="${pageContext.request.contextPath}/img/favicon.png" type="image/png">    
 
         </head>
         <body>
@@ -47,9 +50,7 @@
             <div id="footer">
                 <p>Project of course PA165, Faculty of Informatics, Masaryk University. Copyright © 2012</p>
             </div>
-
-            <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
-            <script src="http://code.jquery.com/ui/1.9.2/jquery-ui.js"></script>
+                
             <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>    
         </body>
         
