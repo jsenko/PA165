@@ -4,6 +4,7 @@ import com.samaxes.stripejb3.EJBBean;
 import cz.muni.fi.pa165.fast.actionbean.context.PlayerActionBeanContext;
 import cz.muni.fi.pa165.fast.dto.PlayerDTO;
 import cz.muni.fi.pa165.fast.dto.TeamDTO;
+import cz.muni.fi.pa165.fast.service.MatchGeneratorFacade;
 import cz.muni.fi.pa165.fast.service.PlayerOrderBy;
 import cz.muni.fi.pa165.fast.service.PlayerService;
 import cz.muni.fi.pa165.fast.service.TeamService;
@@ -40,6 +41,8 @@ public class PlayerActionBean implements ActionBean {
     protected PlayerService playerService;
     @EJBBean("java:global/myapp/TeamServiceImpl!cz.muni.fi.pa165.fast.service.TeamService")
     protected TeamService teamService;
+    @EJBBean("java:global/myapp/MatchGeneratorFacadeImpl!cz.muni.fi.pa165.fast.service.MatchGeneratorFacade")
+    protected MatchGeneratorFacade facade;
 
     @DefaultHandler
     public Resolution all() {
@@ -56,6 +59,12 @@ public class PlayerActionBean implements ActionBean {
         return new RedirectResolution(this.getClass(), "all");
     }
     
+    public Resolution generate(){
+        System.out.println("generate in actionbean is called");
+        facade.generatePlayers();
+        return new RedirectResolution(this.getClass(), "all");
+    }
+
     public Resolution add() {
         //System.out.println(">>>>>>>>>"+player);
         player.setTeamId(getContext().getSelectedTeam().getId());

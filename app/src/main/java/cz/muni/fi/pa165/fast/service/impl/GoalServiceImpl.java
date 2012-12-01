@@ -90,7 +90,8 @@ public class GoalServiceImpl implements GoalService{
 	public GoalDTO getById(long id) {
 		try
 		{
-
+		    //System.out.println("*******id"+id);
+		    //System.out.println("*******entity"+goalDAO.getById(id));
 			return goalConvert.fromEntityToDTO(goalDAO.getById(id));
 		}
 		catch(Exception e)
