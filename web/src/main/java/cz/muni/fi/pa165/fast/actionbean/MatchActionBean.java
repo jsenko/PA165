@@ -16,8 +16,12 @@ import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.controller.LifecycleStage;
+import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
+import net.sourceforge.stripes.validation.ValidationError;
+import net.sourceforge.stripes.validation.ValidationErrors;
+import net.sourceforge.stripes.validation.ValidationMethod;
 
 /**
  *
@@ -111,6 +115,16 @@ public class MatchActionBean implements ActionBean {
     public void setMatchDTO(MatchDTO matchDTO) {
 
         this.matchDTO = matchDTO;
+    }
+    
+    @ValidationMethod(on = {"add", "save"})
+    public void checkTeams(ValidationErrors errors){
+        if(matchDTO.getAwayTeamId() == matchDTO.getHomeTeamId()){
+            errors = getContext().getValidationErrors();
+            
+            ValidationError error = new LocalizableError("validation.teamid.sameTeamId");
+            errors.addGlobalError(error);
+        }
     }
 
     @Override
