@@ -3,7 +3,9 @@ body
     background: #6c9fb3;
     text-align: center;
 }
-.header
+
+/* ==========HEADER=========*/
+#header
 {
     margin: auto;
     margin-top: -10px;
@@ -16,11 +18,15 @@ body
 {
     margin: 10px 0 0 0;
 } 
+
 .language
 {
     float: right;
     margin: 10px 5px 0 5px;
 }
+/* ==========HEADER-END=========*/
+
+/* ==========CONTAINER=========*/
 .container
 {
     margin: auto;
@@ -31,6 +37,7 @@ body
     border-radius: 0 0 20px 20px;
 }
 
+/* ==========MENU=========*/
 #menu
 {
     width: 100px;
@@ -67,6 +74,9 @@ body
 {
     text-decoration: underline;
 }
+/* ==========MENU-END=========*/
+
+/* ==========CONTENT=========*/
 #content
 {
     width: 750px;
@@ -74,6 +84,7 @@ body
     margin-top: 10px;
     margin-bottom: 20px;
 }
+
 #content table
 {
     margin: 0 auto;
@@ -81,19 +92,78 @@ body
     border-spacing: 0;
     margin-bottom: 30px;
 }
+
+#content tr:nth-child(even)
+{
+    background: #9fc9d9;
+}
+
+#content tr:nth-child(odd)
+{
+    background: #6494a7;
+}
+
+#content tr
+{
+    background: #9fc9d9;
+    padding: 0;
+}
+
+.header1
+{
+    font-size: 16px;
+    font-style: oblique;
+}
+
+.admin_section
+{
+    background: #bd362f;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+/* ==========MATCHES=========*/
+
+.match_table tr
+{
+    height: 30px;
+}
+
+.match_table td,th
+{
+    padding-right: 10px;
+}
+
+.match_table tr:first-child td:first-child
+{
+    border-radius: 10px 0 0 0;
+}
+
+.match_table tr:last-child td:last-child
+{
+    border-radius: 0 0 10px 0;
+}
+
+.match_table tr:last-child td:first-child
+{
+    border-radius: 0 0 0 10px;
+}
+
+.match_table tr:first-child td:last-child
+{
+    border-radius: 0 10px 0 0;
+}
+
+.match_table td:first-child
+{
+    padding-left: 5px;
+}
+/* ==========MATCHES-END=========*/
 .team
 {
     width: 60px;
     padding-left: 10px;
 }
-#content tr:nth-child(even)
-{
-    background: #9fc9d9;
-}
-#content tr:nth-child(odd)
-{
-    background: #6494a7;
-}
+
 #league_table
 {
     margin-bottom: 20px;
@@ -118,11 +188,7 @@ body
 {
     padding-right: 50px;
 }
-#content tr
-{
-    background: #9fc9d9;
-    padding: 0;
-}
+
 .round
 {
     padding-right: 10px
@@ -149,8 +215,13 @@ body
     height:30px;
 }
 
-.footer
+
+/* ==========CONTENT-END=========*/
+/* ==========CONTAINER-END=========*/
+
+/* ==========FOOTER=========*/
+#footer
 {
-    font-size: 18px;
     margin-top: 10px;
 }
+/* ==========FOOTER-END=========*/
