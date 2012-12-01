@@ -61,6 +61,9 @@
         </c:forEach>
         <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean"
                 event="create"><s:label name="match.newMatch"/></s:link>
+        
+        <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean"
+                event="generate">Generuj Zapas</s:link>
 
     </s:layout-component>
 </s:layout-render>

@@ -83,6 +83,12 @@ public class MatchActionBean implements ActionBean {
         matchDTO = matchService.getById(Long.parseLong(ids));
         System.out.println(matchDTO);
     }
+    
+     public Resolution generate() {
+         facade.generateMatches();
+         return new ForwardResolution(this.getClass(), "all");
+     }
+    
 
     public Resolution create() {
         return new ForwardResolution("/match/create.jsp");

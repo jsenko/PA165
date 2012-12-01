@@ -62,6 +62,10 @@
                 <s:submit name="add" class="btn btn-info"/>
             </fieldset>
         </s:form>
+                
+                
+                <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="generate">GeneratePlayer</s:link>
+        
     </s:layout-component>
 </s:layout-render>
 
