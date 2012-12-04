@@ -36,7 +36,12 @@ body
     overflow: hidden;
     border-radius: 0 0 20px 20px;
 }
-
+a:hover{
+    color: #225533;
+}
+a{
+    color: #334433;
+}
 /* ==========MENU=========*/
 #menu
 {
