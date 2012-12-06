@@ -1,7 +1,9 @@
 package cz.muni.fi.pa165.fast.convert.impl;
 
 import cz.muni.fi.pa165.fast.convert.TeamConvert;
+import cz.muni.fi.pa165.fast.dao.GoalDAO;
 import cz.muni.fi.pa165.fast.dao.MatchDAO;
+import cz.muni.fi.pa165.fast.dao.PlayerDAO;
 import cz.muni.fi.pa165.fast.dto.MatchResult;
 import cz.muni.fi.pa165.fast.dto.TeamDTO;
 import cz.muni.fi.pa165.fast.model.Goal;
@@ -20,6 +22,10 @@ public class TeamConvertImpl implements TeamConvert{
 
     @EJB
     private MatchDAO matchDao;
+    @EJB
+    private GoalDAO goalDao;
+    @EJB
+    private PlayerDAO playerDao;
 
     @Override
     public TeamDTO fromEntityToDTO(Team entity) {
@@ -41,10 +47,13 @@ public class TeamConvertImpl implements TeamConvert{
         MatchResult[] trend = new MatchResult[5];
 
         for (Match match : matches) {
-            Collection<Goal> goals = match.getGoals();
+            Collection<Goal> goals = goalDao.findByMatch(match);
+            System.out.println("In TeamConverterImpl -> fromEntityToDao -> goals: " + goals);
             int inGoals = 0, outGoals = 0;
             for (Goal goal : goals) {
-                if (entity.getPlayers().contains(goal.getScorePlayer())) {
+                System.out.println("In TeamConverterImpl -> fromEntityToDao -> goal.getScorePlayer():" + goal.getScorePlayer());
+                System.out.println("In TeamConverterImpl -> fromEntityToDao -> playerDao.findPlayersByTeam():" + playerDao.findPlayersByTeam(entity));
+                if (playerDao.findPlayersByTeam(entity).contains(goal.getScorePlayer())) {
                     outGoals++;
                 } else {
                     inGoals++;

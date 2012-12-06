@@ -46,6 +46,7 @@ public class PlayerConvertImpl implements PlayerConvert {
         dtoPlayer.setGoals(goalDao.findByScorePlayer(player).size());
         dtoPlayer.setAssists(goalDao.findByAssistPlayer(player).size());
         dtoPlayer.setTeamId(player.getTeam().getId().longValue());
+        dtoPlayer.setTeamName(teamDao.getById(dtoPlayer.getTeamId()).getName());
 
         return dtoPlayer;
     }

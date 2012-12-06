@@ -34,9 +34,9 @@ public class GoalConvertImpl implements GoalConvert {
             goalDTO.setId(entity.getId());
         }
         goalDTO.setScoredPlayerId(entity.getScorePlayer().getId());
-        goalDTO.setScoredPlayerName(entity.getScorePlayer().getName());
+        goalDTO.setScoredPlayerName(entity.getScorePlayer().getName() + " " + entity.getScorePlayer().getSurname());
         goalDTO.setAssistPlayerId(entity.getAssistPlayer().getId());
-        goalDTO.setAssistPlayerName(entity.getAssistPlayer().getName());
+        goalDTO.setAssistPlayerName(entity.getAssistPlayer().getName() + " " + entity.getAssistPlayer().getSurname());
         goalDTO.setMatchId(entity.getMatch().getId());
         goalDTO.setGoalMinute(entity.getGoalMinute());
         

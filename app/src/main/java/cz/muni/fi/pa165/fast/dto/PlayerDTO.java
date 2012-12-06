@@ -20,6 +20,16 @@ public class PlayerDTO
 	private int height;
         
         private long teamId;
+        
+        private String teamName;
+
+    public String getTeamName() {
+        return teamName;
+    }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
 
     public long getTeamId() {
         return teamId;
@@ -101,7 +111,11 @@ public class PlayerDTO
     }
 
     @Override
-    public String toString() {
+    public String toString(){
+        return name + " " + surname;
+    }
+    
+    public String toDebugString() {
         return "PlayerDTO{" + "id=" + id + ", name=" + name + ", surname=" + surname + ", goals=" + goals + ", assists=" + assists + ", age=" + age + ", weight=" + weight + ", height=" + height + ", teamId=" + teamId + '}';
     }
 

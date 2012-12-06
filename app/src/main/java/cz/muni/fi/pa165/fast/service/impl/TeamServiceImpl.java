@@ -66,12 +66,6 @@ public class TeamServiceImpl implements TeamService {
             
             
             Team team = teamConvert.fromDTOToEntity(dto);
-            //delete players
-            List<Player> players = playerDao.findPlayersByTeam(team);
-            for(Player p: players)
-            {
-                playerDao.delete(p);
-            }
             // delete matches
             List<Match> matches = matchDao.findByAwayTeam(team);
             if(matches != null)
@@ -89,6 +83,13 @@ public class TeamServiceImpl implements TeamService {
                 matchDao.delete(m);
             }
             }
+            //delete players
+            List<Player> players = playerDao.findPlayersByTeam(team);
+            for(Player p: players)
+            {
+                playerDao.delete(p);
+            }
+            
             teamDao.delete(team);
         } catch (Exception ex) {
             throw new RuntimeException("Delete operation failed.", ex);

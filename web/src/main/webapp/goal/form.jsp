@@ -25,7 +25,7 @@
             <s:label class="control-label" for="g2"  name="goal.sPlayer" />
             <div class="controls">
                 <s:select name="goalDTO.scoredPlayerId" id="g2">
-                    <s:options-collection collection="${actionBean.players}" label="name" value="id" group="teamId" />
+                    <s:options-collection collection="${actionBean.players}" value="id" group="teamName" />
                 </s:select>
             </div>
         </div>
@@ -33,7 +33,7 @@
             <s:label class="control-label" for="g3"  name="goal.aPlayer" />
             <div class="controls">
                 <s:select name="goalDTO.assistPlayerId" id="g3">
-                    <s:options-collection collection="${actionBean.players}" label="name" value="id" group="teamId" />
+                    <s:options-collection collection="${actionBean.players}" value="id" group="teamName" />
                 </s:select>
             </div>
         </div>

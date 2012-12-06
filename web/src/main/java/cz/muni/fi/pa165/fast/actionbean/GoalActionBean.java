@@ -17,6 +17,7 @@ import com.samaxes.stripejb3.EJBBean;
 import cz.muni.fi.pa165.fast.dto.GoalDTO;
 import cz.muni.fi.pa165.fast.dto.MatchDTO;
 import cz.muni.fi.pa165.fast.dto.PlayerDTO;
+import cz.muni.fi.pa165.fast.dto.TeamDTO;
 import cz.muni.fi.pa165.fast.service.GoalService;
 import cz.muni.fi.pa165.fast.service.MatchService;
 import cz.muni.fi.pa165.fast.service.PlayerOrderBy;
@@ -75,8 +76,11 @@ public class GoalActionBean implements ActionBean {
     }
 
     public List<PlayerDTO> getPlayers() {
-        List<PlayerDTO> allPlayers = playerService.findAll(PlayerOrderBy.TEAM);
-        return allPlayers;
+        TeamDTO t1 = teamService.getById(matchService.getById(goalDTO.getMatchId()).getAwayTeamId());
+        TeamDTO t2 = teamService.getById(matchService.getById(goalDTO.getMatchId()).getHomeTeamId());
+        List<PlayerDTO> matchPlayers = playerService.findPlayersByTeam(t1.getId(), PlayerOrderBy.NAME);
+        matchPlayers.addAll(playerService.findPlayersByTeam(t2.getId(), PlayerOrderBy.NAME));
+        return matchPlayers;
     }
 
 
