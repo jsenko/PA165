@@ -30,7 +30,7 @@ public class TeamConvertImpl implements TeamConvert{
     @Override
     public TeamDTO fromEntityToDTO(Team entity) {
         if (entity == null) {
-            return null;
+            throw new IllegalArgumentException("Team entity is null.");
         }
         TeamDTO dto = new TeamDTO();
         if (entity.getId() == null) {
@@ -48,11 +48,8 @@ public class TeamConvertImpl implements TeamConvert{
 
         for (Match match : matches) {
             Collection<Goal> goals = goalDao.findByMatch(match);
-            System.out.println("In TeamConverterImpl -> fromEntityToDao -> goals: " + goals);
             int inGoals = 0, outGoals = 0;
             for (Goal goal : goals) {
-                System.out.println("In TeamConverterImpl -> fromEntityToDao -> goal.getScorePlayer():" + goal.getScorePlayer());
-                System.out.println("In TeamConverterImpl -> fromEntityToDao -> playerDao.findPlayersByTeam():" + playerDao.findPlayersByTeam(entity));
                 if (playerDao.findPlayersByTeam(entity).contains(goal.getScorePlayer())) {
                     outGoals++;
                 } else {

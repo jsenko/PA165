@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.fast.service;
 import com.stvconsultants.easygloss.javaee.JavaEEGloss;
 import cz.muni.fi.pa165.fast.convert.TeamConvert;
 import cz.muni.fi.pa165.fast.convert.impl.TeamConvertImpl;
+import cz.muni.fi.pa165.fast.dao.GoalDAO;
 import cz.muni.fi.pa165.fast.dao.MatchDAO;
 import cz.muni.fi.pa165.fast.dao.PlayerDAO;
 import cz.muni.fi.pa165.fast.dao.TeamDAO;
@@ -38,6 +39,8 @@ public class TeamServiceImplTest {
     private MatchDAO matchDaoMock;
     @Mock
     private PlayerDAO playerDaoMock;
+    @Mock
+    private GoalDAO goalDaoMock;
     private TeamConvert teamConvert;
     private TeamService service;
 
@@ -56,16 +59,15 @@ public class TeamServiceImplTest {
     public void setUp() {
         JavaEEGloss convertGloss = new JavaEEGloss();
         convertGloss.addEJB(matchDaoMock);
+        convertGloss.addEJB(goalDaoMock);
+        convertGloss.addEJB(playerDaoMock);
         teamConvert = convertGloss.make(TeamConvertImpl.class);
         JavaEEGloss serviceGloss = new JavaEEGloss();
         serviceGloss.addEJB(teamDaoMock);
         serviceGloss.addEJB(playerDaoMock);
+        serviceGloss.addEJB(matchDaoMock);
         serviceGloss.addEJB(teamConvert);
         service = serviceGloss.make(TeamServiceImpl.class);
-    }
-
-    @After
-    public void tearDown() {
     }
 
     @Test
@@ -117,16 +119,20 @@ public class TeamServiceImplTest {
     }
 
     @Test
-    public void deleteTeam() {/*
+    public void deleteTeam() {
         TeamDTO dto = new TeamDTO();
         dto.setName("TeamName");
         Team entity = new Team();
         entity.setName("TeamName");
+        
+        when(matchDaoMock.findByAwayTeam(entity)).thenReturn(null);
+        when(matchDaoMock.findByHomeTeam(entity)).thenReturn(null);
+        when(playerDaoMock.findPlayersByTeam(entity)).thenReturn(null);
 
         service.delete(dto);
 
         verify(teamDaoMock).delete(entity);
-        verifyNoMoreInteractions(teamDaoMock);*/
+        verifyNoMoreInteractions(teamDaoMock);
     }
 
     @Test
@@ -136,6 +142,29 @@ public class TeamServiceImplTest {
             service.delete(null);
             fail();
         } catch (RuntimeException ex) {
+            //OK
+        }
+    }
+    
+    @Test
+    public void getById() {
+        Team teamA = new Team();
+        teamA.setId(1l);
+        teamA.setName("TeamA");
+        
+        when(teamDaoMock.getById(1l)).thenReturn(teamA);
+
+        TeamDTO t = service.getById(1L);
+
+        verify(teamDaoMock).getById(1L);
+        verifyNoMoreInteractions(teamDaoMock);
+
+        assertEquals(t.getId(), teamA.getId().longValue());
+
+        try {
+            service.getById(0L);
+            fail();
+        } catch (Exception ex) {
             //OK
         }
     }
@@ -484,13 +513,32 @@ public class TeamServiceImplTest {
         matchCHomeList.add(matchC4);
         matchCHomeList.add(matchC5);
         
-         List<Match> matchDHomeList = new ArrayList<Match>();
+        List<Match> matchDHomeList = new ArrayList<Match>();
 
         //********Actual testing********//
 
         when(teamDaoMock.findAll()).thenReturn(teamList);
         when(matchDaoMock.findByAwayTeam(any(Team.class))).thenReturn(matchAAwayList, matchBAwayList, matchCAwayList, matchDAwayList);
         when(matchDaoMock.findByHomeTeam(any(Team.class))).thenReturn(matchAHomeList, matchBHomeList, matchCHomeList, matchDHomeList);
+        when(goalDaoMock.findByMatch(matchA1)).thenReturn(matchA1.getGoals());
+        when(goalDaoMock.findByMatch(matchA2)).thenReturn(matchA2.getGoals());
+        when(goalDaoMock.findByMatch(matchA3)).thenReturn(matchA3.getGoals());
+        when(goalDaoMock.findByMatch(matchA4)).thenReturn(matchA4.getGoals());
+        when(goalDaoMock.findByMatch(matchA5)).thenReturn(matchA5.getGoals());
+        when(goalDaoMock.findByMatch(matchB1)).thenReturn(matchB1.getGoals());
+        when(goalDaoMock.findByMatch(matchB2)).thenReturn(matchB2.getGoals());
+        when(goalDaoMock.findByMatch(matchB3)).thenReturn(matchB3.getGoals());
+        when(goalDaoMock.findByMatch(matchB4)).thenReturn(matchB4.getGoals());
+        when(goalDaoMock.findByMatch(matchB5)).thenReturn(matchB5.getGoals());
+        when(goalDaoMock.findByMatch(matchC1)).thenReturn(matchC1.getGoals());
+        when(goalDaoMock.findByMatch(matchC2)).thenReturn(matchC2.getGoals());
+        when(goalDaoMock.findByMatch(matchC3)).thenReturn(matchC3.getGoals());
+        when(goalDaoMock.findByMatch(matchC4)).thenReturn(matchC4.getGoals());
+        when(goalDaoMock.findByMatch(matchC5)).thenReturn(matchC5.getGoals());
+        when(playerDaoMock.findPlayersByTeam(teamA)).thenReturn(teamA.getPlayers());
+        when(playerDaoMock.findPlayersByTeam(teamB)).thenReturn(teamB.getPlayers());
+        when(playerDaoMock.findPlayersByTeam(teamC)).thenReturn(teamC.getPlayers());
+        when(playerDaoMock.findPlayersByTeam(teamD)).thenReturn(teamD.getPlayers());
 
         List<TeamDTO> dtos = service.findAll();
 
@@ -675,6 +723,12 @@ public class TeamServiceImplTest {
         when(matchDaoMock.findByHomeTeam(teamA)).thenReturn(matchAHomeList);
         when(playerDaoMock.getById(111l)).thenReturn(playerA);
         when(teamDaoMock.findTeamByPlayer(playerA)).thenReturn(teamA);
+        when(goalDaoMock.findByMatch(matchA1)).thenReturn(matchA1.getGoals());
+        when(goalDaoMock.findByMatch(matchA2)).thenReturn(matchA2.getGoals());
+        when(goalDaoMock.findByMatch(matchA3)).thenReturn(matchA3.getGoals());
+        when(goalDaoMock.findByMatch(matchA4)).thenReturn(matchA4.getGoals());
+        when(goalDaoMock.findByMatch(matchA5)).thenReturn(matchA5.getGoals());
+        when(playerDaoMock.findPlayersByTeam(teamA)).thenReturn(teamA.getPlayers());
 
         TeamDTO team = service.findByPlayer(111l);
 
@@ -684,7 +738,6 @@ public class TeamServiceImplTest {
         verify(teamDaoMock).findTeamByPlayer(playerA);
         verifyNoMoreInteractions(teamDaoMock);
         verifyNoMoreInteractions(matchDaoMock);
-        verifyNoMoreInteractions(playerDaoMock);
 
         assertEquals(5, team.getId());
         assertEquals("TeamA", team.getName());

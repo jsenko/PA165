@@ -11,125 +11,112 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * 
+ *
  * @author Peter Laurencik
  */
-
-@Local(value=GoalDAO.class)
+@Local(value = GoalDAO.class)
 @Stateless
 //@TransactionAttribute(TransactionAttributeType.MANDATORY)
-public class GoalDAOImpl implements GoalDAO
-{
-    
+public class GoalDAOImpl implements GoalDAO {
+
     @PersistenceContext(name = "TestPU")
     private EntityManager em;
-   
+
     @Override
-    public void create(Goal goal)
-    {
-        
-        if(goal==null)
-        {
+    public void create(Goal goal) {
+
+        if (goal == null) {
             throw new IllegalArgumentException("Goal can not be null when new goal is created.");
         }
-        
-        em.persist(goal);        
- 
+
+        em.persist(goal);
+
     }
-    
+
     @Override
-    public void update(Goal goal)
-    {
-        if(goal==null)
-        {
+    public void update(Goal goal) {
+        if (goal == null) {
             throw new IllegalArgumentException("Can not update null goal");
         }
-        
+        if (em.find(Goal.class, goal.getId()) == null) {
+            throw new IllegalArgumentException("Goal does not exist.");
+        }
+
         em.merge(goal);
-        
     }
-    
+
     @Override
-    public void delete(Goal goal)
-    {
-        if(goal==null)
-        {
+    public void delete(Goal goal) {
+        if (goal == null) {
             throw new IllegalArgumentException("Can not delete null goal.");
         }
-        if(em.find(Goal.class, goal.getId()) == null)
-	{
-            throw new IllegalArgumentException("Goal you are trying to delete does not exist.");
-	}
-        
+        if (em.find(Goal.class, goal.getId()) == null) {
+            throw new IllegalArgumentException("Goal does not exist.");
+        }
+
         Goal merged = em.merge(goal);
 
         em.remove(merged);
-
     }
-    
+
     @Override
-    public Goal getById(Long id)
-    {
-        if(id==null)
-        {
+    public Goal getById(Long id) {
+        if (id == null) {
             throw new IllegalArgumentException("Can not find goal with null id.");
         }
-        
-        Goal goal = em.find(Goal.class, id);
-        return goal;
- 
+
+        Goal manGoal = em.find(Goal.class, id);
+        if (manGoal == null) {
+            throw new IllegalArgumentException("goal not in DB");
+        }
+
+        return manGoal;
+
     }
-        
+
     @Override
-    public Collection<Goal> findAll()
-    {
-        
+    public Collection<Goal> findAll() {
+
         Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g").getResultList();
-        
+
         return goals;
-        
+
     }
-    
+
     @Override
-    public Collection<Goal> findByScorePlayer(Player player)
-    {
-        if(player == null)
-        {
+    public Collection<Goal> findByScorePlayer(Player player) {
+        if (player == null) {
             throw new IllegalArgumentException("Can not find goal by null scored player.");
         }
-        
+
         Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.scorePlayer= :player").setParameter("player", player).getResultList();
-        
+
         return goals;
-        
+
     }
 
     @Override
     public Collection<Goal> findByAssistPlayer(Player player) {
-        if(player == null)
-        {
+        if (player == null) {
             throw new IllegalArgumentException("Can not find goal by null assist player.");
         }
-        
+
         Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.assistPlayer= :player").setParameter("player", player).getResultList();
-        
+
         return goals;
-        
+
     }
 
     @Override
-    public Collection<Goal> findByMatch(Match match) { 
-        if(match == null)
-        {
+    public Collection<Goal> findByMatch(Match match) {
+        if (match == null) {
             throw new IllegalArgumentException("Can not find goal by null match.");
         }
-        
+
         Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.match=:match").setParameter("match", match).getResultList();
         System.out.println("Collection<Goal>: " + goals);
-        
+
         return goals;
-        
+
     }
-    
-    
 }

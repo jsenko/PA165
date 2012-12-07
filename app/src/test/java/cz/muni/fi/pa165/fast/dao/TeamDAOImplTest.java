@@ -24,7 +24,7 @@ import org.junit.Test;
 /**
  * @author Jakub Senko
  */
-public class TeamDAOTest {
+public class TeamDAOImplTest {
 
     private static Context context;
     private static TeamDAO dao;
@@ -61,7 +61,7 @@ public class TeamDAOTest {
         } catch (EJBException e) {
             // ok
         }
-        
+
         //cleanup
         fem.remove(t);
     }
@@ -95,7 +95,7 @@ public class TeamDAOTest {
 
         assertEquals(t.getId(), tt.getId());
         assertEquals("FC Winners", tt.getName());
-        
+
         //cleanup
         fem.remove(t);
     }
@@ -128,6 +128,40 @@ public class TeamDAOTest {
     }
 
     @Test
+    public void getById() {
+        Team team = new Team();
+        String name = "The Avengers";
+        team.setName(name);
+
+        fem.persist(team);
+
+        Long teamId = team.getId();
+
+        Team dbTeam = dao.getById(teamId);
+
+        assertEquals(name, dbTeam.getName());
+
+        fem.remove(team);
+    }
+
+    @Test
+    public void getByIdInvalid() {
+        try {
+            dao.getById(null);
+            fail();
+        } catch (EJBException ex) {
+            //OK
+        }
+
+        try {
+            dao.getById(Long.MAX_VALUE);
+            fail();
+        } catch (EJBException ex) {
+            //OK
+        }
+    }
+
+    @Test
     public void findAll() {
         assertEquals(0, dao.findAll().size());
 
@@ -144,7 +178,7 @@ public class TeamDAOTest {
         assertEquals(2, result.size());
         assertTrue(result.contains(t));
         assertTrue(result.contains(tt));
-        
+
         //cleanup
         fem.remove(t);
         fem.remove(tt);
@@ -190,7 +224,7 @@ public class TeamDAOTest {
 
         assertEquals("First", res.getName());
         assertEquals("Second", res2.getName());
-        
+
         //cleanup
         fem.remove(t);
         fem.remove(tt);
@@ -222,12 +256,11 @@ public class TeamDAOTest {
         Team res = dao.findHomeTeamByMatch(m);
 
         assertEquals("Home", res.getName());
-        
+
         //cleanup
         fem.removeM(m);
         fem.remove(t);
         fem.remove(tt);
-        
     }
 
     @Test
@@ -256,12 +289,11 @@ public class TeamDAOTest {
         Team res = dao.findAwayTeamByMatch(m);
 
         assertEquals("Away", res.getName());
-        
+
         //cleanup
         fem.removeM(m);
         fem.remove(t);
         fem.remove(tt);
-        
     }
 
     @Stateless
@@ -273,7 +305,7 @@ public class TeamDAOTest {
         public void remove(Team t) {
             em.remove(em.find(Team.class, t.getId()));
         }
-        
+
         public void removeM(Match m) {
             em.remove(em.find(Match.class, m.getId()));
         }

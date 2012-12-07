@@ -85,11 +85,12 @@ public class TeamServiceImpl implements TeamService {
             }
             //delete players
             List<Player> players = playerDao.findPlayersByTeam(team);
+            if(players != null){
             for(Player p: players)
             {
                 playerDao.delete(p);
             }
-            
+            }
             teamDao.delete(team);
         } catch (Exception ex) {
             throw new RuntimeException("Delete operation failed.", ex);

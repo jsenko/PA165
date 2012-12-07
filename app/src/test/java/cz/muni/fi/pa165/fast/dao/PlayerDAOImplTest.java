@@ -14,7 +14,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -23,7 +23,7 @@ import org.junit.Test;
  * @author Peter Laurencik
  */
 public class PlayerDAOImplTest {
-    
+
     private static Context context;
     private static PlayerDAO playerDAO;
     private static PlayerFakeEntityManager fem;
@@ -39,144 +39,161 @@ public class PlayerDAOImplTest {
     public static void setDownClass() throws NamingException {
         context.close();
     }
-    
+
     @Test
-    public void createNullTest()
-    {
+    public void createNullTest() {
         Player player;
         player = null;
-        
-        try{
+
+        try {
             playerDAO.create(player);
-            fail("Null pointer exception shoud be thrown whne null player creating.");
-        }catch(EJBException ex)
-        {
+            fail();
+        } catch (EJBException ex) {
             //OK
         }
     }
-    
+
     @Test
-    public void createTest()
-    {
+    public void createTest() {
         Player player = new Player();
         player.setName("Mike");
-        
-        try{
+
+        try {
             playerDAO.create(player);
-        }catch(Exception ex)
-        {
-            fail("Error when player is created.");
-        } 
-        
+        } catch (Exception ex) {
+            fail();
+        }
+
         Player foundPlayer = fem.find(Player.class, player.getId());
-        
+
         Assert.assertEquals(player, foundPlayer);
-        
+
         fem.remove(player);
     }
-    
+
     @Test
-    public void updateNullTest()
-    {
+    public void updateNullTest() {
         Player player;
         player = null;
-        
-        try{
+
+        try {
             playerDAO.update(player);
-            
-            fail("Null pointer exception shoud be thrown when null player updating.");
-        }catch(EJBException ex)
-        {
+            fail();
+        } catch (EJBException ex) {
             //OK
         }
-        
+
     }
-       
+
     @Test
-    public void updateTest()
-    {
+    public void updateTest() {
         Player player = new Player();
         player.setName("Mike");
-        
-        try{
+
+        try {
             fem.persist(player);
-            
+
             player.setAge(24);
 
             playerDAO.update(player);
- 
-        }catch(EJBException ex)
-        {
-            fail("Error when player is updated.");
-        }  
-        
+        } catch (EJBException ex) {
+            fail();
+        }
+
         Player foundPlayer = fem.find(Player.class, player.getId());
-        
+
         Assert.assertEquals(player, foundPlayer);
-        
+
         fem.remove(player);
     }
-    
+
     @Test
-    public void deleteNullTest()
-    {
+    public void deleteNullTest() {
         Player player;
         player = null;
-        
-        try{
+
+        try {
             playerDAO.delete(player);
-            
-            fail("Null pointer exception shoud be thrown whne null player creating.");
-        }catch(EJBException ex)
-        {
+            fail();
+        } catch (EJBException ex) {
             //OK
         }
-    }   
-    
+    }
+
     @Test
-    public void deleteTest()
-    {  
+    public void deleteTest() {
         Player player = new Player();
-        
-        try{
+
+        try {
             fem.persist(player);
 
             playerDAO.delete(player);
-            
-        }catch(Exception ex)
-        {
-            fail("Error when player is deleted.");
-        }  
-        
+        } catch (Exception ex) {
+            fail();
+        }
+
         Player deletedPlayer = fem.find(Player.class, player.getId());
-        
+
         Assert.assertNull(deletedPlayer);
     }
-    
+
     @Test
-    public void findAllTest()
-    {
+    public void getByIdTest() {
+        Player player = new Player();
+        int age = 25;
+        player.setAge(age);
+
+        fem.persist(player);
+
+        Long playerId = player.getId();
+
+        Player dbPlayer = playerDAO.getById(playerId);
+
+        assertEquals(age, dbPlayer.getAge());
+
+        fem.remove(player);
+    }
+
+    @Test
+    public void getByIdInvalid() {
+        try {
+            playerDAO.getById(null);
+            fail();
+        } catch (EJBException ex) {
+            //OK
+        }
+
+        try {
+            playerDAO.getById(Long.MAX_VALUE);
+            fail();
+        } catch (EJBException ex) {
+            //OK
+        }
+    }
+
+    @Test
+    public void findAllTest() {
         Player player1 = new Player();
         player1.setName("Mike");
         Player player2 = new Player();
         player2.setName("Felix");
-        
+
         fem.persist(player1);
         fem.persist(player2);
-        
+
         Collection<Player> allPlayers = playerDAO.findAll();
-        
+
         Assert.assertEquals(2, allPlayers.size());
-        
+
         Assert.assertTrue(allPlayers.contains(player1));
         Assert.assertTrue(allPlayers.contains(player2));
-        
+
         fem.remove(player1);
         fem.remove(player2);
     }
-    
+
     @Test
-    public void findPlayersByTeamTest(){
+    public void findPlayersByTeamTest() {
         Team t = new Team();
         Player p1 = new Player();
         Player p2 = new Player();
@@ -185,20 +202,20 @@ public class PlayerDAOImplTest {
         t.setPlayers(new ArrayList<Player>());
         t.getPlayers().add(p1);
         t.getPlayers().add(p2);
-        
+
         fem.persist(t);
-        
+
         List<Player> list = playerDAO.findPlayersByTeam(t);
-        
+
         Assert.assertEquals(2, list.size());
-        
+
         Assert.assertTrue(list.contains(p1));
         Assert.assertTrue(list.contains(p2));
-        
+
         fem.remove(p2);
         fem.remove(p1);
     }
-    
+
     @Stateless
     public static class PlayerFakeEntityManager {
 

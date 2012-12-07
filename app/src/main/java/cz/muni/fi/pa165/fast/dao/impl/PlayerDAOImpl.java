@@ -76,7 +76,7 @@ public class PlayerDAOImpl implements PlayerDAO {
 
         Player managed = em.find(Player.class, id);
         if (managed == null) {
-            throw new IllegalArgumentException("team not in DB");
+            throw new IllegalArgumentException("player not in DB");
         }
         return managed;
     }
