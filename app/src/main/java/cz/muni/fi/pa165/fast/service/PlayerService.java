@@ -1,9 +1,7 @@
 package cz.muni.fi.pa165.fast.service;
 
-import java.util.List;
-
-import cz.muni.fi.pa165.fast.dto.MatchDTO;
 import cz.muni.fi.pa165.fast.dto.PlayerDTO;
+import java.util.List;
 
 public interface PlayerService
 {

@@ -5,7 +5,6 @@ import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Player;
 import cz.muni.fi.pa165.fast.model.Team;
 import java.util.Collection;
-import java.util.List;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -75,9 +74,7 @@ public class TeamDAOImpl implements TeamDAO {
 
     @Override
     public Collection<Team> findAll() {
-        Collection<Team> teams = em.createNamedQuery("Team.findAll").getResultList();
-
-        return teams;
+        return em.createNamedQuery("Team.findAll").getResultList();
     }
 
     @Override
@@ -85,17 +82,7 @@ public class TeamDAOImpl implements TeamDAO {
         if (player == null) {
             throw new IllegalArgumentException("player is null");
         }
-        
-        /*System.out.println(player);
 
-        //Team team = (Team) em.createNamedQuery("Team.findTeamByPlayer").setParameter("player", player.getId()).getSingleResult();
-        Query q = em.createNamedQuery("Team.findTeamByPlayer").setParameter("player", player.getId());
-        System.out.println(q.unwrap(org.hibernate.Query.class).getQueryString());
-        Team team = (Team) q.getSingleResult();
-        System.out.println("============" + team);
-        return team;*/
-        
-        ////////dirty hack//////
         Collection<Team> teams = findAll();
         
         for(Team t : teams){
@@ -113,9 +100,7 @@ public class TeamDAOImpl implements TeamDAO {
             throw new IllegalArgumentException("match is null");
         }
 
-        Team team = (Team) em.createNamedQuery("Team.findHomeTeamByMatch").setParameter("match", match).getSingleResult();
-
-        return team;
+        return (Team) em.createNamedQuery("Team.findHomeTeamByMatch").setParameter("match", match).getSingleResult();
     }
 
     @Override
@@ -124,8 +109,6 @@ public class TeamDAOImpl implements TeamDAO {
             throw new IllegalArgumentException("match is null");
         }
 
-        Team team = (Team) em.createNamedQuery("Team.findAwayTeamByMatch").setParameter("match", match).getSingleResult();
-
-        return team;
+        return (Team) em.createNamedQuery("Team.findAwayTeamByMatch").setParameter("match", match).getSingleResult();
     }
 }

@@ -2,11 +2,6 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
          version="2.5">
-    <!--<context-param>
-        <description>umístění konfiguračního souboru pro Spring</description>
-        <param-name>contextConfigLocation</param-name>
-        <param-value>/WEB-INF/context.xml</param-value>
-    </context-param>-->
     <context-param>
         <description>JSTL tagy použijí lokalizované texty ze stejného zdroje jako Stripes tagy</description>
         <param-name>javax.servlet.jsp.jstl.fmt.localizationContext</param-name>
@@ -27,12 +22,6 @@
             <param-name>LocalePicker.Locales</param-name>
             <param-value>sk:utf-8,en:utf-8</param-value>
         </init-param>
-        
-        <!--<init-param>
-            <param-name>LocalePicker.Class</param-name>
-            <param-value>cz.muni.fi.pa165.fast.actionbean.CustomLocalePicker</param-value>
-        </init-param>-->
-      
         <init-param>
             <param-name>Interceptor.Classes</param-name>
             <param-value>com.samaxes.stripejb3.EJBInterceptor</param-value>

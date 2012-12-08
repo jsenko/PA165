@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.fast.service.impl;
 
 import cz.muni.fi.pa165.fast.dto.MatchDTO;
@@ -44,7 +40,6 @@ public class MatchGeneratorFacadeImpl implements MatchGeneratorFacade {
         TeamDTO fixedTeam = teams.get(0);
         teams.remove(0);
 
-
         for (int r = 1; r <= roundsCount; r++) {
             for (int i = 0; i < matchesPerRound; i++) {
                 if (i == 0) {
@@ -69,14 +64,12 @@ public class MatchGeneratorFacadeImpl implements MatchGeneratorFacade {
             TeamDTO removed = teams.remove(0);
             teams.add(removed);
         }
-        
-
     }
 
     @Override
     public void drop() {
         List<MatchDTO> allMatches = matchService.findAll();
-        for(MatchDTO m:allMatches){
+        for (MatchDTO m : allMatches) {
             matchService.delete(m);
         }
     }
@@ -87,33 +80,26 @@ public class MatchGeneratorFacadeImpl implements MatchGeneratorFacade {
         initializeNames();
 
         List<TeamDTO> list = teamService.findAll();
-        
-        Date date = new Date();
- 
-        
-        System.out.println("generate player was called");
+
         for (TeamDTO team : list) {
 
             for (int i = 0; i < 11; i++) {
                 PlayerDTO player = new PlayerDTO();
-                player.setAge(20+rand.nextInt(12));
+                player.setAge(20 + rand.nextInt(12));
                 player.setName(getRandomName());
                 player.setSurname(getRandomSurname());
-                player.setWeight(60+rand.nextInt(25));
-                player.setHeight(170+rand.nextInt(20));
+                player.setWeight(60 + rand.nextInt(25));
+                player.setHeight(170 + rand.nextInt(20));
                 player.setTeamId(team.getId());
                 playerService.create(player);
             }
         }
-
     }
 
     @Override
     public void generateTeams() {
-        System.out.println("call from facade");
         teamService.generate();
     }
-
 
     private void initializeNames() {
         names.add("Paul");

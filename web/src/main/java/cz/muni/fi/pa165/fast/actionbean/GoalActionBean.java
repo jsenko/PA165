@@ -1,19 +1,6 @@
 package cz.muni.fi.pa165.fast.actionbean;
 
-import java.util.List;
-import java.util.Collections;
-import net.sourceforge.stripes.action.ActionBean;
-import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.action.Before;
-import net.sourceforge.stripes.action.DefaultHandler;
-import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.RedirectResolution;
-import net.sourceforge.stripes.action.Resolution;
-import net.sourceforge.stripes.action.UrlBinding;
-import net.sourceforge.stripes.controller.LifecycleStage;
-
 import com.samaxes.stripejb3.EJBBean;
-
 import cz.muni.fi.pa165.fast.dto.GoalDTO;
 import cz.muni.fi.pa165.fast.dto.MatchDTO;
 import cz.muni.fi.pa165.fast.dto.PlayerDTO;
@@ -23,14 +10,22 @@ import cz.muni.fi.pa165.fast.service.MatchService;
 import cz.muni.fi.pa165.fast.service.PlayerOrderBy;
 import cz.muni.fi.pa165.fast.service.PlayerService;
 import cz.muni.fi.pa165.fast.service.TeamService;
-import java.util.ArrayList;
+import java.util.List;
+import net.sourceforge.stripes.action.ActionBean;
+import net.sourceforge.stripes.action.ActionBeanContext;
+import net.sourceforge.stripes.action.Before;
+import net.sourceforge.stripes.action.DefaultHandler;
+import net.sourceforge.stripes.action.ForwardResolution;
+import net.sourceforge.stripes.action.RedirectResolution;
+import net.sourceforge.stripes.action.Resolution;
+import net.sourceforge.stripes.action.UrlBinding;
+import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.validation.LocalizableError;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import net.sourceforge.stripes.validation.ValidationError;
 import net.sourceforge.stripes.validation.ValidationErrors;
 import net.sourceforge.stripes.validation.ValidationMethod;
-
 
 /**
  *
@@ -54,9 +49,7 @@ public class GoalActionBean implements ActionBean {
         @Validate(on = {"add", "save"}, field = "assistPlayerId", required = true, minvalue = 1),
         @Validate(on = {"add", "save"}, field = "goalMinute", required = true, minvalue = 1)})
     private GoalDTO goalDTO;
-    
-    //private Long matchId;
-    
+
     @DefaultHandler
     public Resolution all() {
 
@@ -64,11 +57,7 @@ public class GoalActionBean implements ActionBean {
     }
 
     public List<GoalDTO> getGoals() {
-        //System.out.println("matchid: " + goalDTO.getMatchId());
-        //System.out.println("In getGoals -> goalDTO: " + goalDTO);
-        List<GoalDTO> list = goalService.findByMatch(goalDTO.getMatchId());
-        //System.out.println("GoalList: " + list);
-        return list;
+        return goalService.findByMatch(goalDTO.getMatchId());
     }
 
     public List<MatchDTO> getMatches() {
@@ -83,7 +72,6 @@ public class GoalActionBean implements ActionBean {
         return matchPlayers;
     }
 
-
     @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
     public void loadGoalFromDatabase() {
 
@@ -91,7 +79,7 @@ public class GoalActionBean implements ActionBean {
         if (ids == null) {
             return;
         }
-        
+
         goalDTO = goalService.getById(Long.parseLong(ids));
     }
 
@@ -99,32 +87,26 @@ public class GoalActionBean implements ActionBean {
         return new ForwardResolution("/goal/create.jsp?goalDTO.matchId=" + goalDTO.getMatchId());
     }
 
-    public Resolution add()
-    {
-
-        
+    public Resolution add() {
         goalService.create(goalDTO);
-        
-        //System.out.println(goalDTO);
+
         return new ForwardResolution(this.getClass(), "all");
     }
 
     public Resolution delete() {
-        
         goalService.delete(goalDTO);
+
         return new ForwardResolution(this.getClass(), "all");
     }
 
     public Resolution edit() {
-
         return new RedirectResolution("/goal/edit.jsp?goalDTO.matchId=" + goalDTO.getMatchId() + "&goalDTO.id=" + goalDTO.getId());
     }
 
     public Resolution save() {
-
         goalService.update(goalDTO);
-        return new ForwardResolution(this.getClass(), "all");
 
+        return new ForwardResolution(this.getClass(), "all");
     }
 
     public GoalDTO getGoalDTO() {
@@ -132,22 +114,21 @@ public class GoalActionBean implements ActionBean {
     }
 
     public void setGoalDTO(GoalDTO goalDTO) {
-
         this.goalDTO = goalDTO;
     }
-    
+
     @ValidationMethod(on = {"add", "save"})
-    public void checkPlayers(ValidationErrors errors){
-        if(goalDTO.getAssistPlayerId() == goalDTO.getScoredPlayerId()){
+    public void checkPlayers(ValidationErrors errors) {
+        if (goalDTO.getAssistPlayerId() == goalDTO.getScoredPlayerId()) {
             errors = getContext().getValidationErrors();
-            
+
             ValidationError error = new LocalizableError("validation.goal.samePlayerId");
             errors.addGlobalError(error);
         }
-        
-        if(teamService.findByPlayer(goalDTO.getAssistPlayerId()).getId() != teamService.findByPlayer(goalDTO.getScoredPlayerId()).getId()){
+
+        if (teamService.findByPlayer(goalDTO.getAssistPlayerId()).getId() != teamService.findByPlayer(goalDTO.getScoredPlayerId()).getId()) {
             errors = getContext().getValidationErrors();
-            
+
             ValidationError error = new LocalizableError("validation.goal.playersFromDiffTeams");
             errors.addGlobalError(error);
         }

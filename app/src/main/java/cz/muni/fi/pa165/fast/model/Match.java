@@ -14,16 +14,15 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-
 /**
  * Entity Match
- * 
+ *
  * @author Stefan Uhercik
  */
 @Entity
-@Table(name="FootballMatch")
-public class Match implements Comparable<Match>, Serializable
-{
+@Table(name = "FootballMatch")
+public class Match implements Comparable<Match>, Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
@@ -33,9 +32,8 @@ public class Match implements Comparable<Match>, Serializable
     private Team homeTeam;
     @ManyToOne
     private Team awayTeam;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "match", orphanRemoval=true)
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "match", orphanRemoval = true)
     private Collection<Goal> goals;
-    
     private int round;
 
     public Long getId() {
@@ -54,7 +52,6 @@ public class Match implements Comparable<Match>, Serializable
         this.matchDate = matchDate;
     }
 
-
     public Team getHomeTeam() {
         return homeTeam;
     }
@@ -70,7 +67,7 @@ public class Match implements Comparable<Match>, Serializable
     public void setAwayTeam(Team awayTeam) {
         this.awayTeam = awayTeam;
     }
-    
+
     public Collection<Goal> getGoals() {
         return goals;
     }
@@ -81,13 +78,13 @@ public class Match implements Comparable<Match>, Serializable
 
     @Override
     public String toString() {
-        return "Match{" 
-        		+ "id=" + id
-        		+ ", matchDate=" + matchDate 
-        		+ ", homeTeam=" + homeTeam 
-        		+ ", awayTeam=" + awayTeam 
-        		+ ", round=" + round
-        		+ '}';
+        return "Match{"
+                + "id=" + id
+                + ", matchDate=" + matchDate
+                + ", homeTeam=" + homeTeam
+                + ", awayTeam=" + awayTeam
+                + ", round=" + round
+                + '}';
     }
 
     @Override
@@ -117,11 +114,11 @@ public class Match implements Comparable<Match>, Serializable
         return this.getMatchDate().compareTo(t.getMatchDate());
     }
 
-	public int getRound() {
-		return round;
-	}
+    public int getRound() {
+        return round;
+    }
 
-	public void setRound(int round) {
-		this.round = round;
-	}
+    public void setRound(int round) {
+        this.round = round;
+    }
 }

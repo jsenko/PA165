@@ -50,7 +50,7 @@ public class GoalDTO {
     public void setAssistPlayerId(long assistPlayerId) {
         this.assistPlayerId = assistPlayerId;
     }
-    
+
     public String getScoredPlayerName() {
         return scoredPlayerName;
     }

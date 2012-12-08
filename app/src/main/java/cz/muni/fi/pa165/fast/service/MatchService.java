@@ -1,8 +1,7 @@
 package cz.muni.fi.pa165.fast.service;
 
-import java.util.List;
-
 import cz.muni.fi.pa165.fast.dto.MatchDTO;
+import java.util.List;
 
 /**
  * Service layer class designed to provide prepared match data

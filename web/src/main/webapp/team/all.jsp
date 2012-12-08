@@ -30,7 +30,6 @@
                     <td><c:out value="${team.draw}"/></td>
                     <td><c:out value="${team.goalsFor}"/>:<c:out value="${team.goalsAgainst}"/></td>
                     <th><c:out value="${team.points}"/></th>
-                    <!--<td></td>-->
                     <td class="admin_section"><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" onclick="return confirm('Delete ${team.name}?');" event="delete"><s:param name="team.id" value="${team.id}"/><i class="icon-remove"></i></s:link></td>
                     <td class="admin_section"><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" event="edit"><s:param name="team.id" value="${team.id}"/><i class="icon-pencil"></i></s:link> </td>
                 </tr>

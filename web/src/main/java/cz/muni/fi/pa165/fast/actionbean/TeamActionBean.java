@@ -29,7 +29,7 @@ public class TeamActionBean implements ActionBean {
     protected TeamService teamService;
     @EJBBean("java:global/myapp/MatchGeneratorFacadeImpl!cz.muni.fi.pa165.fast.service.MatchGeneratorFacade")
     protected MatchGeneratorFacade facade;
-    
+
     @DefaultHandler
     public Resolution all() {
         return new ForwardResolution("/team/all.jsp");
@@ -44,14 +44,12 @@ public class TeamActionBean implements ActionBean {
         teamService.delete(team);
         return new RedirectResolution(this.getClass(), "all");
     }
-    
-    
+
     public Resolution generate() {
         teamService.generate();
         facade.generatePlayers();
         return new RedirectResolution(this.getClass(), "all");
     }
-    
 
     @Before(stages = LifecycleStage.BindingAndValidation, on = {"edit", "save"})
     public void loadTeamFromDatabase() {
@@ -70,7 +68,7 @@ public class TeamActionBean implements ActionBean {
         teamService.update(team);
         return new RedirectResolution(this.getClass(), "all");
     }
-    
+
     public Resolution create() {
         return new ForwardResolution("/team/create.jsp");
     }

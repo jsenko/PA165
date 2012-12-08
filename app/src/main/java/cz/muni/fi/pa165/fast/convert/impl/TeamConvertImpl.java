@@ -16,9 +16,9 @@ import javax.ejb.EJB;
 import javax.ejb.Local;
 import javax.ejb.Stateless;
 
-@Local(value=TeamConvert.class)
+@Local(value = TeamConvert.class)
 @Stateless
-public class TeamConvertImpl implements TeamConvert{
+public class TeamConvertImpl implements TeamConvert {
 
     @EJB
     private MatchDAO matchDao;
@@ -32,6 +32,7 @@ public class TeamConvertImpl implements TeamConvert{
         if (entity == null) {
             throw new IllegalArgumentException("Team entity is null.");
         }
+
         TeamDTO dto = new TeamDTO();
         if (entity.getId() == null) {
             dto.setId(0);

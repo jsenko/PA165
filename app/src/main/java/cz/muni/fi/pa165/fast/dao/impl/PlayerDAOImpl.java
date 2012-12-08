@@ -10,7 +10,6 @@ import javax.ejb.Local;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 
 /**
  * Implementation of PlayerDAO interface
@@ -59,7 +58,9 @@ public class PlayerDAOImpl implements PlayerDAO {
                 .setParameter("player", managed)
                 .getResultList();
         
-        goals.addAll(em.createQuery("select g from Goal g where g.assistPlayer = :player").setParameter("player", managed).getResultList());
+        goals.addAll(em.createQuery("select g from Goal g where g.assistPlayer = :player")
+                .setParameter("player", managed)
+                .getResultList());
 
         for (Goal g : goals) {
             em.remove(g);
@@ -83,15 +84,13 @@ public class PlayerDAOImpl implements PlayerDAO {
 
     @Override
     public Collection<Player> findAll() {
-        Query query = em.createQuery("SELECT p FROM Player p");
-        Collection<Player> allPlayers = query.getResultList();
-        return allPlayers;
+        return em.createQuery("SELECT p FROM Player p").getResultList();
     }
 
     @Override
     public List<Player> findPlayersByTeam(Team team) {
-        Query query = em.createQuery("SELECT p FROM Player p WHERE p.team=:team").setParameter("team", team);
-        List<Player> list = query.getResultList();
-        return list;
+        return em.createQuery("SELECT p FROM Player p WHERE p.team=:team")
+                .setParameter("team", team)
+                .getResultList();
     }
 }

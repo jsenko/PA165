@@ -1,11 +1,9 @@
 package cz.muni.fi.pa165.fast.service.impl;
 
-import cz.muni.fi.pa165.fast.convert.PlayerConvert;
 import cz.muni.fi.pa165.fast.convert.TeamConvert;
 import cz.muni.fi.pa165.fast.dao.MatchDAO;
 import cz.muni.fi.pa165.fast.dao.PlayerDAO;
 import cz.muni.fi.pa165.fast.dao.TeamDAO;
-import cz.muni.fi.pa165.fast.dto.PlayerDTO;
 import cz.muni.fi.pa165.fast.dto.TeamDTO;
 import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Player;
@@ -27,7 +25,6 @@ public class TeamServiceImpl implements TeamService {
     private PlayerDAO playerDao;
     @EJB
     private TeamConvert teamConvert;
-    
     @EJB
     private MatchDAO matchDao;
 
@@ -35,13 +32,6 @@ public class TeamServiceImpl implements TeamService {
     public void create(TeamDTO dto) {
         try {
             Team team = teamConvert.fromDTOToEntity(dto);
-
-            System.out.println("call from service");
-            if (team == null) {
-                System.out.println("team is null");
-            } else {
-                System.out.println("team is not null");
-            }
 
             teamDao.create(team);
         } catch (Exception ex) {
@@ -63,33 +53,26 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public void delete(TeamDTO dto) {
         try {
-            
-            
             Team team = teamConvert.fromDTOToEntity(dto);
             // delete matches
             List<Match> matches = matchDao.findByAwayTeam(team);
-            if(matches != null)
-            {
-            for(Match m: matches)
-            {
-                matchDao.delete(m);
-            }
+            if (matches != null) {
+                for (Match m : matches) {
+                    matchDao.delete(m);
+                }
             }
             matches = matchDao.findByHomeTeam(team);
-            if(matches != null)
-            {
-            for(Match m: matches)
-            {
-                matchDao.delete(m);
-            }
+            if (matches != null) {
+                for (Match m : matches) {
+                    matchDao.delete(m);
+                }
             }
             //delete players
             List<Player> players = playerDao.findPlayersByTeam(team);
-            if(players != null){
-            for(Player p: players)
-            {
-                playerDao.delete(p);
-            }
+            if (players != null) {
+                for (Player p : players) {
+                    playerDao.delete(p);
+                }
             }
             teamDao.delete(team);
         } catch (Exception ex) {
@@ -141,7 +124,6 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public void generate() {
-        System.out.println("call form team service generate");
         for (int i = 0; i < 10; i++) {
             TeamDTO team = new TeamDTO();
             switch (i) {

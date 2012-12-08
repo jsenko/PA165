@@ -25,79 +25,71 @@ import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 
 /**
- * 
+ *
  * @author Peter Laurencik
  */
-
 @Stateless
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
-public class PlayerServiceImpl implements PlayerService{
+public class PlayerServiceImpl implements PlayerService {
 
     @EJB
     PlayerDAO playerDao;
-    
     @EJB
     TeamDAO teamDao;
-    
     @EJB
     PlayerConvert convert;
-    
-    
+
     @Override
     public long create(PlayerDTO dto) {
-        
         Player player = convert.fromDTOToEntity(dto);
-        
+
         playerDao.create(player);
-        
+
         return player.getId();
     }
 
     @Override
     public long update(PlayerDTO dto) {
         Player player = convert.fromDTOToEntity(dto);
-        
+
         playerDao.update(player);
-        
+
         return player.getId();
     }
 
     @Override
     public void delete(PlayerDTO dto) {
         Player player = convert.fromDTOToEntity(dto);
-        
+
         playerDao.delete(player);
     }
-    
+
     @Override
-    public PlayerDTO getById(Long id){
-        try{
+    public PlayerDTO getById(Long id) {
+        try {
             Player player = playerDao.getById(id);
             PlayerDTO dto = convert.fromEntityToDTO(player);
-            
+
             return dto;
-        }catch(Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException("Error while retrieving player by its id.", ex);
         }
     }
 
     @Override
     public List<PlayerDTO> findAll(PlayerOrderBy orderBy) {
-        
+
         Collection<Player> allPlayers = playerDao.findAll();
         List<PlayerDTO> allDtoPlayers = new ArrayList<PlayerDTO>();
-        
-        for(Player player : allPlayers)
-        {
+
+        for (Player player : allPlayers) {
             PlayerDTO dtoPlayer = convert.fromEntityToDTO(player);
-            
+
             allDtoPlayers.add(dtoPlayer);
         }
-        
-        switch(orderBy)
-        {
-            
+
+        switch (orderBy) {
             case NAME:
                 Collections.sort(allDtoPlayers, new SortByPlayerName());
                 break;
@@ -116,27 +108,22 @@ public class PlayerServiceImpl implements PlayerService{
             case TEAM:
                 Collections.sort(allDtoPlayers, new SortByTeam());
         }
-        
+
         return allDtoPlayers;
     }
-    
+
     @Override
-    public List<PlayerDTO> findPlayersByTeam(Long teamId, PlayerOrderBy orderBy){
+    public List<PlayerDTO> findPlayersByTeam(Long teamId, PlayerOrderBy orderBy) {
         Collection<Player> players = playerDao.findPlayersByTeam(teamDao.getById(teamId));
         List<PlayerDTO> dtoPlayers = new ArrayList<PlayerDTO>();
-        
-        for(Player player : players)
-        {
+
+        for (Player player : players) {
             PlayerDTO dtoPlayer = convert.fromEntityToDTO(player);
-            
+
             dtoPlayers.add(dtoPlayer);
         }
-        
-        System.out.println("In PlayerServiceImpl -> dtoPlayers: " + dtoPlayers);
-        
-        switch(orderBy)
-        {
-            
+
+        switch (orderBy) {
             case NAME:
                 Collections.sort(dtoPlayers, new SortByPlayerName());
                 break;
@@ -153,8 +140,7 @@ public class PlayerServiceImpl implements PlayerService{
                 Collections.sort(dtoPlayers, new SortByPlayerHeight());
                 break;
         }
-        
+
         return dtoPlayers;
     }
-    
 }

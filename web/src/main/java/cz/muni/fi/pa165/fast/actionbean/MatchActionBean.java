@@ -38,10 +38,7 @@ public class MatchActionBean implements ActionBean {
     protected TeamService teamService;
     @EJBBean("java:global/myapp/MatchGeneratorFacadeImpl!cz.muni.fi.pa165.fast.service.MatchGeneratorFacade")
     protected MatchGeneratorFacade facade;
-    
     private String warning;
-    
-    
     @ValidateNestedProperties(value = {
         @Validate(on = {"add", "save"}, field = "round", required = true),
         @Validate(on = {"add", "save"}, field = "homeTeamId", required = true, minvalue = 1),
@@ -58,24 +55,22 @@ public class MatchActionBean implements ActionBean {
     public List<MatchDTO> getMatches() {
         return matchService.findAll();
     }
-    
-    public int getRounds()
-    {
+
+    public int getRounds() {
         List<MatchDTO> allMatches = matchService.findAll();
         int maxRound = 0;
-        for(MatchDTO match : allMatches)
-        {
-            if(maxRound < match.getRound()) {
+        for (MatchDTO match : allMatches) {
+            if (maxRound < match.getRound()) {
                 maxRound = match.getRound();
             }
         }
+
         return maxRound;
     }
-    
-    public String getWarning(){
+
+    public String getWarning() {
         return warning;
     }
-    
 
     public List<TeamDTO> getTeams() {
         return teamService.findAll();
@@ -90,47 +85,43 @@ public class MatchActionBean implements ActionBean {
         }
 
         matchDTO = matchService.getById(Long.parseLong(ids));
-        System.out.println(matchDTO);
     }
-    
-     public Resolution generate() {
-         
-         System.out.println("------------------------");
-         int teamsAmount = teamService.findAll().size();
-         if((teamsAmount==0)||(teamsAmount%2!=0)) this.warning = "You have wrong amount of teams, the amount must be event and higher than 0";
-         else{
-             facade.drop();
-             facade.generateMatches();
-         }
-         return new ForwardResolution(this.getClass(), "all");
-     }
-    
+
+    public Resolution generate() {
+        int teamsAmount = teamService.findAll().size();
+        if ((teamsAmount == 0) || (teamsAmount % 2 != 0)) {
+            this.warning = "You have wrong amount of teams, the amount must be event and higher than 0";
+        } else {
+            facade.drop();
+            facade.generateMatches();
+        }
+
+        return new ForwardResolution(this.getClass(), "all");
+    }
 
     public Resolution create() {
         return new ForwardResolution("/match/create.jsp");
     }
 
     public Resolution add() {
-        
-        System.out.println("In MatchActionBean.add() -> matchDTO: " + matchDTO);
-
         matchService.create(matchDTO);
+
         return new ForwardResolution(this.getClass(), "all");
     }
 
     public Resolution edit() {
-
-        return new RedirectResolution("/match/edit.jsp?matchDTO.id=" + matchDTO.getId());// hack, neviem preco to nefunguje normalne
+        return new RedirectResolution("/match/edit.jsp?matchDTO.id=" + matchDTO.getId());
     }
 
     public Resolution save() {
-
         matchService.update(matchDTO);
+
         return new RedirectResolution(this.getClass(), "all");
     }
-    
+
     public Resolution delete() {
         matchService.delete(matchDTO);
+
         return new RedirectResolution(this.getClass(), "all");
     }
 
@@ -139,15 +130,14 @@ public class MatchActionBean implements ActionBean {
     }
 
     public void setMatchDTO(MatchDTO matchDTO) {
-
         this.matchDTO = matchDTO;
     }
-    
+
     @ValidationMethod(on = {"add", "save"})
-    public void checkTeams(ValidationErrors errors){
-        if(matchDTO.getAwayTeamId() == matchDTO.getHomeTeamId()){
+    public void checkTeams(ValidationErrors errors) {
+        if (matchDTO.getAwayTeamId() == matchDTO.getHomeTeamId()) {
             errors = getContext().getValidationErrors();
-            
+
             ValidationError error = new LocalizableError("validation.match.sameTeamId");
             errors.addGlobalError(error);
         }

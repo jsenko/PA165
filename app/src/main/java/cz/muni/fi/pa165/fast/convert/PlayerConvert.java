@@ -8,7 +8,7 @@ import cz.muni.fi.pa165.fast.model.Player;
  * @author Peter Laurencik
  */
 public interface PlayerConvert extends Convert<Player, PlayerDTO> {
-    
+
     @Override
     public PlayerDTO fromEntityToDTO(Player player);
 

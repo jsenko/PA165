@@ -1,10 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.fast.actionbean;
 
-import cz.muni.fi.pa165.fast.Users.Admin;
+import cz.muni.fi.pa165.fast.users.Admin;
 import javax.servlet.http.HttpSession;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;

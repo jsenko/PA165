@@ -20,7 +20,6 @@
 
             <c:forEach items="${actionBean.goals}" var="goalDTO" varStatus="loop">
                 <tr>
-                    <!-- <td><c:out value="${loop.index + 1}"/>.</td>-->
                     <c:if test="${goalDTO.isHomeTeam}">
                         <c:set var="home" value="${home + 1}" scope="page" />
                         <td><c:out value="${goalDTO.goalMinute}\'"/> <c:out value="${goalDTO.scoredPlayerName}"/> (<c:out value="${goalDTO.assistPlayerName}"/>)</td>

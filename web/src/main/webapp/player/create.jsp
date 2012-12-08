@@ -12,7 +12,6 @@
             <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" class="form-horizontal">
             
                 <%@include file="/player/form.jsp"%>
-                <%--<s:submit name="add"><s:label name="player.createNewPlayer"/></s:submit>--%>
                 <s:submit name="add" class="btn btn-info"/>
 
         </s:form>

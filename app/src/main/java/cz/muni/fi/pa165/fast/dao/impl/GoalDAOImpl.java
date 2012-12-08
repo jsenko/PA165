@@ -16,7 +16,6 @@ import javax.persistence.PersistenceContext;
  */
 @Local(value = GoalDAO.class)
 @Stateless
-//@TransactionAttribute(TransactionAttributeType.MANDATORY)
 public class GoalDAOImpl implements GoalDAO {
 
     @PersistenceContext(name = "TestPU")
@@ -24,13 +23,11 @@ public class GoalDAOImpl implements GoalDAO {
 
     @Override
     public void create(Goal goal) {
-
         if (goal == null) {
             throw new IllegalArgumentException("Goal can not be null when new goal is created.");
         }
 
         em.persist(goal);
-
     }
 
     @Override
@@ -71,7 +68,6 @@ public class GoalDAOImpl implements GoalDAO {
         }
 
         return manGoal;
-
     }
 
     @Override
@@ -80,7 +76,6 @@ public class GoalDAOImpl implements GoalDAO {
         Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g").getResultList();
 
         return goals;
-
     }
 
     @Override
@@ -89,10 +84,11 @@ public class GoalDAOImpl implements GoalDAO {
             throw new IllegalArgumentException("Can not find goal by null scored player.");
         }
 
-        Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.scorePlayer= :player").setParameter("player", player).getResultList();
+        Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.scorePlayer= :player")
+                .setParameter("player", player)
+                .getResultList();
 
         return goals;
-
     }
 
     @Override
@@ -101,10 +97,11 @@ public class GoalDAOImpl implements GoalDAO {
             throw new IllegalArgumentException("Can not find goal by null assist player.");
         }
 
-        Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.assistPlayer= :player").setParameter("player", player).getResultList();
+        Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.assistPlayer= :player")
+                .setParameter("player", player)
+                .getResultList();
 
         return goals;
-
     }
 
     @Override
@@ -113,10 +110,10 @@ public class GoalDAOImpl implements GoalDAO {
             throw new IllegalArgumentException("Can not find goal by null match.");
         }
 
-        Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.match=:match").setParameter("match", match).getResultList();
-        System.out.println("Collection<Goal>: " + goals);
+        Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g WHERE g.match=:match")
+                .setParameter("match", match)
+                .getResultList();
 
         return goals;
-
     }
 }

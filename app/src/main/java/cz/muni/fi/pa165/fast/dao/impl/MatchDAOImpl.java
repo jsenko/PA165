@@ -60,7 +60,6 @@ public class MatchDAOImpl implements MatchDAO {
                 .setParameter("match", managed)
                 .getResultList();
 
-        System.out.println("Goals: " + goals);
         for (Goal g : goals) {
             em.remove(g);
         }

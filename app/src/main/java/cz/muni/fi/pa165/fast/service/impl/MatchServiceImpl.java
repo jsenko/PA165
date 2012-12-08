@@ -69,7 +69,7 @@ public class MatchServiceImpl implements MatchService {
                 dtos.add(convert.fromEntityToDTO(m));
             }
             Collections.sort(dtos);
-            System.out.println("In MatchServiceImpl -> dtos: " + dtos);
+
             return dtos;
         } catch (Exception ex) {
             throw new RuntimeException("Error while retrieving matches.", ex);
@@ -87,6 +87,7 @@ public class MatchServiceImpl implements MatchService {
                 }
             }
             Collections.sort(dtos);
+
             return dtos;
         } catch (Exception ex) {
             throw new RuntimeException("Error while retrieving matches.", ex);
@@ -111,6 +112,7 @@ public class MatchServiceImpl implements MatchService {
                 dtos.add(convert.fromEntityToDTO(m));
             }
             Collections.sort(dtos);
+
             return dtos;
         } catch (Exception ex) {
             throw new RuntimeException("Error while retrieving matches.", ex);
@@ -120,7 +122,6 @@ public class MatchServiceImpl implements MatchService {
     @Override
     public MatchDTO getById(long id) {
         try {
-
             return convert.fromEntityToDTO(matchDAO.getById(id));
         } catch (Exception e) {
             throw new RuntimeException("getById operation failed", e);

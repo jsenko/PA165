@@ -1,27 +1,19 @@
 package cz.muni.fi.pa165.fast.dto;
 
-public class PlayerDTO
-{
-	private long id;
-	
-	private String name;
-	
-        private String surname;
-        
-	//derived
-	private int goals;
-	// derived
-	private int assists;
-	
-	private int age;
-	
-	private int weight;
-	
-	private int height;
-        
-        private long teamId;
-        
-        private String teamName;
+public class PlayerDTO {
+
+    private long id;
+    private String name;
+    private String surname;
+    //derived
+    private int goals;
+    // derived
+    private int assists;
+    private int age;
+    private int weight;
+    private int height;
+    private long teamId;
+    private String teamName;
 
     public String getTeamName() {
         return teamName;
@@ -111,10 +103,10 @@ public class PlayerDTO
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return name + " " + surname;
     }
-    
+
     public String toDebugString() {
         return "PlayerDTO{" + "id=" + id + ", name=" + name + ", surname=" + surname + ", goals=" + goals + ", assists=" + assists + ", age=" + age + ", weight=" + weight + ", height=" + height + ", teamId=" + teamId + '}';
     }
@@ -133,6 +125,4 @@ public class PlayerDTO
         }
         return true;
     }
-        
-        
 }

@@ -35,12 +35,4 @@
     </div>
 </div>
     
-
-<%--
-<s:hidden name="player.teamId" />
-<s:select name="player.teamId" id="p6">
-    
-    <s:options-collection collection="${actionBean.teams}" label="name" value="id"/>  
-    </s:select>           
---%>
 <br />

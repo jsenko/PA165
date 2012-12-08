@@ -21,10 +21,9 @@ import javax.ejb.Stateless;
 public class MatchConvertImpl implements MatchConvert {
 
     @EJB
-    TeamDAO teamDAO;
-    
+    private TeamDAO teamDAO;
     @EJB
-    GoalDAO goalDAO;
+    private GoalDAO goalDAO;
 
     @Override
     public MatchDTO fromEntityToDTO(Match entity) {
@@ -54,10 +53,7 @@ public class MatchConvertImpl implements MatchConvert {
         int awayGoals = 0;
 
         for (Goal g : goalDAO.findByMatch(entity)) {
-            if (entity.getHomeTeam().equals(
-                    teamDAO.findTeamByPlayer(g.getScorePlayer()))) {
-                    //g.getScorePlayer().getTeam())){
-
+            if (entity.getHomeTeam().equals(teamDAO.findTeamByPlayer(g.getScorePlayer()))) {
                 homeGoals++;
             } else {
                 awayGoals++;

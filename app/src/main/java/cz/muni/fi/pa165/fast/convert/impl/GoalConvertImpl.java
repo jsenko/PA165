@@ -15,7 +15,7 @@ import javax.ejb.Stateless;
  *
  * @author Stefan
  */
-@Local(value=GoalConvert.class)
+@Local(value = GoalConvert.class)
 @Stateless
 public class GoalConvertImpl implements GoalConvert {
 
@@ -23,14 +23,27 @@ public class GoalConvertImpl implements GoalConvert {
     private PlayerDAO playerDAO;
     @EJB
     private MatchDAO matchDAO;
-    
+
     @Override
     public GoalDTO fromEntityToDTO(Goal entity) {
+        if (entity == null) {
+            throw new IllegalArgumentException("Goal entity is null.");
+        }
+        if (entity.getMatch() == null) {
+            throw new RuntimeException("Match cannot be null");
+        }
+        if (entity.getScorePlayer() == null) {
+            throw new RuntimeException("Scoring player cannot be null");
+        }
+        if (entity.getAssistPlayer() == null) {
+            throw new RuntimeException("Assisting player cannot be null");
+        }
+
         GoalDTO goalDTO = new GoalDTO();
-        
-        if(entity.getId() == null){
+
+        if (entity.getId() == null) {
             goalDTO.setId(0);
-        }else{
+        } else {
             goalDTO.setId(entity.getId());
         }
         goalDTO.setScoredPlayerId(entity.getScorePlayer().getId());
@@ -39,7 +52,7 @@ public class GoalConvertImpl implements GoalConvert {
         goalDTO.setAssistPlayerName(entity.getAssistPlayer().getName() + " " + entity.getAssistPlayer().getSurname());
         goalDTO.setMatchId(entity.getMatch().getId());
         goalDTO.setGoalMinute(entity.getGoalMinute());
-        
+
         Team homeTeam = entity.getMatch().getHomeTeam();
         Team scoringPlayerTeam = entity.getScorePlayer().getTeam();
 
@@ -51,17 +64,16 @@ public class GoalConvertImpl implements GoalConvert {
             goalDTO.setIsHomeTeam(false);
         }
 
-        System.out.println("In convert: GoalDTO output: " + goalDTO);
         return goalDTO;
     }
 
     @Override
     public Goal fromDTOToEntity(GoalDTO dto) {
         Goal goal = new Goal();
-        
-        if(dto.getId() == 0){
+
+        if (dto.getId() == 0) {
             goal.setId(null);
-        }else{
+        } else {
             goal.setId(dto.getId());
         }
 
@@ -80,16 +92,15 @@ public class GoalConvertImpl implements GoalConvert {
             assistant = playerDAO.getById(dto.getAssistPlayerId());
         }
         goal.setAssistPlayer(assistant);
-        
-        if(dto.getMatchId() == 0){
+
+        if (dto.getMatchId() == 0) {
             goal.setMatch(null);
-        }else{
+        } else {
             goal.setMatch(matchDAO.getById(dto.getMatchId()));
         }
-        
+
         goal.setGoalMinute(dto.getGoalMinute());
-        
-        System.out.println("In convert: Goal output: " + goal);
+
         return goal;
     }
 }

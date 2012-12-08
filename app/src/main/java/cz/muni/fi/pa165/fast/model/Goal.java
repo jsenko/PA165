@@ -5,12 +5,12 @@ import javax.persistence.*;
 
 /**
  * Entity - Goal
- * 
+ *
  * @author Michal Kimle
  */
 @Entity
-public class Goal implements Serializable
-{
+public class Goal implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.TABLE)
     private Long id;
@@ -61,8 +61,6 @@ public class Goal implements Serializable
     public void setMatch(Match match) {
         this.match = match;
     }
-    
-    
 
     @Override
     public int hashCode() {

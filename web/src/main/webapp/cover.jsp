@@ -18,14 +18,6 @@
         </head>
         <body>
             <div id="header">
-                <!--<s:link beanclass="cz.muni.fi.pa165.fast.actionbean.CoverActionBean" event="sk">
-                    <s:param name="locale" value="sk"/>
-                    <img src="${pageContext.request.contextPath}/img/sk.png" alt="Slovenčina" class="language"/>
-                </s:link>
-                <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.CoverActionBean" event="en">
-                    <s:param name="locale" value="en"/>
-                    <img src="${pageContext.request.contextPath}/img/us.png" alt="English" class="language"/>
-                </s:link>-->
                 <img src="${pageContext.request.contextPath}/img/logo.jpg" alt="FAST - Fotball analytical and statistical tool" id="logo" />
             </div>
             <div class="container">
