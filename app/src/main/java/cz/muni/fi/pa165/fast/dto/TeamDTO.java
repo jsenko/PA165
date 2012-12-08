@@ -11,7 +11,6 @@ public class TeamDTO implements Comparable<TeamDTO> {
     private int won;
     private int lost;
     private int draw;
-    private MatchResult[] trend;
 
     public long getId() {
         return id;
@@ -75,14 +74,6 @@ public class TeamDTO implements Comparable<TeamDTO> {
 
     public void setDraw(int draw) {
         this.draw = draw;
-    }
-
-    public MatchResult[] getTrend() {
-        return trend;
-    }
-
-    public void setTrend(MatchResult[] trend) {
-        this.trend = trend;
     }
 
     @Override

@@ -4,7 +4,6 @@ import cz.muni.fi.pa165.fast.convert.TeamConvert;
 import cz.muni.fi.pa165.fast.dao.GoalDAO;
 import cz.muni.fi.pa165.fast.dao.MatchDAO;
 import cz.muni.fi.pa165.fast.dao.PlayerDAO;
-import cz.muni.fi.pa165.fast.dto.MatchResult;
 import cz.muni.fi.pa165.fast.dto.TeamDTO;
 import cz.muni.fi.pa165.fast.model.Goal;
 import cz.muni.fi.pa165.fast.model.Match;
@@ -44,8 +43,6 @@ public class TeamConvertImpl implements TeamConvert {
         List<Match> matches = matchDao.findByAwayTeam(entity);
         matches.addAll(matchDao.findByHomeTeam(entity));
         Collections.sort(matches);
-        int i = 0;
-        MatchResult[] trend = new MatchResult[5];
 
         for (Match match : matches) {
             Collection<Goal> goals = goalDao.findByMatch(match);
@@ -62,26 +59,14 @@ public class TeamConvertImpl implements TeamConvert {
 
             if (outGoals > inGoals) {
                 dto.setWon(dto.getWon() + 1);
-                if (i < 5) {
-                    trend[i] = MatchResult.WON;
-                }
             } else if (outGoals < inGoals) {
                 dto.setLost(dto.getLost() + 1);
-                if (i < 5) {
-                    trend[i] = MatchResult.LOST;
-                }
             } else {
                 dto.setDraw(dto.getDraw() + 1);
-                if (i < 5) {
-                    trend[i] = MatchResult.DRAWN;
-                }
             }
-
-            i++;
         }
 
         dto.setPoints(dto.getWon() * 2 + dto.getDraw());
-        dto.setTrend(trend);
 
         return dto;
     }

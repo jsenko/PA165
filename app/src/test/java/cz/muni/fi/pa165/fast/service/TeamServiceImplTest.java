@@ -7,7 +7,6 @@ import cz.muni.fi.pa165.fast.dao.GoalDAO;
 import cz.muni.fi.pa165.fast.dao.MatchDAO;
 import cz.muni.fi.pa165.fast.dao.PlayerDAO;
 import cz.muni.fi.pa165.fast.dao.TeamDAO;
-import cz.muni.fi.pa165.fast.dto.MatchResult;
 import cz.muni.fi.pa165.fast.dto.TeamDTO;
 import cz.muni.fi.pa165.fast.model.Goal;
 import cz.muni.fi.pa165.fast.model.Match;
@@ -17,7 +16,6 @@ import cz.muni.fi.pa165.fast.service.impl.TeamServiceImpl;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.junit.After;
 import org.junit.AfterClass;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
@@ -566,12 +564,6 @@ public class TeamServiceImplTest {
         assertEquals(4, team.getWon());
         assertEquals(0, team.getLost());
         assertEquals(1, team.getDraw());
-        MatchResult[] trend = team.getTrend();
-        assertEquals(trend[0], MatchResult.WON);
-        assertEquals(trend[1], MatchResult.WON);
-        assertEquals(trend[2], MatchResult.DRAWN);
-        assertEquals(trend[3], MatchResult.WON);
-        assertEquals(trend[4], MatchResult.WON);
 
         team = dtos.get(1);
         assertEquals(5, team.getId());
@@ -582,12 +574,6 @@ public class TeamServiceImplTest {
         assertEquals(2, team.getWon());
         assertEquals(1, team.getLost());
         assertEquals(2, team.getDraw());
-        trend = team.getTrend();
-        assertEquals(trend[0], MatchResult.WON);
-        assertEquals(trend[1], MatchResult.LOST);
-        assertEquals(trend[2], MatchResult.DRAWN);
-        assertEquals(trend[3], MatchResult.DRAWN);
-        assertEquals(trend[4], MatchResult.WON);
 
         team = dtos.get(2);
         assertEquals(6, team.getId());
@@ -598,12 +584,6 @@ public class TeamServiceImplTest {
         assertEquals(0, team.getWon());
         assertEquals(3, team.getLost());
         assertEquals(2, team.getDraw());
-        trend = team.getTrend();
-        assertEquals(trend[0], MatchResult.DRAWN);
-        assertEquals(trend[1], MatchResult.DRAWN);
-        assertEquals(trend[2], MatchResult.LOST);
-        assertEquals(trend[3], MatchResult.LOST);
-        assertEquals(trend[4], MatchResult.LOST);
     }
 
     @Test
@@ -747,11 +727,5 @@ public class TeamServiceImplTest {
         assertEquals(2, team.getWon());
         assertEquals(1, team.getLost());
         assertEquals(2, team.getDraw());
-        MatchResult[] trend = team.getTrend();
-        assertEquals(trend[0], MatchResult.WON);
-        assertEquals(trend[1], MatchResult.LOST);
-        assertEquals(trend[2], MatchResult.DRAWN);
-        assertEquals(trend[3], MatchResult.DRAWN);
-        assertEquals(trend[4], MatchResult.WON);
     }
 }
