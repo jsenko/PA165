@@ -4,21 +4,21 @@
 
 
 <div class="control-group">
-    <s:label class="control-label" for="m1" name="match.round" />
+    <s:label class="control-label" for="m1" name="matchDTO.round" />
     <div class="controls">
         <s:text id="m1" name="matchDTO.round" />
     </div>
 </div>
 
 <div class="control-group">
-    <s:label class="control-label" for="m7"  name="match.date" />
+    <s:label class="control-label" for="m7"  name="matchDTO.date" />
     <div class="controls">
         <s:text name="matchDTO.date" formatPattern="MM/dd/yyyy" id="m7" class="m7"/>
     </div>
 </div>
 
 <div class="control-group">
-    <s:label class="control-label" for="m5" name="match.hTeam" />
+    <s:label class="control-label" for="m5" name="matchDTO.homeTeamId" />
     <div class="controls">
         <s:select name="matchDTO.homeTeamId" id="m5">
             <s:options-collection collection="${actionBean.teams}" label="name" value="id" />
@@ -27,7 +27,7 @@
 </div>
 
 <div class="control-group">
-    <s:label class="control-label" for="m6"  name="match.aTeam" />
+    <s:label class="control-label" for="m6"  name="matchDTO.awayTeamId" />
     <div class="controls"> 
         <s:select name="matchDTO.awayTeamId" id="m6">
             <s:options-collection collection="${actionBean.teams}"  label="name" value="id" />

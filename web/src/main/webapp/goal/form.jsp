@@ -6,7 +6,7 @@
 <s:hidden name="goalDTO.matchId"/>
 
         <div class="control-group">
-            <s:label class="control-label" for="g4" name="goal.minute" />
+            <s:label class="control-label" for="g4" name="goalDTO.goalMinute" />
             <div class="controls">
                 <s:text name="goalDTO.goalMinute" id="g4" />
             </div>
