@@ -5,7 +5,6 @@ import cz.muni.fi.pa165.fast.comparator.SortByPlayerGoals;
 import cz.muni.fi.pa165.fast.comparator.SortByPlayerHeight;
 import cz.muni.fi.pa165.fast.comparator.SortByPlayerName;
 import cz.muni.fi.pa165.fast.comparator.SortByPlayerWeight;
-import cz.muni.fi.pa165.fast.comparator.SortByTeam;
 import cz.muni.fi.pa165.fast.convert.PlayerConvert;
 import cz.muni.fi.pa165.fast.dao.PlayerDAO;
 import cz.muni.fi.pa165.fast.dao.TeamDAO;
@@ -75,41 +74,6 @@ public class PlayerServiceImpl implements PlayerService {
         } catch (Exception ex) {
             throw new RuntimeException("Error while retrieving player by its id.", ex);
         }
-    }
-
-    @Override
-    public List<PlayerDTO> findAll(PlayerOrderBy orderBy) {
-
-        Collection<Player> allPlayers = playerDao.findAll();
-        List<PlayerDTO> allDtoPlayers = new ArrayList<PlayerDTO>();
-
-        for (Player player : allPlayers) {
-            PlayerDTO dtoPlayer = convert.fromEntityToDTO(player);
-
-            allDtoPlayers.add(dtoPlayer);
-        }
-
-        switch (orderBy) {
-            case NAME:
-                Collections.sort(allDtoPlayers, new SortByPlayerName());
-                break;
-            case GOALS:
-                Collections.sort(allDtoPlayers, new SortByPlayerGoals());
-                break;
-            case AGE:
-                Collections.sort(allDtoPlayers, new SortByPlayerAge());
-                break;
-            case WEIGHT:
-                Collections.sort(allDtoPlayers, new SortByPlayerWeight());
-                break;
-            case HEIGHT:
-                Collections.sort(allDtoPlayers, new SortByPlayerHeight());
-                break;
-            case TEAM:
-                Collections.sort(allDtoPlayers, new SortByTeam());
-        }
-
-        return allDtoPlayers;
     }
 
     @Override

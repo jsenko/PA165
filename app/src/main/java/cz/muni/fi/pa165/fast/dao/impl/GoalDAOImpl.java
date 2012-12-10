@@ -71,11 +71,8 @@ public class GoalDAOImpl implements GoalDAO {
     }
 
     @Override
-    public Collection<Goal> findAll() {
-
-        Collection<Goal> goals = em.createQuery("SELECT g FROM Goal g").getResultList();
-
-        return goals;
+    public Collection<Goal> findAll() {     
+        throw new UnsupportedOperationException();
     }
 
     @Override

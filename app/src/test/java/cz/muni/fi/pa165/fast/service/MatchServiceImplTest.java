@@ -14,7 +14,6 @@ import java.util.List;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
@@ -144,59 +143,6 @@ public class MatchServiceImplTest {
          assertEquals("First Team", dto.getAwayTeamName());
          assertEquals(1, (int)dto.getHomeTeamGoals());
          assertEquals(0, (int)dto.getAwayTeamGoals());
-    }
-
-    @Test
-    public void findByRound() {
-         List<MatchDTO> dtos = service.findByRound(2);
-
-         assertEquals(3, dtos.size()); // six total, three in each round
-		
-         verify(matchDAOMock).findAll();
-         verifyNoMoreInteractions(matchDAOMock);
-		
-         // verify that all three matches are from round 2
-         for(MatchDTO dto: dtos)
-         {
-         assertEquals(2, dto.getRound());
-         }
-		
-         MatchDTO dto = dtos.get(0); // get sample - first match in second round
-         assertEquals(3, dto.getId());
-         assertEquals(2, dto.getRound());
-         assertEquals(2, dto.getHomeTeamId());
-         assertEquals("Second Team", dto.getHomeTeamName());
-         assertEquals(1, dto.getAwayTeamId());
-         assertEquals("First Team", dto.getAwayTeamName());
-         assertEquals(0, (int)dto.getHomeTeamGoals());
-         assertEquals(1, (int)dto.getAwayTeamGoals());
-    }
-
-    @Test
-    public void findByTeam() {
-         List<MatchDTO> dtos = service.findByTeam(3);
-
-         assertEquals(4, dtos.size()); // four total
-		
-         verify(matchDAOMock).findByHomeTeam(any(Team.class));
-         verify(matchDAOMock).findByAwayTeam(any(Team.class));
-         verifyNoMoreInteractions(matchDAOMock);
-		
-         // verify that all 4 matches have home or away team with id 3
-         for(MatchDTO dto: dtos)
-         {
-         assertTrue(dto.getHomeTeamId() == 3 || dto.getAwayTeamId() == 3);
-         }
-		
-         MatchDTO dto = dtos.get(0); // get sample - match with lowest date
-         assertEquals(2, dto.getId());
-         assertEquals(1, dto.getRound());
-         assertEquals(1, dto.getHomeTeamId());
-         assertEquals("First Team", dto.getHomeTeamName());
-         assertEquals(3, dto.getAwayTeamId());
-         assertEquals("Third Team", dto.getAwayTeamName());
-         assertEquals(1, (int)dto.getHomeTeamGoals());
-         assertEquals(1, (int)dto.getAwayTeamGoals());
     }
     
     @Test

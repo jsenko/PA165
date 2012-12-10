@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.fast.dao;
 import cz.muni.fi.pa165.fast.model.Player;
 import cz.muni.fi.pa165.fast.model.Team;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
@@ -169,27 +168,6 @@ public class PlayerDAOImplTest {
         } catch (EJBException ex) {
             //OK
         }
-    }
-
-    @Test
-    public void findAllTest() {
-        Player player1 = new Player();
-        player1.setName("Mike");
-        Player player2 = new Player();
-        player2.setName("Felix");
-
-        fem.persist(player1);
-        fem.persist(player2);
-
-        Collection<Player> allPlayers = playerDAO.findAll();
-
-        Assert.assertEquals(2, allPlayers.size());
-
-        Assert.assertTrue(allPlayers.contains(player1));
-        Assert.assertTrue(allPlayers.contains(player2));
-
-        fem.remove(player1);
-        fem.remove(player2);
     }
 
     @Test

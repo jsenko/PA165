@@ -84,7 +84,7 @@ public class PlayerDAOImpl implements PlayerDAO {
 
     @Override
     public Collection<Player> findAll() {
-        return em.createQuery("SELECT p FROM Player p").getResultList();
+        throw new UnsupportedOperationException();
     }
 
     @Override

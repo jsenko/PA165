@@ -30,8 +30,8 @@ public class PlayerActionBean implements ActionBean {
         @Validate(on = {"add", "save"}, field = "name", required = true),
         @Validate(on = {"add", "save"}, field = "surname", required = true),
         @Validate(on = {"add", "save"}, field = "age", required = true, minvalue = 16),
-        @Validate(on = {"add", "save"}, field = "height", required = true, minvalue = 50),
-        @Validate(on = {"add", "save"}, field = "weight", required = true, minvalue = 100),
+        @Validate(on = {"add", "save"}, field = "height", required = true, minvalue = 100),
+        @Validate(on = {"add", "save"}, field = "weight", required = true, minvalue = 50),
     })
     private PlayerDTO player;
     private TeamDTO team;
@@ -117,30 +117,6 @@ public class PlayerActionBean implements ActionBean {
 
     public void setTeam(TeamDTO team) {
         this.team = team;
-    }
-
-    public List<TeamDTO> getTeams() {
-        TeamDTO utTeam = getContext().getSelectedTeam();
-        if (utTeam == null || utTeam.getId() == 0) {
-            return teamService.findAll();
-        }
-        int i;
-        List<TeamDTO> list = teamService.findAll();
-        for (i = 0; i < list.size(); i++) {
-            if (utTeam.getId() == list.get(i).getId()) {
-                break;
-            }
-        }
-
-        if (i >= list.size()) {
-            return teamService.findAll();
-        }
-
-        TeamDTO tmp = list.get(i);
-        list.set(i, list.get(0));
-        list.set(0, tmp);
-
-        return list;
     }
 
     public List<PlayerDTO> getPlayers() {

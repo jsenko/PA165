@@ -4,9 +4,6 @@ import cz.muni.fi.pa165.fast.model.Goal;
 import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Player;
 import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.ejb.embeddable.EJBContainer;
@@ -179,31 +176,6 @@ public class GoalDAOImplTest {
         } catch (EJBException ex) {
             //OK
         }
-    }
-
-    @Test
-    public void testFindAll() {
-        Random r = new Random();
-
-        List<Goal> list = new LinkedList<Goal>();
-
-        Goal g = new Goal();
-
-        g.setGoalMinute(r.nextInt(100));
-        list.add(g);
-        em.persist(g);
-
-        Goal g2 = new Goal();
-        g2.setGoalMinute(r.nextInt(100));
-        list.add(g2);
-        em.persist(g2);
-
-        List<Goal> goalsFromDB = (List<Goal>) gdaoi.findAll();
-
-        assertEquals(list, goalsFromDB);
-
-        em.remove(g);
-        em.remove(g2);
     }
 
     @Test

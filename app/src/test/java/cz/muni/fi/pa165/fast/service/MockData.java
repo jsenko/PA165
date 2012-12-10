@@ -312,7 +312,6 @@ public class MockData {
         doReturn(list(new Player[]{p2})).when(playerDAOMock).findPlayersByTeam(t2);
         doReturn(list(new Player[]{p3})).when(playerDAOMock).findPlayersByTeam(t3);
         doReturn(list(new Player[]{p4, p5, p6, p7, p8, p9})).when(playerDAOMock).findPlayersByTeam(t4);
-        doReturn(list(new Player[]{p1, p2, p3, p4, p5, p6, p7, p8, p9})).when(playerDAOMock).findAll();
     }
 
     public TeamDAO getTeamDAOMock() {
