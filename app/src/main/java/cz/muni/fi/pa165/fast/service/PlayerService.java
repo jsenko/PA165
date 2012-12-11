@@ -28,14 +28,6 @@ public interface PlayerService
          * @param dto Player data transfer object
          */
 	public void delete(PlayerDTO dto);
-	
-        /**
-         * Creating sorted list of all Players.
-         * 
-         * @param orderBy Type of sorting method
-         * @return sorted list of player data transfer object
-         */
-	public List<PlayerDTO> findAll(PlayerOrderBy orderBy);
         
         public List<PlayerDTO> findPlayersByTeam(Long teamId, PlayerOrderBy orderBy);
 }

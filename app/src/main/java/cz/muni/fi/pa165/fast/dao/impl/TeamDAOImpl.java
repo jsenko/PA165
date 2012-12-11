@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.fast.dao.impl;
 
 import cz.muni.fi.pa165.fast.dao.TeamDAO;
-import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Player;
 import cz.muni.fi.pa165.fast.model.Team;
 import java.util.Collection;
@@ -92,23 +91,5 @@ public class TeamDAOImpl implements TeamDAO {
         }
         
         throw new IllegalArgumentException("player doesn't have a team");
-    }
-
-    @Override
-    public Team findHomeTeamByMatch(Match match) {
-        if (match == null) {
-            throw new IllegalArgumentException("match is null");
-        }
-
-        return (Team) em.createNamedQuery("Team.findHomeTeamByMatch").setParameter("match", match).getSingleResult();
-    }
-
-    @Override
-    public Team findAwayTeamByMatch(Match match) {
-        if (match == null) {
-            throw new IllegalArgumentException("match is null");
-        }
-
-        return (Team) em.createNamedQuery("Team.findAwayTeamByMatch").setParameter("match", match).getSingleResult();
     }
 }

@@ -10,7 +10,6 @@ import cz.muni.fi.pa165.fast.dto.PlayerDTO;
 import cz.muni.fi.pa165.fast.model.Player;
 import cz.muni.fi.pa165.fast.service.impl.PlayerServiceImpl;
 import java.util.List;
-import org.junit.After;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
@@ -101,46 +100,6 @@ public class PlayerServiceImplTest {
         verify(playerDao).delete(player);
         verifyNoMoreInteractions(playerDao);
     }
-
-    @Test
-    public void findAll() {
-
-        List<PlayerDTO> playersDtoByName = service.findAll(PlayerOrderBy.NAME);
-        List<PlayerDTO> playersDtoByGoals = service.findAll(PlayerOrderBy.GOALS);
-        List<PlayerDTO> playersDtoByAge = service.findAll(PlayerOrderBy.AGE);
-        List<PlayerDTO> playersDtoByHeight = service.findAll(PlayerOrderBy.HEIGHT);
-        List<PlayerDTO> playersDtoByWeight = service.findAll(PlayerOrderBy.WEIGHT);
-
-        PlayerDTO firstByNamePlayer = playersDtoByName.get(0);
-        PlayerDTO lastByNamePlayer = playersDtoByName.get(8);
-
-        PlayerDTO firstByGoalsPlayer = playersDtoByGoals.get(0);
-        PlayerDTO lastByGoalsPlayer = playersDtoByGoals.get(8);
-
-        PlayerDTO youngestPlayer = playersDtoByAge.get(0);
-        PlayerDTO oldestPlayer = playersDtoByAge.get(8);
-
-        PlayerDTO lightestPlayer = playersDtoByHeight.get(0);
-        PlayerDTO heaviestPlayer = playersDtoByHeight.get(8);
-
-        PlayerDTO smallestPlayer = playersDtoByWeight.get(0);
-        PlayerDTO tallestPlayer = playersDtoByWeight.get(8);
-
-        assertEquals(firstByNamePlayer.getId(), 6L);
-        assertEquals(lastByNamePlayer.getId(), 1L);
-
-        assertEquals(firstByGoalsPlayer.getId(), 1L);
-        assertEquals(lastByGoalsPlayer.getId(), 9L);
-
-        assertEquals(youngestPlayer.getId(), 8L);
-        assertEquals(oldestPlayer.getId(), 6L);
-
-        assertEquals(lightestPlayer.getId(), 5L);
-        assertEquals(heaviestPlayer.getId(), 9L);
-
-        assertEquals(smallestPlayer.getId(), 7L);
-        assertEquals(tallestPlayer.getId(), 5L);
-    }
     
     @Test
     public void getById() {
@@ -168,7 +127,6 @@ public class PlayerServiceImplTest {
         List<PlayerDTO> pOfT2 = service.findPlayersByTeam(2L, PlayerOrderBy.NAME);
         List<PlayerDTO> pOfT3 = service.findPlayersByTeam(3L, PlayerOrderBy.NAME);
         List<PlayerDTO> pOfT4ByName = service.findPlayersByTeam(4L, PlayerOrderBy.NAME);
-        List<PlayerDTO> pOfT4ByGoals = service.findPlayersByTeam(4L, PlayerOrderBy.GOALS);
         List<PlayerDTO> pOfT4ByAge = service.findPlayersByTeam(4L, PlayerOrderBy.AGE);
         List<PlayerDTO> pOfT4ByHeight = service.findPlayersByTeam(4L, PlayerOrderBy.HEIGHT);
         List<PlayerDTO> pOfT4ByWight = service.findPlayersByTeam(4L, PlayerOrderBy.WEIGHT);
@@ -180,9 +138,6 @@ public class PlayerServiceImplTest {
         
         PlayerDTO firstByNamePlayer = pOfT4ByName.get(0);
         PlayerDTO lastByNamePlayer = pOfT4ByName.get(5);
-
-        PlayerDTO firstByGoalsPlayer = pOfT4ByGoals.get(0);
-        PlayerDTO lastByGoalsPlayer = pOfT4ByGoals.get(5);
 
         PlayerDTO youngestPlayer = pOfT4ByAge.get(0);
         PlayerDTO oldestPlayer = pOfT4ByAge.get(5);
