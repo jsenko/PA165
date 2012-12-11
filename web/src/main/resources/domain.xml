@@ -24,6 +24,7 @@
             <property name="DatabaseName" value="pa165"/>
             <property name="User" value="pa165"/>
             <property name="Password" value="pa165"/>
+            <property name="create" value="true"/>
         </jdbc-connection-pool>
     </resources>
     <servers>

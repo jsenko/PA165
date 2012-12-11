@@ -1,5 +1,8 @@
 package cz.muni.fi.pa165.fast.dto;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement
 public class PlayerDTO {
 
     private long id;

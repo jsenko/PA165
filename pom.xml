@@ -12,7 +12,8 @@
     <modules>
         <module>app</module>
         <module>web</module>
-    </modules>
+    <module>cli</module>
+  </modules>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
