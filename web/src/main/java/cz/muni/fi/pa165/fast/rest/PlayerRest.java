@@ -24,7 +24,7 @@ import cz.muni.fi.pa165.fast.service.PlayerService;
 @Stateless
 @Path("/player")
 public class PlayerRest
-{   
+{   /*
     @EJB
     private PlayerService ps;
     
@@ -75,5 +75,5 @@ public class PlayerRest
         }
         
         return Response.created(URI.create("/" + id)).build();
-    }
+    }*/
 }
