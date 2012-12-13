@@ -1,7 +1,5 @@
 package cz.muni.fi.pa165.fast.cli;
 
-import com.sun.jersey.api.client.WebResource;
-
 import cz.muni.fi.pa165.fast.service.TeamRestService;
 
 /**
@@ -10,31 +8,33 @@ import cz.muni.fi.pa165.fast.service.TeamRestService;
  */
 public class CLI 
 {
-    public static final String HELP_INFO = "Run the program with no arguments to display help page.";
-    
-    // this resource is set to .../rest path.
-    //public static WebResource resource;
-    
     public static TeamRestService teamService;
     
     public static void main(String[] args)
     {
         try
         {
-            Command c = new MainCommand();
+            Command c = new MainCommand(); // default command
             for(int i = 0; i < args.length; i++)
             {
-                if(args[i].startsWith("--"))
+                if("help".equals(args[i]) || "--help".equals(args[i]))
                 {
-                    //argument
+                    c.help();
+                    break;
+                }
+                else if(args[i].startsWith("--"))
+                {
+                    String name = args[i].substring(2);
                     
-                    if(i+1<args.length && !args[i+1].startsWith("--"))
+                    //argument
+                    if(i+1 < args.length && !args[i+1].startsWith("--")) // with value
                     {
-                        c = c.argument(args[i].substring(2), args[i+1]); // with value
+                        c = c.argument(name, args[i+1]); 
                         i++;
-                    }else
+                    }
+                    else // without value
                     {
-                        c = c.argument(args[i].substring(2), null); // without value
+                        c = c.argument(name, null); 
                     }
                 }
                 else
@@ -42,17 +42,49 @@ public class CLI
                     //command
                     c = c.subCommand(args[i]);
                 }
+                
+                if(c == null)
+                {
+                    break; //abort
+                }
+                
+                if(i == args.length - 1) // final token was parsed
+                {
+                    c.execute();
+                }
             }
-            //execute
-            c.execute();
-        }
-        catch(IllegalArgumentException e)
-        {
-            System.out.println(e.getMessage());
         }
         catch (Exception e)
         {
-            System.out.println("Unknown error has ocured. Try again.");
+            //e.printStackTrace();
+            System.out.println("An unknown error has ocured. Check your connection and try again.");
         }
+    }
+    
+    /**
+     * Convenience method to display standardized message.
+     */
+    public static void helpInfo()
+    {
+        System.out.println("Run any command with '--help' argument "
+                +"or 'help' subcommand to display help page.");
+    }
+    
+    /**
+     * Convenience method to display standardized error message.
+     */
+    public static void unknownCommand(String commandName)
+    {
+        System.out.println("Unknown command '" + commandName + "'.");
+        helpInfo();
+    }
+    
+    /**
+     * Convenience method to display standardized error message.
+     */
+    public static void unknownArgument(String argumentName)
+    {
+        System.out.println("Unknown argument '" + argumentName + "'.");
+        helpInfo();
     }
 }

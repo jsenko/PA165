@@ -7,31 +7,36 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 
 import cz.muni.fi.pa165.fast.service.TeamRestService;
+import static cz.muni.fi.pa165.fast.cli.CLI.*;
 
+/** 
+ * @author Jakub Senko
+ */
 public class MainCommand implements Command
 {
 
-    
     @Override
     public Command subCommand(String sc)
     {
+        if(CLI.teamService == null)
+        {
+            System.out.println("Connection uri is required. Use '--uri [uri]'.");
+            return null;
+        }
+        
         if("team".equals(sc))
         {
             return new TeamCommand();
         }
-        else if("player".equals(sc))
+        
+        if("player".equals(sc))
         {
-            throw new IllegalArgumentException("TODO");
-        }
-        else if("help".equals(sc))
-        {
-            execute();
+            System.out.println("TODO");
             return null;
         }
-        else
-        {
-            throw new UnknownCommandException(sc);   
-        }
+
+        unknownCommand(sc);
+        return null; // abort
     }
 
     @Override
@@ -41,31 +46,35 @@ public class MainCommand implements Command
         {
             try
             {
+                // setup services using --uri
                 Client client = new Client();
                 WebResource resource = client.resource(new URI(value));
                 CLI.teamService = new TeamRestService(resource.path("team"));
-                
+                return this;
             }
-            catch(URISyntaxException e)
+            catch(Exception e)
             {
-                throw new IllegalArgumentException("Invalid uri.", e);
+                System.out.println("Invalid uri '" + value + "'.");
+                return null; //abort
             }
-            return this;
         }
-        else
-        {
-            throw new UnknownArgumentException(name);
-        }
+
+        unknownArgument(name);
+        return null; //abort
     }
 
     @Override
     public void execute()
     {
-        // todo help
+        helpInfo();
+    }
+
+    @Override
+    public void help()
+    {
         String s = "FAST CLI using REST API\n"
                 + "Usage: [command] [--argument] [value] [subcommand] ...\n"
                 + "Available subcommands:\n"
-                + " help - display this help page\n"
                 + " player - display, create and edit players\n"
                 + " team - display, create and edit teams\n"
                 + "Available arguments:\n"

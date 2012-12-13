@@ -1,6 +1,8 @@
 package cz.muni.fi.pa165.fast.cli;
 
-import com.sun.jersey.api.client.WebResource;
+import static cz.muni.fi.pa165.fast.cli.CLI.helpInfo;
+import static cz.muni.fi.pa165.fast.cli.CLI.unknownArgument;
+import static cz.muni.fi.pa165.fast.cli.CLI.unknownCommand;
 
 /**
  * 
@@ -16,50 +18,49 @@ public class TeamCommand implements Command
         {
             return new TeamSelectCommand();
         }
-        else if("create".equals(sc))
+        
+        if("create".equals(sc))
         {
             return new TeamCreateCommand();
         }
-        else if("update".equals(sc))
+        
+        if("update".equals(sc))
         {
             return new TeamUpdateCommand();
         }
-        else if("delete".equals(sc))
+        
+        if("delete".equals(sc))
         {
             return new TeamDeleteCommand();
         }
-        else if("help".equals(sc))
-        {
-            execute();
-            return null;
-        }
-        else
-        {
-            throw new UnknownCommandException(sc);
-        }
+
+        unknownCommand(sc);
+        return null;
     }
 
     @Override
     public Command argument(String name, String value)
     {
-        // player does not accept any arguments
-        throw new UnknownArgumentException(name);
+        unknownArgument(name);
+        return null; //abort
     }
 
     @Override
     public void execute()
     {
-        // no-arguments, display help
+        helpInfo();
+    }
+
+    @Override
+    public void help()
+    {
         String s = "FAST CLI using REST API - team command\n"
                 + "Usage: [command] [--argument] [value] [subcommand] ...\n"
                 + "Available subcommands:\n"
-                + " help - display this help page\n"
                 + " create - create new team\n"
                 + " select - display table of teams\n"
                 + " update - update team\n"
-                + " delete - delete team\n"
-                + "Available arguments:\n"
-                + " none\n";
+                + " delete - delete team";
         System.out.println(s);
     }
 }

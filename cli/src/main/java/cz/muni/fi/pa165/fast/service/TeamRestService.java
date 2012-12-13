@@ -23,10 +23,14 @@ public class TeamRestService implements TeamService
     @Override
     public void create(TeamDTO dto)
     {
+        
         ClientResponse response = resource
                 .type(MediaType.TEXT_XML)
                 //.accept(MediaType.TEXT_XML)
                 .post(ClientResponse.class, dto);
+        
+        // if http status is not 200 OK then fail
+        if(response.getStatus() != 200) throw new IllegalArgumentException("Operation failed!");
     }
 
     @Override
@@ -36,6 +40,8 @@ public class TeamRestService implements TeamService
                 .type(MediaType.TEXT_XML)
                 //.accept(MediaType.TEXT_XML)
                 .put(ClientResponse.class, dto);
+        
+        if(response.getStatus() != 200) throw new IllegalArgumentException("Operation failed!");
     }
 
     @Override
@@ -43,10 +49,10 @@ public class TeamRestService implements TeamService
     {
         ClientResponse response = resource
                 .path(String.valueOf(dto.getId()))
-                .accept(MediaType.TEXT_XML)
+                .type(MediaType.TEXT_XML)
                 .delete(ClientResponse.class);
 
-        //return response.getStatus() == 200 ? response.getEntity(TeamDTO.class) : null;
+        if(response.getStatus() != 200) throw new IllegalArgumentException("Operation failed!");
     }
 
     @Override

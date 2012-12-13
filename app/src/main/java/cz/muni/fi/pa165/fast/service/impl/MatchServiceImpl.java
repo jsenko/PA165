@@ -31,7 +31,7 @@ public class MatchServiceImpl implements MatchService {
         try {
             Match m = convert.fromDTOToEntity(dto);
 
-            matchDAO.create(m);
+            
         } catch (Exception ex) {
             throw new RuntimeException("Create operation failed.", ex);
         }

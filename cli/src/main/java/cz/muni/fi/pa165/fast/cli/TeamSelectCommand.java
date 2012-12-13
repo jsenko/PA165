@@ -4,76 +4,79 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cz.muni.fi.pa165.fast.dto.TeamDTO;
+import static cz.muni.fi.pa165.fast.cli.CLI.*;
 
 /**
  * 
  * @author Jakub Senko
  * 
  */
-public class TeamSelectCommand implements Command {
+public class TeamSelectCommand implements Command
+{
     private Long id;
     private boolean all = false;
     private Long playerId;
+    
     @Override
     public Command subCommand(String subCommand)
     {
-        if("help".equals(subCommand))
-        {
-            String s = "FAST CLI using REST API - team select command\n"
-                    + "Usage: [command] [--argument] [value] [subcommand] ...\n"
-                    + "Available subcommands:\n"
-                    + " help - display this help page\n"
-                    + "Available arguments:\n"
-                    + " --all - display extended table\n"
-                    + " --id - display team with the specified id\n"
-                    + " --playerId - display team member of which is a player with the  specified playerId";
-            System.out.println(s);
-            return null;
-        }
-        else
-        {
-            throw new UnknownCommandException(subCommand);
-        }
+        unknownCommand(subCommand);
+        return null;
     }
 
     @Override
     public Command argument(String name, String value)
     {
-        if ("id".equals(name)) {
+        if ("id".equals(name))
+        {
             if(playerId != null)
             {
-                throw new IllegalArgumentException("Argument '--id' cannot be used together with '--playerId'");
+                System.out.println("Argument '--id' cannot be used together with '--playerId'");
+                return null;
             }
-            try {
+            
+            try
+            {
                 id = Long.parseLong(value);
-            } catch (RuntimeException e) {
-                throw new IllegalArgumentException("Invalid id '" + value
-                        + "'. Must be an integer.");
             }
+            catch(Exception e)
+            {
+                System.out.println("Invalid id '"
+                        + value + "'. Must be an integer.");
+                return null;
+            }
+            return this;
         }
-        else if("playerId".equals(name))
+        
+        if("playerId".equals(name))
         {
             if(id != null)
             {
-                throw new IllegalArgumentException("Argument '--playerId' cannot be used together with '--id'");
+                System.out.println("Argument '--playerId' cannot be used together with '--id'");
+                return null;
             }
-            try {
+            
+            try
+            {
                 playerId = Long.parseLong(value);
-            } catch (RuntimeException e) {
-                throw new IllegalArgumentException("Invalid playerId '" + value
-                        + "'. Must be an integer.");
             }
+            catch(Exception e)
+            {
+                System.out.println("Invalid playerId '"
+                        + value + "'. Must be an integer.");
+                return null;
+            }
+            return this;
         }
-        else if("all".equals(name))
+        
+        if("all".equals(name))
         {
             all = true;
-        }
-        else
-        {    
-            throw new UnknownArgumentException(name);
+            return this;
         }
 
-        return this;
+        unknownCommand(name);
+        return null;
     }
     
     private void so(char c)
@@ -117,8 +120,9 @@ public class TeamSelectCommand implements Command {
                 TeamDTO dto = CLI.teamService.getById(id);
                 if(dto == null)
                 {
-                    throw new IllegalArgumentException("Failed to retrieve data from rest service.\n"
-                +"Team with id '"+id+"' might not exist.");
+                    System.out.println("Failed to retrieve data from rest service.\n"
+                            + "Team with id '" + id + "' might not exist or bad uri.");
+                    return;
                 }
                 
                 list = new ArrayList<TeamDTO>();
@@ -129,8 +133,9 @@ public class TeamSelectCommand implements Command {
                 TeamDTO dto = CLI.teamService.findByPlayer(playerId);
                 if(dto == null)
                 {
-                    throw new IllegalArgumentException("Failed to retrieve data from rest service.\n"
-                +"Team with playerId '"+playerId+"' might not exist.");
+                    System.out.println("Failed to retrieve data from rest service.\n"
+                            + "Team with playerId '" + playerId + "' might not exist or bad uri.");
+                    return;
                 }
                 
                 list = new ArrayList<TeamDTO>();
@@ -141,7 +146,8 @@ public class TeamSelectCommand implements Command {
                 list = CLI.teamService.findAll();
                 if(list == null)
                 {
-                    throw new IllegalArgumentException("Failed to retrieve data from rest service.");
+                    System.out.println("Failed to retrieve data from rest service. Check your uri.");
+                    return;
                 }
             }
         
@@ -226,6 +232,18 @@ public class TeamSelectCommand implements Command {
         line(size);
         
         System.out.println("Total " + list.size() + " row(s).");
+    }
+
+    @Override
+    public void help()
+    {
+        String s = "FAST CLI using REST API - team select command\n"
+                + "Usage: [command] [--argument] [value] [subcommand] ...\n"
+                + "Available arguments:\n"
+                + " --all - display extended table\n"
+                + " --id - display team with the specified id\n"
+                + " --playerId - display team member of which is a player with the  specified playerId";
+        System.out.println(s);
     }
 
 }
