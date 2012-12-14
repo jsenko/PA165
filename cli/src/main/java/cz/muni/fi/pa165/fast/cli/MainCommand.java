@@ -8,6 +8,7 @@ import com.sun.jersey.api.client.WebResource;
 
 import cz.muni.fi.pa165.fast.service.TeamRestService;
 import static cz.muni.fi.pa165.fast.cli.CLI.*;
+import cz.muni.fi.pa165.fast.service.PlayerRestService;
 
 /** 
  * @author Jakub Senko
@@ -50,6 +51,7 @@ public class MainCommand implements Command
                 Client client = new Client();
                 WebResource resource = client.resource(new URI(value));
                 CLI.teamService = new TeamRestService(resource.path("team"));
+                CLI.playerService = new PlayerRestService(resource.path("player"));
                 return this;
             }
             catch(Exception e)

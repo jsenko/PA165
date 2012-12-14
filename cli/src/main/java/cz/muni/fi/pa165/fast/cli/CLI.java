@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.fast.cli;
 
+import cz.muni.fi.pa165.fast.service.PlayerRestService;
 import cz.muni.fi.pa165.fast.service.TeamRestService;
 
 /**
@@ -9,6 +10,7 @@ import cz.muni.fi.pa165.fast.service.TeamRestService;
 public class CLI 
 {
     public static TeamRestService teamService;
+    public static PlayerRestService playerService;
     
     public static void main(String[] args)
     {
