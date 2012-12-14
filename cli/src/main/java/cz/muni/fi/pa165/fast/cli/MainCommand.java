@@ -35,8 +35,7 @@ public class MainCommand implements Command
         
         if("player".equals(sc))
         {
-            System.out.println("TODO");
-            return null;
+            return new PlayerCommand();
         }
         
         if("interactive".equals(sc))

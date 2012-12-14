@@ -131,6 +131,15 @@ public class PlayerActionBean implements ActionBean {
 
         return playerService.findPlayersByTeam(utTeam.getId(), getContext().getOrder());
     }
+    
+    public List<TeamDTO> getTeams() {
+        
+        if(teamService.findAll().size() > 0)
+            return teamService.findAll();
+        
+        else
+            return new ArrayList<TeamDTO>();
+    }
 
     public Resolution create() {
 

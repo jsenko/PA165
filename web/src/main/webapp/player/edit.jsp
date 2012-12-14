@@ -4,7 +4,7 @@
 <%@ taglib prefix="s" uri="http://stripes.sourceforge.net/stripes.tld" %>
 <s:layout-render name="/cover.jsp" nadpis="Edit team">
     <s:layout-component name="content">
-        <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" var="actionBean"/>
+        <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" var="playerActionBean"/>
 
         <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" class="form-horizontal">
             <s:hidden name="player.id"/>
@@ -14,7 +14,9 @@
                     <s:label class="control-label" name="Team" />
                     <div class="controls">
                         <s:select name="player.teamId" id="p6">
-                            <s:options-collection collection="${actionBean.teams}" label="name" value="id"/>  
+                            <c:forEach items="${playerActionBean.teams}" var="teams" varStatus="loop">
+                                <s:option label="${teams.name}" value="${teams.id}"/>  
+                            </c:forEach>
                         </s:select>
                     </div>
                 </div>
