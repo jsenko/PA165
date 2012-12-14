@@ -1,5 +1,8 @@
 package cz.muni.fi.pa165.fast.cli;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
 
@@ -33,6 +36,37 @@ public class MainCommand implements Command
         if("player".equals(sc))
         {
             System.out.println("TODO");
+            return null;
+        }
+        
+        if("interactive".equals(sc))
+        {
+            String line = ""; // Line read from standard in
+            System.out.println("Interactive CLI (type 'quit' to exit):");
+            
+            InputStreamReader converter = new InputStreamReader(System.in);
+            BufferedReader in = new BufferedReader(converter);
+
+            while (!(line.equals("quit")))
+            {
+                System.out.print("> ");
+                try
+                {
+                    line = in.readLine();
+                }
+                catch(IOException e)
+                {
+                    System.out.println("An unknown error has occured.");
+                    return null;
+                }
+               
+                if (!(line.equals("quit")))
+                {
+                    String delims = "[ ]+";
+                    String[] args = line.split(delims);
+                    main(args);
+                }
+            }
             return null;
         }
 
