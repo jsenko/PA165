@@ -189,29 +189,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-            <plugin>
-                <groupId>org.glassfish</groupId>
-                <artifactId>maven-embedded-glassfish-plugin</artifactId>
-                <version>3.1.1</version>
-                <configuration>
-                    <goalPrefix>glassfish</goalPrefix>
-                    <app>target/${artifactId}-${version}.${packaging}</app>
-                    <port>8080</port>
-                    <contextRoot>pa165</contextRoot>
-                    <name>${name}</name>
-                    <configFile>${basedir}/src/main/resources/domain.xml</configFile>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>install</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
         </plugins>
     </build>
 </project>
