@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cz.muni.fi.pa165</groupId>
@@ -11,13 +11,19 @@
     <name>FAST - Football Analytical and Statistical Tool</name>
 
     <modules>
-        <!-- the submodules will be included by default profile, so they can be ommited by local profile -->
+        <!-- the submodules will be included by default profile, so they 
+            can be ommited by local profile -->
     </modules>
-    
-    
+
+
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <local.war>${basedir}/web/target/fast-web-1.0-SNAPSHOT.war</local.war>
+        <local.domain>${basedir}/web/src/main/resources/domain.xml</local.domain>
+        <local.croot>pa165</local.croot>
+        <cli.jar>${basedir}/cli/target/fast-cli-1.0-SNAPSHOT-jar-with-dependencies.jar</cli.jar>
+        <cli.local.uri>http://localhost:8080/${local.croot}/rest</cli.local.uri>
     </properties>
 
     <dependencyManagement>
@@ -32,7 +38,7 @@
 
         </dependencies>
     </dependencyManagement>
-    
+
     <build>
         <pluginManagement>
             <plugins>
@@ -45,17 +51,18 @@
                         <source>1.6</source>
                         <target>1.6</target>
                         <compilerArguments>
-                            <Werror/>
+                            <Werror />
                         </compilerArguments>
                     </configuration>
                 </plugin>
 
             </plugins>
         </pluginManagement>
+
     </build>
-    
+
     <profiles>
-    
+
         <profile>
             <id>default</id>
             <activation>
@@ -67,7 +74,8 @@
                 <module>web</module>
             </modules>
         </profile>
-    
+
+        <!-- run embedded glassfish -->
         <profile>
             <id>local</id>
             <activation>
@@ -75,37 +83,75 @@
                     <name>local</name>
                 </property>
             </activation>
-            
-            <properties>
-                <local.war>${basedir}/web/target/fast-web-1.0-SNAPSHOT.war</local.war>
-                <local.domain>${basedir}/web/src/main/resources/domain.xml</local.domain>
-                <local.name>pa165</local.name>
-            </properties>
+
             <build>
                 <plugins>
-               <plugin>
-                <groupId>org.glassfish</groupId>
-                <artifactId>maven-embedded-glassfish-plugin</artifactId>
-                <version>3.1.1</version>
-                <configuration>
-                    <goalPrefix>glassfish</goalPrefix>
-                    <app>${local.war}</app>
-                    <port>8080</port>
-                    <contextRoot>pa165</contextRoot>
-                    <name>${local.name}</name>
-                    <configFile>${local.domain}</configFile>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+                    <plugin>
+                        <groupId>org.glassfish</groupId>
+                        <artifactId>maven-embedded-glassfish-plugin</artifactId>
+                        <version>3.1.1</version>
+                        <configuration>
+                            <goalPrefix>glassfish</goalPrefix>
+                            <app>${local.war}</app>
+                            <port>8080</port>
+                            <contextRoot>${local.croot}</contextRoot>
+                            <name>${local.croot}</name>
+                            <configFile>${local.domain}</configFile>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
                 </plugins>
             </build>
         </profile>
+
+        <!-- CLI tool, interactive mode, configured with uri to embedded 
+            glassfish -->
+        <profile>
+            <id>cli</id>
+            <activation>
+                <property>
+                    <name>cli</name>
+                </property>
+            </activation>
+
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>1.2.1</version>
+                        <executions>
+                            <execution>
+                                <id>cli</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>java</executable>
+                                    <arguments>
+                                        <argument>-jar</argument>
+                                        <argument>${cli.jar}</argument>
+                                        <argument>--uri</argument>
+                                        <argument>${cli.local.uri}</argument>
+                                        <argument>interactive</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
     </profiles>
+
+
 </project>

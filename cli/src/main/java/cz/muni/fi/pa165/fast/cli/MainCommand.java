@@ -42,7 +42,7 @@ public class MainCommand implements Command
         if("interactive".equals(sc))
         {
             String line = ""; // Line read from standard in
-            System.out.println("Interactive CLI (type 'quit' to exit):");
+            System.out.println("Interactive CLI. (type 'help' for info, 'quit' to exit):");
             
             InputStreamReader converter = new InputStreamReader(System.in);
             BufferedReader in = new BufferedReader(converter);
