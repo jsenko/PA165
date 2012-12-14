@@ -220,6 +220,7 @@ public class TeamSelectCommand implements Command
                     Long.valueOf(dto.getId()).toString(), dto.getName(), dto.getWon() + dto.getDraw() + dto.getLost(),
                     dto.getWon(), dto.getWon(), dto.getLost(), dto.getGoalsFor() + ":" + dto.getGoalsAgainst(), 
                     dto.getPoints());
+                System.out.println();
             }
             else
             {

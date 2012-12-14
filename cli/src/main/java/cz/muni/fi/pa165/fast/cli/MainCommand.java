@@ -8,6 +8,7 @@ import com.sun.jersey.api.client.WebResource;
 
 import cz.muni.fi.pa165.fast.service.TeamRestService;
 import static cz.muni.fi.pa165.fast.cli.CLI.*;
+import cz.muni.fi.pa165.fast.dto.PlayerDTO;
 import cz.muni.fi.pa165.fast.service.PlayerRestService;
 
 /** 
@@ -32,8 +33,7 @@ public class MainCommand implements Command
         
         if("player".equals(sc))
         {
-            System.out.println("TODO");
-            return null;
+            return new PlayerCommand();
         }
 
         unknownCommand(sc);

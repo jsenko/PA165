@@ -23,6 +23,7 @@ import cz.muni.fi.pa165.fast.service.PlayerOrderBy;
 import cz.muni.fi.pa165.fast.service.PlayerService;
 import cz.muni.fi.pa165.fast.service.TeamService;
 import java.util.LinkedList;
+import javax.ws.rs.DELETE;
 
 @Stateless
 @Path("/player")
@@ -61,5 +62,31 @@ public class PlayerRest
     {
         return ps.getById(id);
     }    
+    
+    @POST
+    @Consumes(MediaType.TEXT_XML)
+    public Response create(PlayerDTO playerDTO){
+        ps.create(playerDTO);
+        return Response.ok().build();
+    }
+    
+    @PUT
+    @Consumes(MediaType.TEXT_XML)
+    public Response update(PlayerDTO playerDTO)
+    {
+        ps.update(playerDTO);        
+        return Response.ok().build();
+    }
+    
+    @DELETE
+    @Consumes(MediaType.TEXT_XML)
+    @Path("{id}")
+    public Response delete(@PathParam("id") long id)
+    {   
+        ps.delete(ps.getById(id));
+        return Response.ok().build();
+    }
+    
+    
     
 }
