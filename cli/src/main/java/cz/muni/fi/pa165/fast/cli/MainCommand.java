@@ -42,6 +42,13 @@ public class MainCommand implements Command
         
         if("interactive".equals(sc))
         {
+            if(CLI.teamService.findAll()==null){
+                System.out.println("Could not connect to REST service");
+                return null;
+            }
+            
+
+            
             String line = ""; // Line read from standard in
             System.out.println("Interactive CLI. (type 'help' for info, 'quit' to exit):");
             
