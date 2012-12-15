@@ -24,14 +24,6 @@ public class PlayerRestService implements PlayerService {
         this.resource = resource;
     }
 
-    public List<PlayerDTO> findAll() {
-        ClientResponse response = resource
-                .type(MediaType.TEXT_XML)
-                .get(ClientResponse.class);
-        return response.getStatus() == 200 ? response.getEntity(new GenericType<List<PlayerDTO>>() {
-        }) : null;
-    }
-
     public PlayerDTO getById(Long id) {
         ClientResponse response = resource
                 .path(id.toString())
@@ -79,6 +71,12 @@ public class PlayerRestService implements PlayerService {
 
     @Override
     public List<PlayerDTO> findPlayersByTeam(Long teamId, PlayerOrderBy orderBy) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        ClientResponse response = resource
+                .path("teamId")
+                .path(teamId.toString())
+                .type(MediaType.TEXT_XML)
+                .get(ClientResponse.class);
+        return response.getStatus() == 200 ? response.getEntity(new GenericType<List<PlayerDTO>>() {
+        }) : null;
     }
 }

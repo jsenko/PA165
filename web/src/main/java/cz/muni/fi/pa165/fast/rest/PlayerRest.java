@@ -34,19 +34,6 @@ public class PlayerRest
     @EJB
     private TeamService ts;
     
-    
-    @GET
-    @Produces(MediaType.TEXT_XML)
-    public List<PlayerDTO> findAll(){
-        List<PlayerDTO> allPlayers = new LinkedList<PlayerDTO>();
-        List<TeamDTO> allTeams = ts.findAll();
-        for(TeamDTO t:allTeams){
-            allPlayers.addAll(ps.findPlayersByTeam(t.getId(), PlayerOrderBy.NAME));
-        }
-        return allPlayers;
-    }
-    
-    
     @GET
     @Path("teamId/{id}")
     @Produces(MediaType.TEXT_XML)
