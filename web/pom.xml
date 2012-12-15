@@ -20,6 +20,20 @@
     </properties>
 
     <dependencies>
+        
+        <dependency>
+            <groupId>cz.muni.fi.pa165</groupId>
+            <artifactId>fast-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
+        
+        <dependency>
+            <groupId>cz.muni.fi.pa165</groupId>
+            <artifactId>fast-app</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>jar</type>
+        </dependency>
 
         <dependency>
             <groupId>com.sun.jersey</groupId>
@@ -48,13 +62,6 @@
             <groupId>com.samaxes.stripejb3</groupId>
             <artifactId>stripejb3</artifactId>
             <version>1.0.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cz.muni.fi.pa165</groupId>
-            <artifactId>fast-app</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <type>jar</type>
         </dependency>
 
         <dependency>

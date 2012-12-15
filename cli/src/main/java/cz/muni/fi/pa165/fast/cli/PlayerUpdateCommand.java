@@ -125,7 +125,7 @@ public class PlayerUpdateCommand implements Command{
     public void help() {
         String s = "HELP\n"
                 + "Available arguments:\n"
-                + " --id - (required) id of the team to update.\n"
+                + " --id - (required) id of the player to update.\n"
                 + " --name - new name of player.\n"
                 + " --surname - new surname of player.\n"
                 + " --age - new age of player.\n"
