@@ -73,7 +73,7 @@ public class TeamConvertImpl implements TeamConvert {
 
     @Override
     public Team fromDTOToEntity(TeamDTO dto) {
-        if (dto == null || dto.getName() == null) {
+        if (dto == null) {
             return null;
         }
         Team entity = new Team();

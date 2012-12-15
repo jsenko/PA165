@@ -71,7 +71,7 @@ public class GoalDAOImpl implements GoalDAO {
     }
 
     @Override
-    public Collection<Goal> findAll() {     
+    public Collection<Goal> findAll() {
         throw new UnsupportedOperationException();
     }
 

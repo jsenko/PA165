@@ -17,7 +17,7 @@
                 <td><s:label name="table.tosses"/></td>
                 <td><s:label name="table.score"/></td>
                 <td><s:label name="table.points"/></td>
-               
+
             </tr>
             <c:forEach items="${actionBean.teams}" var="team" varStatus="loop">
 
@@ -32,15 +32,15 @@
                     <th><c:out value="${team.points}"/></th>
                     <td class="admin_section"><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" onclick="return confirm('Delete ${team.name}?');" event="delete"><s:param name="team.id" value="${team.id}"/><i class="icon-remove"></i></s:link></td>
                     <td class="admin_section"><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" event="edit"><s:param name="team.id" value="${team.id}"/><i class="icon-pencil"></i></s:link> </td>
-                </tr>
+                    </tr>
 
             </c:forEach>
         </table> 
-        
-                <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" event="create"><s:label class="btn btn-info" name="team.newTeam"/></s:link>              
-                
-                <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" event="generate"><s:label class="btn btn-info" name="team.generateTeams" /></s:link>
-        
+
+        <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" event="create"><s:label class="btn btn-info" name="team.newTeam"/></s:link>              
+
+        <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" event="generate"><s:label class="btn btn-info" name="team.generateTeams" /></s:link>
+
     </s:layout-component>
 </s:layout-render>
 

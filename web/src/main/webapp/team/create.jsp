@@ -11,7 +11,7 @@
             <%@include file="/team/form.jsp"%>
             <s:submit name="add" class="btn btn-info"/>
         </s:form>
-                
+
     </s:layout-component>
 </s:layout-render>
 

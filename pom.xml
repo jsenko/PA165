@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cz.muni.fi.pa165</groupId>
@@ -11,12 +13,9 @@
 
     <modules>
         <!-- the submodules will be included by default profile, so they 
-            can be ommited by local profile -->
-    
-  </modules>
-
-
-
+        can be ommited by local profile -->
+    </modules>
+  
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <local.war>${basedir}/web/target/fast-web-1.0-SNAPSHOT.war</local.war>
@@ -113,7 +112,7 @@
         </profile>
 
         <!-- CLI tool, interactive mode, configured with uri to embedded 
-            glassfish -->
+        glassfish -->
         <profile>
             <id>cli</id>
             <activation>

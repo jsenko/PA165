@@ -14,8 +14,8 @@ import javax.persistence.PersistenceContext;
  *
  * @author Michal Kimle
  */
-@Local(value=TeamDAO.class)
-@Stateless(mappedName="TeamDaoImpl")
+@Local(value = TeamDAO.class)
+@Stateless(mappedName = "TeamDaoImpl")
 public class TeamDAOImpl implements TeamDAO {
 
     @PersistenceContext(name = "TestPU")
@@ -83,13 +83,13 @@ public class TeamDAOImpl implements TeamDAO {
         }
 
         Collection<Team> teams = findAll();
-        
-        for(Team t : teams){
-            if(player.getTeam().getId().equals(t.getId())) {
+
+        for (Team t : teams) {
+            if (player.getTeam().getId().equals(t.getId())) {
                 return t;
             }
         }
-        
+
         throw new IllegalArgumentException("player doesn't have a team");
     }
 }

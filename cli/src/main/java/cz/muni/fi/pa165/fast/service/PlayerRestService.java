@@ -1,14 +1,9 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.fast.service;
 
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.GenericType;
 import com.sun.jersey.api.client.WebResource;
 import cz.muni.fi.pa165.fast.dto.PlayerDTO;
-import cz.muni.fi.pa165.fast.dto.TeamDTO;
 import java.util.List;
 import javax.ws.rs.core.MediaType;
 
@@ -24,6 +19,7 @@ public class PlayerRestService implements PlayerService {
         this.resource = resource;
     }
 
+    @Override
     public PlayerDTO getById(Long id) {
         ClientResponse response = resource
                 .path(id.toString())
@@ -54,8 +50,10 @@ public class PlayerRestService implements PlayerService {
                 .type(MediaType.TEXT_XML)
                 //.accept(MediaType.TEXT_XML)
                 .put(ClientResponse.class, dto);
-        
-        if(response.getStatus() != 200) throw new IllegalArgumentException("Operation failed!");
+
+        if (response.getStatus() != 200) {
+            throw new IllegalArgumentException("Operation failed!");
+        }
         return 0; //UPRAVIT
     }
 
@@ -66,7 +64,9 @@ public class PlayerRestService implements PlayerService {
                 .type(MediaType.TEXT_XML)
                 .delete(ClientResponse.class);
 
-        if(response.getStatus() != 200) throw new IllegalArgumentException("Operation failed!");
+        if (response.getStatus() != 200) {
+            throw new IllegalArgumentException("Operation failed!");
+        }
     }
 
     @Override

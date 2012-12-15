@@ -31,8 +31,7 @@ public class PlayerActionBean implements ActionBean {
         @Validate(on = {"add", "save"}, field = "surname", required = true),
         @Validate(on = {"add", "save"}, field = "age", required = true, minvalue = 16),
         @Validate(on = {"add", "save"}, field = "height", required = true, minvalue = 100),
-        @Validate(on = {"add", "save"}, field = "weight", required = true, minvalue = 50),
-    })
+        @Validate(on = {"add", "save"}, field = "weight", required = true, minvalue = 50),})
     private PlayerDTO player;
     private TeamDTO team;
     private int order;
@@ -52,7 +51,7 @@ public class PlayerActionBean implements ActionBean {
         if (team != null && team.getId() != 0) {
             getContext().setSelectedTeam(team);
         }
-        
+
         return new RedirectResolution(this.getClass(), "all");
     }
 
@@ -131,14 +130,13 @@ public class PlayerActionBean implements ActionBean {
 
         return playerService.findPlayersByTeam(utTeam.getId(), getContext().getOrder());
     }
-    
+
     public List<TeamDTO> getTeams() {
-        
-        if(teamService.findAll().size() > 0)
+        if (teamService.findAll().size() > 0) {
             return teamService.findAll();
-        
-        else
+        } else {
             return new ArrayList<TeamDTO>();
+        }
     }
 
     public Resolution create() {

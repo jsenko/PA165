@@ -17,7 +17,7 @@
             </p>
             <p>
                 <s:submit class="btn" name="login" title="Sign in">Sign in</s:submit>
-            </p>
+                </p>
         </s:form>
 
     </s:layout-component>

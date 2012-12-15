@@ -1,12 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.fast.cli;
 
 import static cz.muni.fi.pa165.fast.cli.CLI.*;
 import cz.muni.fi.pa165.fast.dto.PlayerDTO;
-import cz.muni.fi.pa165.fast.dto.TeamDTO;
 import cz.muni.fi.pa165.fast.service.PlayerOrderBy;
 import java.util.ArrayList;
 import java.util.List;

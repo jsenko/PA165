@@ -8,28 +8,23 @@ import static cz.muni.fi.pa165.fast.cli.CLI.unknownCommand;
  *
  * @author Lauro
  */
-public class PlayerCommand implements Command{
+public class PlayerCommand implements Command {
 
     @Override
-    public Command subCommand(String subCommand) 
-    {
-        if("select".equals(subCommand))
-        {
+    public Command subCommand(String subCommand) {
+        if ("select".equals(subCommand)) {
             return new PlayerSelectCommand();
         }
-        
-        if("create".equals(subCommand))
-        {
+
+        if ("create".equals(subCommand)) {
             return new PlayerCreateCommand();
         }
-        
-        if("update".equals(subCommand))
-        {
+
+        if ("update".equals(subCommand)) {
             return new PlayerUpdateCommand();
         }
-        
-        if("delete".equals(subCommand))
-        {
+
+        if ("delete".equals(subCommand)) {
             return new PlayerDeleteCommand();
         }
 
@@ -59,5 +54,4 @@ public class PlayerCommand implements Command{
     public void execute() {
         helpInfo();
     }
-    
 }
