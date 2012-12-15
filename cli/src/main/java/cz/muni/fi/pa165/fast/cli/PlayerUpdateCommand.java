@@ -46,7 +46,7 @@ public class PlayerUpdateCommand implements Command{
         
         if("surname".equals(name))
         {
-            playerDto.setSurname(name);
+            playerDto.setSurname(value);
             
             return this;
         }
@@ -142,7 +142,7 @@ public class PlayerUpdateCommand implements Command{
                       
             PlayerDTO oldPlayer = CLI.playerService.getById(playerDto.getId());
             
-            System.out.println(oldPlayer);
+            
             
             if(playerDto.getAge() != 0)
                 oldPlayer.setAge(playerDto.getAge());
@@ -169,9 +169,9 @@ public class PlayerUpdateCommand implements Command{
         }
         catch(Exception e)
         {
-            System.out.println(e);
             
-            System.out.println("Could not update player, an error has occurred.");
+            
+            System.out.println("Could not update player, an error has occurred. Check if you provided required arguments.");
         }
     }
     

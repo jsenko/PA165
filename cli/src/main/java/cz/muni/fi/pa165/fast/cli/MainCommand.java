@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
@@ -62,8 +64,39 @@ public class MainCommand implements Command
                 if (!(line.equals("quit")))
                 {
                     String delims = "[ ]+";
-                    String[] args = line.split(delims);
-                    main(args);
+                    String[] args0 = line.split(delims);
+                    // process double quotes
+                    List<String> arglist = new ArrayList<String>();
+                    for(int i = 0; i < args0.length; i++)
+                    {
+                        String s = args0[i];
+                        if(args0[i].startsWith("\""))
+                        {
+                            //check if the token starts and ends with the double quotes
+                            if(args0[i].endsWith("\""))
+                            {
+                                s = args0[i].substring(1, args0[i].length() -1);
+                            }
+                            else
+                            {
+                            
+                                // add first part, without opening quote
+                                s = args0[i].substring(1) + " ";
+                                i++;
+                                // while not found closing quote
+                                while(!args0[i].endsWith("\""))
+                                {
+                                    s =  s + args0[i] + " ";
+                                    i++;
+                                }
+                                // add final part with closing quote
+                                s = s + args0[i].substring(0, args0[i].length() -1);
+                            }
+                        }
+                        arglist.add(s);
+                    }
+                    String[] args = new String[arglist.size()];
+                    main(arglist.toArray(args));
                 }
             }
             return null;

@@ -58,7 +58,7 @@ public class CLI
         }
         catch (Exception e)
         {
-            //e.printStackTrace();
+            
             System.out.println("An unknown error has ocured. Check your connection and try again.");
         }
     }
