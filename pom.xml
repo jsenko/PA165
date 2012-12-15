@@ -95,7 +95,7 @@
                             <app>${local.war}</app>
                             <port>8080</port>
                             <contextRoot>${local.croot}</contextRoot>
-                            <name>${local.croot}</name>
+                            <name>myapp</name>
                             <configFile>${local.domain}</configFile>
                         </configuration>
                         <executions>
