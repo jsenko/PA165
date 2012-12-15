@@ -63,7 +63,7 @@ public class PlayerSelectCommand implements Command {
     public void help() {
         String s = "FAST CLI using REST API - player select command\n"
                 + "Usage: [command] [--argument] [value] [subcommand] ...\n"
-                + "Available arguments:\n"
+                + "Available arguments (one of them is required):\n"
                 + " --id - display player with the specified id\n"
                 + " --teamId - display players from team with the specified id\n";
         System.out.println(s);
@@ -111,7 +111,8 @@ public class PlayerSelectCommand implements Command {
                 return;
             }
         } else {
-            list = new ArrayList<PlayerDTO>();
+            help();
+            return;
         }
 
 
