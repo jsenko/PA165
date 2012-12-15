@@ -17,6 +17,10 @@ public class TeamUpdateCommand implements Command {
     @Override
     public Command argument(String name, String value) {
         if ("name".equals(name)) {
+            if (value.isEmpty()) {
+                System.out.println("Team has to have a name");
+                return null;
+            }
             teamDTO.setName(value);
             return this;
         }
