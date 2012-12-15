@@ -78,6 +78,10 @@ public class MainCommand implements Command {
                     String[] args = new String[arglist.size()];
                     main(arglist.toArray(args));
                 }
+                else
+                {
+                    System.out.println("bye!");
+                }
             }
             return null;
         }
@@ -112,18 +116,19 @@ public class MainCommand implements Command {
     }
 
     @Override
-    public void help() {
-        String s = "FAST CLI using REST API\n"
-                + "Usage: [command] [--argument] [value] [subcommand] ...\n"
+    public void help()
+    {
+        String s = "FAST CLI Tool Help\n"
+                + "Usage: [command] [--argument [value]] [subcommand [...]]\n"
                 + "Available subcommands:\n"
                 + " player - display, create and edit players\n"
                 + " team - display, create and edit teams\n"
-                + "quit - close the connection"
+                + " interactive - enter interactive mode"
                 + "Available arguments:\n"
                 + " --uri - (required) uri of the rest service\n"
                 + "Example:\n"
-                + " [java -jar ...] --uri http://localhost:8080/example/rest team help\n"
-                + "  display help for team subcommand (available for all subcomands)";
+                + " $java -jar [...] --uri http://localhost:8080/pa165/rest team --help\n"
+                + " display help for team subcommand (available for all subcomands)";
         System.out.println(s);
     }
 }
