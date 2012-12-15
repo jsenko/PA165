@@ -59,7 +59,7 @@ where select is a subcommand of team command.
 ### Interactive mode
 Can be run by executing:
 ```
-java -jar [...] --uri [...] interacive
+java -jar [...] --uri [...] interactive
 ```
 The program then basically remembers the `--uri` of the resource
 and accepts subsequent commands in a loop without the need to enter it each time.
