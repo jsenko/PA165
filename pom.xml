@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+=======
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+>>>>>>> 25a1af5ab8e0abfbe9307297af3b34cc8fe40441
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cz.muni.fi.pa165</groupId>
@@ -12,8 +16,14 @@
 
     <modules>
         <!-- the submodules will be included by default profile, so they 
+<<<<<<< HEAD
         can be ommited by local profile -->
     </modules>
+=======
+            can be ommited by local profile -->
+    
+  </modules>
+>>>>>>> 25a1af5ab8e0abfbe9307297af3b34cc8fe40441
 
 
 
@@ -51,7 +61,7 @@
                         <source>1.6</source>
                         <target>1.6</target>
                         <compilerArguments>
-                            <Werror />
+                            <Werror/>
                         </compilerArguments>
                     </configuration>
                 </plugin>
@@ -69,6 +79,7 @@
                 <activeByDefault>true</activeByDefault>
             </activation>
             <modules>
+                <module>fast-api</module>
                 <module>app</module>
                 <module>cli</module>
                 <module>web</module>

@@ -21,6 +21,8 @@
     
     <dependencies>
         
+        
+        
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -35,9 +37,15 @@
         
         <dependency>
             <groupId>cz.muni.fi.pa165</groupId>
-            <artifactId>fast-app</artifactId>
+            <artifactId>fast-api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        
+<!--        <dependency>
+            <groupId>cz.muni.fi.pa165</groupId>
+            <artifactId>fast-app</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>-->
         
     </dependencies>
     <build>
