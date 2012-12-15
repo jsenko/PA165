@@ -57,7 +57,7 @@ public class PlayerDAOImpl implements PlayerDAO {
         List<Goal> goals = em.createQuery("select g from Goal g where g.scorePlayer = :player")
                 .setParameter("player", managed)
                 .getResultList();
-        
+
         goals.addAll(em.createQuery("select g from Goal g where g.assistPlayer = :player")
                 .setParameter("player", managed)
                 .getResultList());

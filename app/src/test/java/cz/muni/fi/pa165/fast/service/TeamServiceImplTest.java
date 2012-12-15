@@ -122,7 +122,7 @@ public class TeamServiceImplTest {
         dto.setName("TeamName");
         Team entity = new Team();
         entity.setName("TeamName");
-        
+
         when(matchDaoMock.findByAwayTeam(entity)).thenReturn(null);
         when(matchDaoMock.findByHomeTeam(entity)).thenReturn(null);
         when(playerDaoMock.findPlayersByTeam(entity)).thenReturn(null);
@@ -143,13 +143,13 @@ public class TeamServiceImplTest {
             //OK
         }
     }
-    
+
     @Test
     public void getById() {
         Team teamA = new Team();
         teamA.setId(1l);
         teamA.setName("TeamA");
-        
+
         when(teamDaoMock.getById(1l)).thenReturn(teamA);
 
         TeamDTO t = service.getById(1L);
@@ -200,7 +200,7 @@ public class TeamServiceImplTest {
         Player playerG = new Player();
         Player playerH = new Player();
         Player playerI = new Player();
-        
+
         teamA.setId(5l);
         teamA.setName("TeamA");
         teamA.setPlayers(new ArrayList<Player>());
@@ -236,7 +236,7 @@ public class TeamServiceImplTest {
         teamC.getAwayMatches().add(matchC3);
         teamC.getHomeMatches().add(matchC4);
         teamC.getHomeMatches().add(matchC5);
-        
+
         teamD.setId(8l);
         teamD.setName("TeamD");
         teamD.setPlayers(new ArrayList<Player>());
@@ -248,7 +248,7 @@ public class TeamServiceImplTest {
         teamD.getPlayers().add(playerI);
         teamD.setAwayMatches(new ArrayList<Match>());
         teamD.setHomeMatches(new ArrayList<Match>());
-        
+
         Date matchDate = new Date(System.currentTimeMillis() - 50000);
 
         //2:1 won
@@ -496,7 +496,7 @@ public class TeamServiceImplTest {
         matchCAwayList.add(matchC1);
         matchCAwayList.add(matchC2);
         matchCAwayList.add(matchC3);
-        
+
         List<Match> matchDAwayList = new ArrayList<Match>();
 
         List<Match> matchAHomeList = new ArrayList<Match>();
@@ -510,7 +510,7 @@ public class TeamServiceImplTest {
         List<Match> matchCHomeList = new ArrayList<Match>();
         matchCHomeList.add(matchC4);
         matchCHomeList.add(matchC5);
-        
+
         List<Match> matchDHomeList = new ArrayList<Match>();
 
         //********Actual testing********//

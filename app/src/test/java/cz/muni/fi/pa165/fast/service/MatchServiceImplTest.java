@@ -127,24 +127,24 @@ public class MatchServiceImplTest {
 
     @Test
     public void findAll() {
-         List<MatchDTO> dtos = service.findAll();
+        List<MatchDTO> dtos = service.findAll();
 
-         assertEquals(6, dtos.size());
-		
-         verify(matchDAOMock).findAll();
-         verifyNoMoreInteractions(matchDAOMock);
-		
-         MatchDTO dto = dtos.get(4); // get sample - fifth match, ordered by date
-         assertEquals(5, dto.getId());
-         assertEquals(2, dto.getRound());
-         assertEquals(3, dto.getHomeTeamId());
-         assertEquals("Third Team", dto.getHomeTeamName());
-         assertEquals(1, dto.getAwayTeamId());
-         assertEquals("First Team", dto.getAwayTeamName());
-         assertEquals(1, (int)dto.getHomeTeamGoals());
-         assertEquals(0, (int)dto.getAwayTeamGoals());
+        assertEquals(6, dtos.size());
+
+        verify(matchDAOMock).findAll();
+        verifyNoMoreInteractions(matchDAOMock);
+
+        MatchDTO dto = dtos.get(4); // get sample - fifth match, ordered by date
+        assertEquals(5, dto.getId());
+        assertEquals(2, dto.getRound());
+        assertEquals(3, dto.getHomeTeamId());
+        assertEquals("Third Team", dto.getHomeTeamName());
+        assertEquals(1, dto.getAwayTeamId());
+        assertEquals("First Team", dto.getAwayTeamName());
+        assertEquals(1, (int) dto.getHomeTeamGoals());
+        assertEquals(0, (int) dto.getAwayTeamGoals());
     }
-    
+
     @Test
     public void testGetById() {
         Match m1 = new Match();

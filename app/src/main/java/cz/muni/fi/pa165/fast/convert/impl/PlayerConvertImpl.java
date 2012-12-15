@@ -30,7 +30,7 @@ public class PlayerConvertImpl implements PlayerConvert {
         if (player == null) {
             throw new IllegalArgumentException("Player entity is null.");
         }
-        if (player.getTeam() == null){
+        if (player.getTeam() == null) {
             throw new RuntimeException("Team cannot be null");
         }
 

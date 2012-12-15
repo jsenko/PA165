@@ -61,7 +61,6 @@ public class GoalActionBean implements ActionBean {
     }
 
     public List<PlayerDTO> getPlayers() {
-        System.out.println("in getPlayers");
         TeamDTO t1 = teamService.getById(matchService.getById(goalDTO.getMatchId()).getAwayTeamId());
         TeamDTO t2 = teamService.getById(matchService.getById(goalDTO.getMatchId()).getHomeTeamId());
         List<PlayerDTO> matchPlayers = playerService.findPlayersByTeam(t1.getId(), PlayerOrderBy.NAME);

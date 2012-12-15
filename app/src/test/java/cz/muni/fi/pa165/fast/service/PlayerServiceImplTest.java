@@ -100,7 +100,7 @@ public class PlayerServiceImplTest {
         verify(playerDao).delete(player);
         verifyNoMoreInteractions(playerDao);
     }
-    
+
     @Test
     public void getById() {
         Player p1 = new Player();
@@ -120,9 +120,9 @@ public class PlayerServiceImplTest {
             //OK
         }
     }
-    
+
     @Test
-    public void findPlayersByTeam(){
+    public void findPlayersByTeam() {
         List<PlayerDTO> pOfT1 = service.findPlayersByTeam(1L, PlayerOrderBy.NAME);
         List<PlayerDTO> pOfT2 = service.findPlayersByTeam(2L, PlayerOrderBy.NAME);
         List<PlayerDTO> pOfT3 = service.findPlayersByTeam(3L, PlayerOrderBy.NAME);
@@ -130,12 +130,12 @@ public class PlayerServiceImplTest {
         List<PlayerDTO> pOfT4ByAge = service.findPlayersByTeam(4L, PlayerOrderBy.AGE);
         List<PlayerDTO> pOfT4ByHeight = service.findPlayersByTeam(4L, PlayerOrderBy.HEIGHT);
         List<PlayerDTO> pOfT4ByWight = service.findPlayersByTeam(4L, PlayerOrderBy.WEIGHT);
-        
+
         assertEquals(1, pOfT1.size());
         assertEquals(1, pOfT2.size());
         assertEquals(1, pOfT3.size());
         assertEquals(6, pOfT4ByName.size());
-        
+
         PlayerDTO firstByNamePlayer = pOfT4ByName.get(0);
         PlayerDTO lastByNamePlayer = pOfT4ByName.get(5);
 

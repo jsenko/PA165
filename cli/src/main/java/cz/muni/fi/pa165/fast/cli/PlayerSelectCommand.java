@@ -200,7 +200,7 @@ public class PlayerSelectCommand implements Command {
             line(size);
 
         }
-        
-        
+
+
     }
 }

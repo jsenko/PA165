@@ -18,12 +18,12 @@
                 <li><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="order"><s:param name="order" value="2"/><s:label name="player.age"/></s:link></li>
                 <li><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="order"><s:param name="order" value="3"/><s:label name="player.weight"/></s:link></li>
                 <li><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="order"><s:param name="order" value="4"/><s:label name="player.height"/></s:link></li>
-            </ul>
-        </div>
-            
-        <table id="player_table">
-            <tr>
-                <td><s:label name="global.no"/></td>
+                </ul>
+            </div>
+
+            <table id="player_table">
+                <tr>
+                    <td><s:label name="global.no"/></td>
                 <td><s:label name="player.name"/></td>
                 <td><s:label name="player.goals"/></td>
                 <td><s:label name="player.assistances"/></td>
@@ -42,12 +42,12 @@
                     <td><c:out value="${player.height}"/></td>
                     <td class="admin_section"><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" onclick="return confirm('Delete ${player.name}?');" event="delete"><s:param name="player.id" value="${player.id}"/><i class="icon-remove"></i></s:link></td>
                     <td class="admin_section"><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="edit"><s:param name="player.id" value="${player.id}"/><i class="icon-pencil"></i></s:link> </td>
-                </tr>
+                    </tr>
             </c:forEach>
         </table>
 
-                <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="create"><s:label class="btn btn-info" name="player.newPlayer" /></s:link> 
- 
+        <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="create"><s:label class="btn btn-info" name="player.newPlayer" /></s:link> 
+
     </s:layout-component>
 </s:layout-render>
 

@@ -7,7 +7,7 @@
         <form action="/pa165/admin/" method="get">
             <p><s:label name="admin.invalidCred" Invalid username / password /></p>
             <input type="submit" class="btn btn-danger" value="Back"/>
-            </form>
+        </form>
 
-</s:layout-component>
+    </s:layout-component>
 </s:layout-render>

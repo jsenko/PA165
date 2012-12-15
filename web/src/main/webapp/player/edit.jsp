@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <s:submit class="btn btn-warning" name="save"/>
-                </fieldset>
+            </fieldset>
         </s:form>
 
     </s:layout-component>

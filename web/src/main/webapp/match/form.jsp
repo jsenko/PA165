@@ -35,28 +35,28 @@
     </div>
 </div>
 
-    <script type="text/javascript">
-        $(function() {
+<script type="text/javascript">
+    $(function() {
         $.datepicker.regional['sk'] = {clearText: 'Vyčistiť', clearStatus: 'Zmazať aktuálny dátum',
-    closeText: 'Zatvoriť', closeStatus: 'Zatvoriť bez zmien',
-    prevText: '<Pred', prevStatus: 'Zobraziť predchádzjúci mesiac',
-    nextText: 'Nasl>', nextStatus: 'Zobraziť nasledujúci mesiac',
-    currentText: 'Dnes', currentStatus: 'Zobraziť aktuálny mesiac',
-    monthNames: ['Január','Február','Marec','Apríl','Máj','Jún',
-    'Júl','August','September','Október','November','December'],
-    monthNamesShort: ['Jan','Feb','Mar','Apr','Máj','Jún',
-    'Júl','Aug','Sep','Okt','Nov','Dec'],
-    monthStatus: 'Zobraziť iný mesiac', yearStatus: 'Zobraziť iný rok',
-    weekHeader: 'Tý', weekStatus: 'Týždeň roku',
-    dayNames: ['Nedeľa','Pondelok','Utorok','Streda','Štvrtok','Piatok','Sobota'],
-    dayNamesShort: ['Ned','Pon','Uto','Str','Štv','Pia','Sob'],
-    dayNamesMin: ['Ne','Po','Ut','St','Št','Pia','So'],
-    dayStatus: 'Nastaviť DD ako prvý deň v týždni', dateStatus: 'Vybrať DD, MM d',
-    dateFormat: 'dd.mm.yy', firstDay: 1, 
-    initStatus: 'Vybrať dátum', isRTL: false};
+            closeText: 'Zatvoriť', closeStatus: 'Zatvoriť bez zmien',
+            prevText: '<Pred', prevStatus: 'Zobraziť predchádzjúci mesiac',
+            nextText: 'Nasl>', nextStatus: 'Zobraziť nasledujúci mesiac',
+            currentText: 'Dnes', currentStatus: 'Zobraziť aktuálny mesiac',
+            monthNames: ['Január','Február','Marec','Apríl','Máj','Jún',
+                'Júl','August','September','Október','November','December'],
+            monthNamesShort: ['Jan','Feb','Mar','Apr','Máj','Jún',
+                'Júl','Aug','Sep','Okt','Nov','Dec'],
+            monthStatus: 'Zobraziť iný mesiac', yearStatus: 'Zobraziť iný rok',
+            weekHeader: 'Tý', weekStatus: 'Týždeň roku',
+            dayNames: ['Nedeľa','Pondelok','Utorok','Streda','Štvrtok','Piatok','Sobota'],
+            dayNamesShort: ['Ned','Pon','Uto','Str','Štv','Pia','Sob'],
+            dayNamesMin: ['Ne','Po','Ut','St','Št','Pia','So'],
+            dayStatus: 'Nastaviť DD ako prvý deň v týždni', dateStatus: 'Vybrať DD, MM d',
+            dateFormat: 'dd.mm.yy', firstDay: 1, 
+                initStatus: 'Vybrať dátum', isRTL: false};
         $( "#m7" ).datepicker( $.datepicker.regional[ "${actionBean.context.locale}" ] );
     });
-                                </script>
+</script>
 
 
 
