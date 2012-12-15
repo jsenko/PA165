@@ -1,12 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.muni.fi.pa165.fast.cli;
 
 import static cz.muni.fi.pa165.fast.cli.CLI.*;
 import cz.muni.fi.pa165.fast.dto.PlayerDTO;
-import cz.muni.fi.pa165.fast.dto.TeamDTO;
 import cz.muni.fi.pa165.fast.service.PlayerOrderBy;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +14,6 @@ public class PlayerSelectCommand implements Command {
 
     private Long teamId;
     private Long playerId;
-    private boolean all = false;
 
     @Override
     public Command subCommand(String subCommand) {
@@ -38,7 +32,7 @@ public class PlayerSelectCommand implements Command {
             try {
                 teamId = Long.parseLong(value);
             } catch (Exception e) {
-                System.out.println("Invalid id '"
+                System.out.println("Invalid teamId '"
                         + value + "'. Must be an integer.");
                 return null;
             }
@@ -61,22 +55,17 @@ public class PlayerSelectCommand implements Command {
             return this;
         }
 
-        if ("all".equals(name)) {
-            all = true;
-            return this;
-        }
-
         unknownCommand(name);
         return null;
     }
 
     @Override
     public void help() {
-        String s = "FAST CLI using REST API - team select command\n"
+        String s = "FAST CLI using REST API - player select command\n"
                 + "Usage: [command] [--argument] [value] [subcommand] ...\n"
                 + "Available arguments:\n"
-                + " --all - display table of all players\n"
-                + " --id - display player with the specified id\n";
+                + " --playerId - display player with the specified id\n"
+                + " --teamId - display players from team with the specified id\n";
         System.out.println(s);
     }
 
@@ -108,7 +97,7 @@ public class PlayerSelectCommand implements Command {
             PlayerDTO dto = CLI.playerService.getById(playerId);
             if (dto == null) {
                 System.out.println("Failed to retrieve data from rest service.\n"
-                        + "Team with id '" + playerId + "' might not exist or bad uri.");
+                        + "Player with id '" + playerId + "' might not exist or bad uri.");
                 return;
             }
 
@@ -118,15 +107,12 @@ public class PlayerSelectCommand implements Command {
             list = CLI.playerService.findPlayersByTeam(teamId, PlayerOrderBy.NAME);
             if (list == null) {
                 System.out.println("Failed to retrieve data from rest service.\n"
-                        + "Team with playerId '" + playerId + "' might not exist or bad uri.");
+                        + "Team with Id '" + teamId + "' might not exist or bad uri.");
                 return;
             }
         } else {
-            list = CLI.playerService.findAll();
-            if (list == null) {
-                System.out.println("Failed to retrieve data from rest service. Check your uri.");
-                return;
-            }
+            System.out.println("Failed to retrieve data from rest service. Check your uri.");
+            return;
         }
 
 
