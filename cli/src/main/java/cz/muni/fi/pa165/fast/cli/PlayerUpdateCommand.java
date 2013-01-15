@@ -33,12 +33,20 @@ public class PlayerUpdateCommand implements Command {
         }
 
         if ("name".equals(name)) {
+            if (value.isEmpty()) {
+                System.out.println("Player has to have a name");
+                return null;
+            }
             playerDto.setName(value);
 
             return this;
         }
 
         if ("surname".equals(name)) {
+            if (value.isEmpty()) {
+                System.out.println("Player has to have a surname");
+                return null;
+            }
             playerDto.setSurname(value);
 
             return this;
@@ -46,6 +54,10 @@ public class PlayerUpdateCommand implements Command {
 
         if ("age".equals(name)) {
             try {
+                if (Integer.parseInt(value) < 16) {
+                    System.out.println("Player has to be older than 15 years.");
+                    return null;
+                }
                 playerDto.setAge(Integer.parseInt(value));
             } catch (NumberFormatException e) {
                 System.out.println("Invalid player age '" + value + "'. Must be an integer.");
@@ -54,8 +66,12 @@ public class PlayerUpdateCommand implements Command {
             return this;
         }
 
-        if ("id".equals(name)) {
+        if ("weight".equals(name)) {
             try {
+                if (Integer.parseInt(value) < 50) {
+                    System.out.println("Player has to have at least 50kg.");
+                    return null;
+                }
                 playerDto.setWeight(Integer.parseInt(value));
             } catch (NumberFormatException e) {
                 System.out.println("Invalid player weight '" + value + "'. Must be an integer.");
@@ -66,6 +82,10 @@ public class PlayerUpdateCommand implements Command {
 
         if ("height".equals(name)) {
             try {
+                if (Integer.parseInt(value) < 100) {
+                    System.out.println("Player has to have at least 100cm.");
+                    return null;
+                }
                 playerDto.setHeight(Integer.parseInt(value));
             } catch (NumberFormatException e) {
                 System.out.println("Invalid player height '" + value + "'. Must be an integer.");

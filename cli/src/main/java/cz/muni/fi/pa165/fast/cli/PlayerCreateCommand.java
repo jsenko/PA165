@@ -22,12 +22,20 @@ public class PlayerCreateCommand implements Command {
     public Command argument(String name, String value) {
 
         if ("name".equals(name)) {
+            if (value.isEmpty()) {
+                System.out.println("Player has to have a name");
+                return null;
+            }
             playerDto.setName(value);
 
             return this;
         }
 
         if ("surname".equals(name)) {
+            if (value.isEmpty()) {
+                System.out.println("Player has to have a surname");
+                return null;
+            }
             playerDto.setSurname(value);
 
             return this;
@@ -35,6 +43,10 @@ public class PlayerCreateCommand implements Command {
 
         if ("age".equals(name)) {
             try {
+                if (Integer.parseInt(value) < 16) {
+                    System.out.println("Player has to be older than 15 years.");
+                    return null;
+                }
                 playerDto.setAge(Integer.parseInt(value));
 
             } catch (NumberFormatException ex) {
@@ -46,6 +58,10 @@ public class PlayerCreateCommand implements Command {
 
         if ("height".equals(name)) {
             try {
+                if (Integer.parseInt(value) < 100) {
+                    System.out.println("Player has to have at least 100cm.");
+                    return null;
+                }
                 playerDto.setHeight(Integer.parseInt(value));
 
             } catch (NumberFormatException ex) {
@@ -57,7 +73,10 @@ public class PlayerCreateCommand implements Command {
 
         if ("weight".equals(name)) {
             try {
-
+                if (Integer.parseInt(value) < 50) {
+                    System.out.println("Player has to have at least 50kg.");
+                    return null;
+                }
                 playerDto.setWeight(Integer.parseInt(value));
 
             } catch (NumberFormatException ex) {
@@ -113,7 +132,7 @@ public class PlayerCreateCommand implements Command {
             }
 
             CLI.playerService.create(playerDto);
-            System.out.println("Player '" + playerDto.getName() + "' created successfully!");
+            System.out.println("Player '" + playerDto.getName() + " " + playerDto.getSurname() + "' created successfully!");
         } catch (Exception e) {
             System.out.println("Could not create new player, an error has occurred.");
         }

@@ -46,7 +46,7 @@ public class TeamUpdateCommand implements Command {
             CLI.teamService.update(teamDTO);
             System.out.println("Team " + teamDTO.getId() + " updated successfully!");
         } catch (IllegalArgumentException e) {
-            System.out.println("Could not update the team, team with id '" + teamDTO.getId() + "' dowsn't exist.");
+            System.out.println("Could not update the team, team with id '" + teamDTO.getId() + "' doesn't exist.");
         } catch (Exception e) {
             System.out.println("Could not update the team, an error has occurred.");
         }
