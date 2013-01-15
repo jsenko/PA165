@@ -11,7 +11,7 @@ public class CLI {
     public static void main(String[] args) {
         try {
             Command c = new MainCommand(); // default command
-            for (int i = 0; i < args.length; i++) {
+            for (int i = 0; i < args.length; i++) {             
                 if ("help".equals(args[i]) || "--help".equals(args[i])) {
                     c.help();
                     break;
@@ -34,6 +34,50 @@ public class CLI {
 
                 if (c == null) {
                     break; //abort
+                }
+                
+                //check for number of parameters
+                if(c instanceof TeamCreateCommand){
+                    if(args.length != 4){
+                        System.out.println("Invalid command.");
+                        c.help();
+                        break;
+                    }
+                }
+                if(c instanceof TeamUpdateCommand){
+                    if(args.length != 6){
+                        System.out.println("Invalid command.");
+                        c.help();
+                        break;
+                    }
+                }
+                if(c instanceof TeamDeleteCommand){
+                    if(args.length != 4){
+                        System.out.println("Invalid command.");
+                        c.help();
+                        break;
+                    }
+                }
+                if(c instanceof PlayerCreateCommand){
+                    if(args.length != 14){
+                        System.out.println("Invalid command.");
+                        c.help();
+                        break;
+                    }
+                }
+                if(c instanceof PlayerUpdateCommand){
+                    if(args.length < 4){
+                        System.out.println("Invalid command.");
+                        c.help();
+                        break;
+                    }
+                }
+                if(c instanceof PlayerDeleteCommand){
+                    if(args.length != 4){
+                        System.out.println("Invalid command.");
+                        c.help();
+                        break;
+                    }
                 }
 
                 if (i == args.length - 1) // final token was parsed
