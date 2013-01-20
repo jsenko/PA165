@@ -3,12 +3,15 @@ package cz.muni.fi.pa165.fast.actionbean;
 import com.samaxes.stripejb3.EJBBean;
 import cz.muni.fi.pa165.fast.dto.MatchDTO;
 import cz.muni.fi.pa165.fast.dto.TeamDTO;
+import cz.muni.fi.pa165.fast.model.User;
+import cz.muni.fi.pa165.fast.security.SecurityFacade;
 import cz.muni.fi.pa165.fast.service.MatchGeneratorFacade;
 import cz.muni.fi.pa165.fast.service.MatchService;
 import cz.muni.fi.pa165.fast.service.TeamService;
 import java.util.List;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
+import net.sourceforge.stripes.action.After;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -46,6 +49,21 @@ public class MatchActionBean implements ActionBean {
         @Validate(on = {"add", "save"}, field = "date", required = true)})
     private MatchDTO matchDTO;
 
+    @EJBBean("java:global/myapp/SecurityFacadeImpl!cz.muni.fi.pa165.fast.security.SecurityFacade")
+    private SecurityFacade sf;
+    
+    @Before(stages = LifecycleStage.EventHandling)
+    private void loadUser()
+    {
+        sf.setUser((User)context.getRequest().getSession().getAttribute("user"));
+    }
+    
+    @After(stages = LifecycleStage.RequestComplete)
+    private void saveUser()
+    {
+        context.getRequest().getSession().setAttribute("user", sf.getUser());
+    }
+    
     @DefaultHandler
     public Resolution all() {
 

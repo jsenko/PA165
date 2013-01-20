@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.fast.rest;
 
 import cz.muni.fi.pa165.fast.dto.TeamDTO;
+import cz.muni.fi.pa165.fast.security.SecurityFacade;
 import cz.muni.fi.pa165.fast.service.TeamService;
 import java.util.List;
 import javax.ejb.EJB;
@@ -22,10 +23,14 @@ public class TeamRest {
 
     @EJB
     private TeamService ts;
+    
+    @EJB
+    SecurityFacade sf;
 
     @GET
     @Produces(MediaType.TEXT_XML)
     public List<TeamDTO> findAll() {
+        sf.login("admin", "password"); // to enable full access to services via rest
         return ts.findAll();
     }
 
@@ -33,6 +38,7 @@ public class TeamRest {
     @Produces(MediaType.TEXT_XML)
     @Path("playerId/{id}") // different url had to be used
     public TeamDTO findByTeam(@PathParam("id") long playerId) {
+        sf.login("admin", "password"); // to enable full access to services via rest
         return ts.findByPlayer(playerId);
     }
 
@@ -40,12 +46,14 @@ public class TeamRest {
     @Produces(MediaType.TEXT_XML)
     @Path("{id}")
     public TeamDTO getById(@PathParam("id") long id) {
+        sf.login("admin", "password"); // to enable full access to services via rest
         return ts.getById(id);
     }
 
     @POST
     @Consumes(MediaType.TEXT_XML)
     public Response create(TeamDTO teamDTO) {
+        sf.login("admin", "password"); // to enable full access to services via rest
         ts.create(teamDTO);
         return Response.ok().build();
     }
@@ -53,6 +61,7 @@ public class TeamRest {
     @PUT
     @Consumes(MediaType.TEXT_XML)
     public Response update(TeamDTO teamDTO) {
+        sf.login("admin", "password"); // to enable full access to services via rest
         ts.update(teamDTO);
 
         return Response.ok().build();
@@ -62,6 +71,7 @@ public class TeamRest {
     @Consumes(MediaType.TEXT_XML)
     @Path("{id}")
     public Response delete(@PathParam("id") long id) {
+        sf.login("admin", "password"); // to enable full access to services via rest
 
         ts.delete(ts.getById(id));
 

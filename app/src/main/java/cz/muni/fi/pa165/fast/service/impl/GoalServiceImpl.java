@@ -6,18 +6,23 @@ import cz.muni.fi.pa165.fast.dao.MatchDAO;
 import cz.muni.fi.pa165.fast.dto.GoalDTO;
 import cz.muni.fi.pa165.fast.model.Goal;
 import cz.muni.fi.pa165.fast.model.Match;
+import cz.muni.fi.pa165.fast.security.Acl;
+import cz.muni.fi.pa165.fast.security.Role;
+import cz.muni.fi.pa165.fast.security.impl.AuthorizationInterceptor;
 import cz.muni.fi.pa165.fast.service.GoalService;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 
 /**
  *
  * @author Stefan
  */
 @Stateless
+@Interceptors({AuthorizationInterceptor.class})
 public class GoalServiceImpl implements GoalService {
 
     @EJB
@@ -28,6 +33,7 @@ public class GoalServiceImpl implements GoalService {
     private MatchDAO matchDAO;
 
     @Override
+    @Acl(Role.ADMIN)
     public long create(GoalDTO dto) {
         try {
             Goal g = goalConvert.fromDTOToEntity(dto);
@@ -39,6 +45,7 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
+    @Acl(Role.ADMIN)
     public long update(GoalDTO dto) {
         try {
             Goal g = goalConvert.fromDTOToEntity(dto);
@@ -50,6 +57,7 @@ public class GoalServiceImpl implements GoalService {
     }
 
     @Override
+    @Acl(Role.ADMIN)
     public void delete(GoalDTO dto) {
         try {
             Goal g = goalConvert.fromDTOToEntity(dto);

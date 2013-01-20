@@ -1,5 +1,14 @@
 package cz.muni.fi.pa165.fast.service.impl;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
+
 import cz.muni.fi.pa165.fast.convert.TeamConvert;
 import cz.muni.fi.pa165.fast.dao.MatchDAO;
 import cz.muni.fi.pa165.fast.dao.PlayerDAO;
@@ -8,15 +17,13 @@ import cz.muni.fi.pa165.fast.dto.TeamDTO;
 import cz.muni.fi.pa165.fast.model.Match;
 import cz.muni.fi.pa165.fast.model.Player;
 import cz.muni.fi.pa165.fast.model.Team;
+import cz.muni.fi.pa165.fast.security.Acl;
+import cz.muni.fi.pa165.fast.security.Role;
+import cz.muni.fi.pa165.fast.security.impl.AuthorizationInterceptor;
 import cz.muni.fi.pa165.fast.service.TeamService;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
 
 @Stateless
+@Interceptors({AuthorizationInterceptor.class})
 public class TeamServiceImpl implements TeamService {
 
     @EJB
@@ -29,6 +36,7 @@ public class TeamServiceImpl implements TeamService {
     private MatchDAO matchDao;
 
     @Override
+    @Acl(Role.ADMIN)
     public void create(TeamDTO dto) {
         try {
             Team team = teamConvert.fromDTOToEntity(dto);
@@ -40,6 +48,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
+    @Acl(Role.ADMIN)
     public void update(TeamDTO dto) {
         try {
             Team team = teamConvert.fromDTOToEntity(dto);
@@ -51,6 +60,7 @@ public class TeamServiceImpl implements TeamService {
     }
 
     @Override
+    @Acl(Role.ADMIN)
     public void delete(TeamDTO dto) {
         try {
             Team team = teamConvert.fromDTOToEntity(dto);

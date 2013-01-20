@@ -5,6 +5,9 @@ import cz.muni.fi.pa165.fast.dao.MatchDAO;
 import cz.muni.fi.pa165.fast.dao.TeamDAO;
 import cz.muni.fi.pa165.fast.dto.MatchDTO;
 import cz.muni.fi.pa165.fast.model.Match;
+import cz.muni.fi.pa165.fast.security.Acl;
+import cz.muni.fi.pa165.fast.security.Role;
+import cz.muni.fi.pa165.fast.security.impl.AuthorizationInterceptor;
 import cz.muni.fi.pa165.fast.service.MatchService;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,11 +15,13 @@ import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 
 /**
  * @author Jakub Senko
  */
 @Stateless
+@Interceptors({AuthorizationInterceptor.class})
 public class MatchServiceImpl implements MatchService {
 
     @EJB
@@ -27,6 +32,7 @@ public class MatchServiceImpl implements MatchService {
     TeamDAO teamDAO;
 
     @Override
+    @Acl(Role.ADMIN)
     public void create(MatchDTO dto) {
         try {
             Match m = convert.fromDTOToEntity(dto);
@@ -38,6 +44,7 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
+    @Acl(Role.ADMIN)
     public void update(MatchDTO dto) {
         try {
             Match m = convert.fromDTOToEntity(dto);
@@ -48,6 +55,7 @@ public class MatchServiceImpl implements MatchService {
     }
 
     @Override
+    @Acl(Role.ADMIN)
     public void delete(MatchDTO dto) {
         try {
             // to reduce unnecessary overhead we will not use converter

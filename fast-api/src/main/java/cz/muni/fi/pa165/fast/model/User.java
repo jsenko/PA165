@@ -7,6 +7,7 @@ import javax.persistence.*;
  * @author Jakub Senko
  */
 @Entity
+@Table(name="usercredentials")
 public class User implements Serializable
 {
     @Id

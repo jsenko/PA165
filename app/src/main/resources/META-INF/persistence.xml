@@ -9,6 +9,7 @@
         <class>cz.muni.fi.pa165.fast.model.Match</class>
         <class>cz.muni.fi.pa165.fast.model.Player</class>
         <class>cz.muni.fi.pa165.fast.model.Team</class>
+        <class>cz.muni.fi.pa165.fast.model.User</class>
         <properties>
             <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
             <property name="eclipselink.debug" value="ALL"/>

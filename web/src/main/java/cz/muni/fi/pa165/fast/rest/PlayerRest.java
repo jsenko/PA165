@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.fast.rest;
 
 import cz.muni.fi.pa165.fast.dto.PlayerDTO;
+import cz.muni.fi.pa165.fast.security.SecurityFacade;
 import cz.muni.fi.pa165.fast.service.PlayerOrderBy;
 import cz.muni.fi.pa165.fast.service.PlayerService;
 import cz.muni.fi.pa165.fast.service.TeamService;
@@ -26,11 +27,15 @@ public class PlayerRest {
     private PlayerService ps;
     @EJB
     private TeamService ts;
+    
+    @EJB
+    SecurityFacade sf;
 
     @GET
     @Path("teamId/{id}")
     @Produces(MediaType.TEXT_XML)
     public List<PlayerDTO> findPlayersBytTeamId(@PathParam("id") Long id) {
+        sf.login("admin", "password"); // to enable full access to services via rest
         return ps.findPlayersByTeam(id, PlayerOrderBy.NAME);
     }
 
@@ -38,12 +43,14 @@ public class PlayerRest {
     @Path("{id}")
     @Produces(MediaType.TEXT_XML)
     public PlayerDTO findPlayerById(@PathParam("id") Long id) {
+        sf.login("admin", "password"); // to enable full access to services via rest
         return ps.getById(id);
     }
 
     @POST
     @Consumes(MediaType.TEXT_XML)
     public Response create(PlayerDTO playerDTO) {
+        sf.login("admin", "password"); // to enable full access to services via rest
         ps.create(playerDTO);
         return Response.ok().build();
     }
@@ -51,6 +58,7 @@ public class PlayerRest {
     @PUT
     @Consumes(MediaType.TEXT_XML)
     public Response update(PlayerDTO playerDTO) {
+        sf.login("admin", "password"); // to enable full access to services via rest
         ps.update(playerDTO);
         return Response.ok().build();
     }
@@ -59,6 +67,7 @@ public class PlayerRest {
     @Consumes(MediaType.TEXT_XML)
     @Path("{id}")
     public Response delete(@PathParam("id") long id) {
+        sf.login("admin", "password"); // to enable full access to services via rest
         ps.delete(ps.getById(id));
         return Response.ok().build();
     }

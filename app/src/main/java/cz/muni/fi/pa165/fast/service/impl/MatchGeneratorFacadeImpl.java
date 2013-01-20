@@ -3,6 +3,9 @@ package cz.muni.fi.pa165.fast.service.impl;
 import cz.muni.fi.pa165.fast.dto.MatchDTO;
 import cz.muni.fi.pa165.fast.dto.PlayerDTO;
 import cz.muni.fi.pa165.fast.dto.TeamDTO;
+import cz.muni.fi.pa165.fast.security.Acl;
+import cz.muni.fi.pa165.fast.security.Role;
+import cz.muni.fi.pa165.fast.security.impl.AuthorizationInterceptor;
 import cz.muni.fi.pa165.fast.service.MatchGeneratorFacade;
 import cz.muni.fi.pa165.fast.service.MatchService;
 import cz.muni.fi.pa165.fast.service.PlayerService;
@@ -13,6 +16,7 @@ import java.util.List;
 import java.util.Random;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.interceptor.Interceptors;
 
 /**
  *

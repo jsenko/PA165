@@ -1,18 +1,10 @@
 package cz.muni.fi.pa165.fast.actionbean;
 
-import com.samaxes.stripejb3.EJBBean;
-import cz.muni.fi.pa165.fast.dto.GoalDTO;
-import cz.muni.fi.pa165.fast.dto.MatchDTO;
-import cz.muni.fi.pa165.fast.dto.PlayerDTO;
-import cz.muni.fi.pa165.fast.dto.TeamDTO;
-import cz.muni.fi.pa165.fast.service.GoalService;
-import cz.muni.fi.pa165.fast.service.MatchService;
-import cz.muni.fi.pa165.fast.service.PlayerOrderBy;
-import cz.muni.fi.pa165.fast.service.PlayerService;
-import cz.muni.fi.pa165.fast.service.TeamService;
 import java.util.List;
+
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
+import net.sourceforge.stripes.action.After;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -27,6 +19,18 @@ import net.sourceforge.stripes.validation.ValidationError;
 import net.sourceforge.stripes.validation.ValidationErrors;
 import net.sourceforge.stripes.validation.ValidationMethod;
 
+import com.samaxes.stripejb3.EJBBean;
+
+import cz.muni.fi.pa165.fast.dto.GoalDTO;
+import cz.muni.fi.pa165.fast.dto.PlayerDTO;
+import cz.muni.fi.pa165.fast.dto.TeamDTO;
+import cz.muni.fi.pa165.fast.model.User;
+import cz.muni.fi.pa165.fast.security.SecurityFacade;
+import cz.muni.fi.pa165.fast.service.GoalService;
+import cz.muni.fi.pa165.fast.service.MatchService;
+import cz.muni.fi.pa165.fast.service.PlayerOrderBy;
+import cz.muni.fi.pa165.fast.service.PlayerService;
+import cz.muni.fi.pa165.fast.service.TeamService;
 /**
  *
  * @author Jakub Senko
@@ -49,6 +53,21 @@ public class GoalActionBean implements ActionBean {
         @Validate(on = {"add", "save"}, field = "assistPlayerId", required = true, minvalue = 1),
         @Validate(on = {"add", "save"}, field = "goalMinute", required = true, minvalue = 1)})
     private GoalDTO goalDTO;
+    
+    @EJBBean("java:global/myapp/SecurityFacadeImpl!cz.muni.fi.pa165.fast.security.SecurityFacade")
+    private SecurityFacade sf;
+    
+    @Before(stages = LifecycleStage.EventHandling)
+    private void loadUser()
+    {
+        sf.setUser((User)context.getRequest().getSession().getAttribute("user"));
+    }
+    
+    @After(stages = LifecycleStage.RequestComplete)
+    private void saveUser()
+    {
+        context.getRequest().getSession().setAttribute("user", sf.getUser());
+    }
 
     @DefaultHandler
     public Resolution all() {

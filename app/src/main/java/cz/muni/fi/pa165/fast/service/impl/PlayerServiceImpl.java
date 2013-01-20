@@ -10,6 +10,9 @@ import cz.muni.fi.pa165.fast.dao.PlayerDAO;
 import cz.muni.fi.pa165.fast.dao.TeamDAO;
 import cz.muni.fi.pa165.fast.dto.PlayerDTO;
 import cz.muni.fi.pa165.fast.model.Player;
+import cz.muni.fi.pa165.fast.security.Acl;
+import cz.muni.fi.pa165.fast.security.Role;
+import cz.muni.fi.pa165.fast.security.impl.AuthorizationInterceptor;
 import cz.muni.fi.pa165.fast.service.PlayerOrderBy;
 import cz.muni.fi.pa165.fast.service.PlayerService;
 import java.util.ArrayList;
@@ -22,12 +25,14 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
+import javax.interceptor.Interceptors;
 
 /**
  *
  * @author Peter Laurencik
  */
 @Stateless
+@Interceptors({AuthorizationInterceptor.class})
 @TransactionManagement(TransactionManagementType.CONTAINER)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 public class PlayerServiceImpl implements PlayerService {
@@ -40,6 +45,7 @@ public class PlayerServiceImpl implements PlayerService {
     PlayerConvert convert;
 
     @Override
+    @Acl(Role.ADMIN)
     public long create(PlayerDTO dto) {
         Player player = convert.fromDTOToEntity(dto);
 
@@ -49,6 +55,7 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
+    @Acl(Role.ADMIN)
     public long update(PlayerDTO dto) {
         Player player = convert.fromDTOToEntity(dto);
 
@@ -58,6 +65,7 @@ public class PlayerServiceImpl implements PlayerService {
     }
 
     @Override
+    @Acl(Role.ADMIN)
     public void delete(PlayerDTO dto) {
         Player player = convert.fromDTOToEntity(dto);
 
