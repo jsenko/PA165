@@ -42,7 +42,11 @@ public class TeamActionBean implements ActionBean {
     private SecurityFacade sf;
     
 
-    
+    @Before(stages = LifecycleStage.EventHandling)
+    private void loadUser()
+    {
+        sf.setUser((User)context.getRequest().getSession().getAttribute("user"));
+    }
     
     @DefaultHandler
     public Resolution all() {

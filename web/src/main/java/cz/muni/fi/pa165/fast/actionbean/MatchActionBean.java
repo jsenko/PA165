@@ -53,7 +53,11 @@ public class MatchActionBean implements ActionBean {
     @EJBBean("java:global/myapp/SecurityFacadeImpl!cz.muni.fi.pa165.fast.security.SecurityFacade")
     private SecurityFacade sf;
     
-
+    @Before(stages = LifecycleStage.EventHandling)
+    private void loadUser()
+    {
+        sf.setUser((User)context.getRequest().getSession().getAttribute("user"));
+    }
     
     @DefaultHandler
     public Resolution all() {
