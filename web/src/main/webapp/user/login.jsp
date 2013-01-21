@@ -11,6 +11,12 @@
 		<s:label class="header1 text-info" name="Login" />
 		<s:form beanclass="cz.muni.fi.pa165.fast.actionbean.UserActionBean" action="/users/doLogin">
 			<s:errors />
+                        <c:if test="${actionBean.invalidLogin}">
+                            <s:label class="text-error" name="login.invalidLogin"/>
+                        </c:if>
+                        <c:if test="${actionBean.loggedUser}">
+                            <s:label class="text-error" name="login.alreadyLogged"/>
+                        </c:if>    
 			<div class="control-group">
 
 				<div class="control-group">

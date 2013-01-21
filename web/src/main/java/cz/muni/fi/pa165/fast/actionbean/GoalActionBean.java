@@ -31,6 +31,7 @@ import cz.muni.fi.pa165.fast.service.MatchService;
 import cz.muni.fi.pa165.fast.service.PlayerOrderBy;
 import cz.muni.fi.pa165.fast.service.PlayerService;
 import cz.muni.fi.pa165.fast.service.TeamService;
+import cz.muni.fi.pa165.fast.service.impl.GoalServiceImpl;
 /**
  *
  * @author Jakub Senko
@@ -149,6 +150,27 @@ public class GoalActionBean implements ActionBean {
         }
     }
 
+    public boolean getCanCreate() throws NoSuchMethodException, SecurityException
+    {
+      
+        return sf.authorize(GoalServiceImpl.class
+                .getDeclaredMethod("create", GoalDTO.class));
+    }
+    
+    public boolean getCanUpdate() throws NoSuchMethodException, SecurityException
+    {
+      
+        return sf.authorize(GoalServiceImpl.class
+                .getDeclaredMethod("update", GoalDTO.class));
+    }
+    
+    public boolean getCanDelete() throws NoSuchMethodException, SecurityException
+    {
+      
+        return sf.authorize(GoalServiceImpl.class
+                .getDeclaredMethod("delete", GoalDTO.class));
+    }
+    
     @Override
     public void setContext(ActionBeanContext context) {
         this.context = context;

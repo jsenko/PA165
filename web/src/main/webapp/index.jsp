@@ -7,7 +7,7 @@
     <s:layout-component name="content">
 
         <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean" var="actionBean"/>
-
+        
         <s:label name="index.matches" class="header1 text-info"/>
         <c:choose>
             <c:when test="${actionBean.rounds eq 0}">
@@ -47,19 +47,20 @@
                                             <c:out value="${matchDTO.homeTeamGoals}"/> : <c:out value="${matchDTO.awayTeamGoals}"/>
                                         </s:link>
                                     </td>
-
-                                    <td class="admin_section">
-                                        <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean" onclick="return confirm('Delete ${matchDTO.homeTeamName} vs. ${matchDTO.awayTeamName}?');" event="delete">
-                                            <s:param name="matchDTO.id" value="${matchDTO.id}"/><i class="icon-remove"></i>
-                                        </s:link>
-                                    </td>
-
-                                    <td class="admin_section">
-                                        <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean" event="edit">
-                                            <s:param name="matchDTO.id" value="${matchDTO.id}"/><i class="icon-pencil"></i>
-                                        </s:link>
-                                    </td>
-
+                                    <c:if test="${actionBean.canUpdate}" >
+                                        <td class="admin_section">
+                                            <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean" onclick="return confirm('Delete ${matchDTO.homeTeamName} vs. ${matchDTO.awayTeamName}?');" event="delete">
+                                                <s:param name="matchDTO.id" value="${matchDTO.id}"/><i class="icon-remove"></i>
+                                            </s:link>
+                                        </td>
+                                    </c:if>
+                                    <c:if test="${actionBean.canDelete}" >
+                                        <td class="admin_section">
+                                            <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean" event="edit">
+                                                <s:param name="matchDTO.id" value="${matchDTO.id}"/><i class="icon-pencil"></i>
+                                            </s:link>
+                                        </td>
+                                    </c:if>
                                 </tr>
                             </c:if>
                         </c:forEach>
@@ -68,11 +69,12 @@
                 </c:forEach>
             </c:otherwise>
         </c:choose>
-
-        <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean"
-                event="create"><s:label class="btn btn-info" name="match.newMatch"/></s:link>
-        <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean"
-                event="generate"><s:label class="btn btn-info" name="index.generateMatches"/></s:link>
+        <c:if test="${actionBean.canCreate}" >
+            <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean"
+                    event="create"><s:label class="btn btn-info" name="match.newMatch"/></s:link>
+            <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.MatchActionBean"
+                    event="generate"><s:label class="btn btn-info" name="index.generateMatches"/></s:link>
+        </c:if>
             <br/>
         <c:out value="${actionBean.warning}"/>
 

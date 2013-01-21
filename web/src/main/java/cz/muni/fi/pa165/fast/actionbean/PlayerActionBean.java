@@ -10,6 +10,7 @@ import cz.muni.fi.pa165.fast.service.MatchGeneratorFacade;
 import cz.muni.fi.pa165.fast.service.PlayerOrderBy;
 import cz.muni.fi.pa165.fast.service.PlayerService;
 import cz.muni.fi.pa165.fast.service.TeamService;
+import cz.muni.fi.pa165.fast.service.impl.PlayerServiceImpl;
 import java.util.ArrayList;
 import java.util.List;
 import net.sourceforge.stripes.action.ActionBean;
@@ -163,6 +164,27 @@ public class PlayerActionBean implements ActionBean {
         return new ForwardResolution("/player/create.jsp");
     }
 
+    public boolean getCanCreate() throws NoSuchMethodException, SecurityException
+    {
+      
+        return sf.authorize(PlayerServiceImpl.class
+                .getDeclaredMethod("create", PlayerDTO.class));
+    }
+    
+    public boolean getCanUpdate() throws NoSuchMethodException, SecurityException
+    {
+      
+        return sf.authorize(PlayerServiceImpl.class
+                .getDeclaredMethod("update", PlayerDTO.class));
+    }
+    
+    public boolean getCanDelete() throws NoSuchMethodException, SecurityException
+    {
+      
+        return sf.authorize(PlayerServiceImpl.class
+                .getDeclaredMethod("delete", PlayerDTO.class));
+    }
+    
     @Override
     public void setContext(ActionBeanContext context) {
         this.context = (PlayerActionBeanContext) context;

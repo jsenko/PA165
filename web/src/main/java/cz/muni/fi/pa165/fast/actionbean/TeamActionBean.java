@@ -118,6 +118,18 @@ public class TeamActionBean implements ActionBean {
         return sf.authorize(TeamServiceImpl.class
                 .getDeclaredMethod("create", TeamDTO.class));
     }
+    
+    public boolean getCanUpdate() throws NoSuchMethodException, SecurityException
+    {
+        return sf.authorize(TeamServiceImpl.class
+                .getDeclaredMethod("delete", TeamDTO.class));
+    }
+    
+    public boolean getCanDelete() throws NoSuchMethodException, SecurityException
+    {
+        return sf.authorize(TeamServiceImpl.class
+                .getDeclaredMethod("delete", TeamDTO.class));
+    }
 
     @Override
     public void setContext(ActionBeanContext context) {

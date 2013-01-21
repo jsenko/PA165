@@ -8,6 +8,7 @@ import cz.muni.fi.pa165.fast.security.SecurityFacade;
 import cz.muni.fi.pa165.fast.service.MatchGeneratorFacade;
 import cz.muni.fi.pa165.fast.service.TeamService;
 import java.util.List;
+import javax.ejb.EJBException;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
@@ -33,6 +34,10 @@ public class UserActionBean implements ActionBean
     private ActionBeanContext context;
     
     private UserDTO userDTO;
+    
+    private boolean invalidLogin;
+    
+    private boolean loggedUser;
     
     @EJBBean("java:global/myapp/SecurityFacadeImpl!cz.muni.fi.pa165.fast.security.SecurityFacade")
     private SecurityFacade sf;
@@ -68,9 +73,28 @@ public class UserActionBean implements ActionBean
 
     public Resolution doLogin()
     {
-        // TODO catch exceptions and display error message
-        sf.login(userDTO.getLogin(), userDTO.getPassword());
-
+        
+        try{
+            sf.login(userDTO.getLogin(), userDTO.getPassword());
+        }catch(EJBException ex)
+        {
+            if(ex.getCause() instanceof IllegalArgumentException)
+            {
+                
+                invalidLogin = true;
+                return new ForwardResolution("/user/login.jsp");
+                
+            }
+            
+            if(ex.getCause() instanceof IllegalStateException)
+            {
+                loggedUser = true;
+                return new ForwardResolution("/user/login.jsp");
+            }
+            
+            
+        }
+        
         return new ForwardResolution("/team/all.jsp");
     }
     
@@ -105,6 +129,26 @@ public class UserActionBean implements ActionBean
 
     public void setUserDTO(UserDTO userDTO) {
         this.userDTO = userDTO;
+    }
+    
+    public boolean getInvalidLogin()
+    {
+        if(invalidLogin)
+        {
+            invalidLogin = false;
+            return true;
+        }else
+            return false;
+    }
+    
+    public boolean getLoggedUser()
+    {
+        if(loggedUser)
+        {
+            loggedUser = false;
+            return true;
+        }else
+            return false;
     }
     
     

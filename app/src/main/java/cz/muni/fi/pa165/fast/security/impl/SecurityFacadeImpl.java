@@ -46,8 +46,10 @@ public class SecurityFacadeImpl implements SecurityFacade
     {
         // create defaut root admin
         // TODO remove in production!
+        
         if(userDAO.findByLogin("admin") == null)
         {
+            
             User user = new User();
             user.setLogin("admin");
             user.setPassword("password");
@@ -55,6 +57,8 @@ public class SecurityFacadeImpl implements SecurityFacade
         }
         
         User user = authenticator.authenticate(login, password);
+        
+            
         if(user == null)
         {
             throw new
@@ -86,7 +90,8 @@ public class SecurityFacadeImpl implements SecurityFacade
 
     @Override
     public boolean authorize(Method method)
-    {
+    {  
+              
         // get Acl annotations
         Acl acl = method.getAnnotation(Acl.class);
         Role role = null;
@@ -97,6 +102,7 @@ public class SecurityFacadeImpl implements SecurityFacade
         else
         {
             role = acl.value();
+            
         }
         // instead of checking which role the user has (userRole),
         // we'll assume that if he is logged in then he is an admin else none
