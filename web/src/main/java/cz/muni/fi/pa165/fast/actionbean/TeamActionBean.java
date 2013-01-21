@@ -6,6 +6,8 @@ import cz.muni.fi.pa165.fast.model.User;
 import cz.muni.fi.pa165.fast.security.SecurityFacade;
 import cz.muni.fi.pa165.fast.service.MatchGeneratorFacade;
 import cz.muni.fi.pa165.fast.service.TeamService;
+import cz.muni.fi.pa165.fast.service.impl.TeamServiceImpl;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -107,6 +109,14 @@ public class TeamActionBean implements ActionBean {
 
     public List<TeamDTO> getTeams() {
         return teamService.findAll();
+    }
+    
+    
+    // allow access to create team
+    public boolean getCanCreate() throws NoSuchMethodException, SecurityException
+    {
+        return sf.authorize(TeamServiceImpl.class
+                .getDeclaredMethod("create", TeamDTO.class));
     }
 
     @Override

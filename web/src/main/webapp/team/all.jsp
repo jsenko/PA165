@@ -36,11 +36,11 @@
 
             </c:forEach>
         </table> 
-
+<c:if test="${actionBean.canCreate}">
         <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" event="create"><s:label class="btn btn-info" name="team.newTeam"/></s:link>              
 
         <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.TeamActionBean" event="generate"><s:label class="btn btn-info" name="team.generateTeams" /></s:link>
-
+</c:if>
     </s:layout-component>
 </s:layout-render>
 
