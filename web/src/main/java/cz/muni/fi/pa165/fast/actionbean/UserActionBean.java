@@ -6,9 +6,9 @@ import cz.muni.fi.pa165.fast.security.SecurityFacade;
 import cz.muni.fi.pa165.fast.service.UserService;
 import cz.muni.fi.pa165.fast.service.impl.UserServiceImpl;
 import java.util.List;
+import javax.ejb.EJBException;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
-import net.sourceforge.stripes.action.After;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
@@ -19,6 +19,8 @@ import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
 import org.apache.commons.codec.digest.DigestUtils;
+
+
 
 @UrlBinding("/users/{$event}")
 public class UserActionBean implements ActionBean
@@ -31,19 +33,23 @@ public class UserActionBean implements ActionBean
         @Validate(on = {"add"}, field = "login", required = true),
         @Validate(on = {"add"}, field = "password", required = true)
     })
+    private boolean invalidLogin;
+    
+    private boolean loggedUser;
+    
     @EJBBean("java:global/myapp/SecurityFacadeImpl!cz.muni.fi.pa165.fast.security.SecurityFacade")
     private SecurityFacade sf;
     @EJBBean("java:global/myapp/UserServiceImpl!cz.muni.fi.pa165.fast.service.UserService")
     protected UserService userService;
     
     @Before(stages = LifecycleStage.EventHandling)
-    private void loadUser()
+    public void loadUser()
     {
         sf.setUser((UserDTO)context.getRequest().getSession().getAttribute("user"));
     }
     
-    @After(stages = LifecycleStage.RequestComplete)
-    private void saveUser()
+    
+    public void saveUser()
     {
         context.getRequest().getSession().setAttribute("user", sf.getUser());
     }
@@ -66,11 +72,31 @@ public class UserActionBean implements ActionBean
 
     public Resolution doLogin()
     {
-        userDTO.setPassword(DigestUtils.sha256Hex(userDTO.getPassword()));
-        // TODO catch exceptions and display error message
-        sf.login(userDTO.getLogin(), userDTO.getPassword());
-
-        return new ForwardResolution("/team/all.jsp");
+        
+        try{
+            userDTO.setPassword(DigestUtils.sha256Hex(userDTO.getPassword()));
+            sf.login(userDTO.getLogin(), userDTO.getPassword());
+            saveUser();
+        }catch(EJBException ex)
+        {
+            if(ex.getCause() instanceof IllegalArgumentException)
+            {
+                
+                invalidLogin = true;
+                return new ForwardResolution("/user/login.jsp");
+                
+            }
+            
+            if(ex.getCause() instanceof IllegalStateException)
+            {
+                loggedUser = true;
+                return new ForwardResolution("/user/login.jsp");
+            }
+            
+            
+        }
+        
+        return new ForwardResolution("/index.jsp");
     }
     
     
@@ -82,8 +108,8 @@ public class UserActionBean implements ActionBean
     public Resolution doLogout()
     {
         sf.logout();
-
-        return new ForwardResolution("/team/all.jsp");
+        saveUser();
+        return new ForwardResolution("/index.jsp");
     }
     
 
@@ -136,5 +162,27 @@ public class UserActionBean implements ActionBean
     public Resolution create() {
         return new ForwardResolution("/user/create.jsp");
     }
+
+    public boolean getInvalidLogin()
+    {
+        if(invalidLogin)
+        {
+            invalidLogin = false;
+            return true;
+        }else
+            return false;
+    }
+    
+    public boolean getLoggedUser()
+    {
+        if(loggedUser)
+        {
+            loggedUser = false;
+            return true;
+        }else {
+            return false;
+        }
+    }
+    
     
 }

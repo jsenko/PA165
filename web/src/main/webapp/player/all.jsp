@@ -40,14 +40,14 @@
                     <td><c:out value="${player.age}"/></td>
                     <td><c:out value="${player.weight}"/></td>
                     <td><c:out value="${player.height}"/></td>
-                    <td class="admin_section"><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" onclick="return confirm('Delete ${player.name}?');" event="delete"><s:param name="player.id" value="${player.id}"/><i class="icon-remove"></i></s:link></td>
-                    <td class="admin_section"><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="edit"><s:param name="player.id" value="${player.id}"/><i class="icon-pencil"></i></s:link> </td>
+                    <c:if test="${actionBean.canUpdate}"><td class="admin_section"><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" onclick="return confirm('Delete ${player.name}?');" event="delete"><s:param name="player.id" value="${player.id}"/><i class="icon-remove"></i></s:link></td></c:if>
+                    <c:if test="${actionBean.canDelete}"><td class="admin_section"><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="edit"><s:param name="player.id" value="${player.id}"/><i class="icon-pencil"></i></s:link> </td></c:if>
                     </tr>
             </c:forEach>
         </table>
-
-        <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="create"><s:label class="btn btn-info" name="player.newPlayer" /></s:link> 
-
+        <c:if test="${actionBean.canCreate}">
+            <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.PlayerActionBean" event="create"><s:label class="btn btn-info" name="player.newPlayer" /></s:link> 
+        </c:if>
     </s:layout-component>
 </s:layout-render>
 

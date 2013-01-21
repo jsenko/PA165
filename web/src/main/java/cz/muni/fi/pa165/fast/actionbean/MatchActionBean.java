@@ -8,6 +8,7 @@ import cz.muni.fi.pa165.fast.security.SecurityFacade;
 import cz.muni.fi.pa165.fast.service.MatchGeneratorFacade;
 import cz.muni.fi.pa165.fast.service.MatchService;
 import cz.muni.fi.pa165.fast.service.TeamService;
+import cz.muni.fi.pa165.fast.service.impl.MatchServiceImpl;
 import java.util.List;
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
@@ -56,12 +57,6 @@ public class MatchActionBean implements ActionBean {
     private void loadUser()
     {
         sf.setUser((UserDTO)context.getRequest().getSession().getAttribute("user"));
-    }
-    
-    @After(stages = LifecycleStage.RequestComplete)
-    private void saveUser()
-    {
-        context.getRequest().getSession().setAttribute("user", sf.getUser());
     }
     
     @DefaultHandler
@@ -161,6 +156,27 @@ public class MatchActionBean implements ActionBean {
         }
     }
 
+    public boolean getCanCreate() throws NoSuchMethodException, SecurityException
+    {
+      
+        return sf.authorize(MatchServiceImpl.class
+                .getDeclaredMethod("create", MatchDTO.class));
+    }
+    
+    public boolean getCanUpdate() throws NoSuchMethodException, SecurityException
+    {
+      
+        return sf.authorize(MatchServiceImpl.class
+                .getDeclaredMethod("update", MatchDTO.class));
+    }
+    
+    public boolean getCanDelete() throws NoSuchMethodException, SecurityException
+    {
+      
+        return sf.authorize(MatchServiceImpl.class
+                .getDeclaredMethod("delete", MatchDTO.class));
+    }
+    
     @Override
     public void setContext(ActionBeanContext context) {
         this.context = context;

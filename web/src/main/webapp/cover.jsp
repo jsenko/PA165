@@ -32,6 +32,7 @@
 		<s:useActionBean
 			beanclass="cz.muni.fi.pa165.fast.actionbean.UserActionBean"
 			var="userBean" />
+			<% userBean.loadUser(); %>
 		<div id="menu">
 			<ul>
 				<li><s:link href="${pageContext.request.contextPath}/">

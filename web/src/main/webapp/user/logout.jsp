@@ -10,11 +10,11 @@
 
 		<s:label class="header1 text-info" name="Logout" />
 		<s:form beanclass="cz.muni.fi.pa165.fast.actionbean.UserActionBean"
-		action="users/doLogout">
+		action="/users/doLogout">
 			<s:errors />
 
 
-			<s:submit name="doLogout" class="btn btn-info" />
+			<s:submit name="doLogout" class="btn btn-info" value="Logout"/>
 		</s:form>
 
 	</s:layout-component>
