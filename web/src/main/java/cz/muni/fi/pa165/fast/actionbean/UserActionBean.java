@@ -1,19 +1,6 @@
 package cz.muni.fi.pa165.fast.actionbean;
 
-import com.samaxes.stripejb3.EJBBean;
-import cz.muni.fi.pa165.fast.dto.TeamDTO;
-import cz.muni.fi.pa165.fast.dto.UserDTO;
-import cz.muni.fi.pa165.fast.model.User;
-import cz.muni.fi.pa165.fast.security.SecurityFacade;
-import cz.muni.fi.pa165.fast.service.MatchGeneratorFacade;
-import cz.muni.fi.pa165.fast.service.TeamService;
-import java.util.List;
 import javax.ejb.EJBException;
-
-import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
-
-import org.eclipse.persistence.sessions.Session;
 
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
@@ -21,12 +8,15 @@ import net.sourceforge.stripes.action.After;
 import net.sourceforge.stripes.action.Before;
 import net.sourceforge.stripes.action.DefaultHandler;
 import net.sourceforge.stripes.action.ForwardResolution;
-import net.sourceforge.stripes.action.RedirectResolution;
 import net.sourceforge.stripes.action.Resolution;
 import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.controller.LifecycleStage;
-import net.sourceforge.stripes.validation.Validate;
-import net.sourceforge.stripes.validation.ValidateNestedProperties;
+
+import com.samaxes.stripejb3.EJBBean;
+
+import cz.muni.fi.pa165.fast.dto.UserDTO;
+import cz.muni.fi.pa165.fast.model.User;
+import cz.muni.fi.pa165.fast.security.SecurityFacade;
 
 @UrlBinding("/users/{$event}")
 public class UserActionBean implements ActionBean
@@ -42,14 +32,14 @@ public class UserActionBean implements ActionBean
     @EJBBean("java:global/myapp/SecurityFacadeImpl!cz.muni.fi.pa165.fast.security.SecurityFacade")
     private SecurityFacade sf;
     
-    @Before(stages = LifecycleStage.EventHandling)
-    private void loadUser()
+    
+    public void loadUser()
     {
         sf.setUser((User)context.getRequest().getSession().getAttribute("user"));
     }
     
-    @After(stages = LifecycleStage.RequestComplete)
-    private void saveUser()
+    
+    public void saveUser()
     {
         context.getRequest().getSession().setAttribute("user", sf.getUser());
     }
@@ -76,6 +66,7 @@ public class UserActionBean implements ActionBean
         
         try{
             sf.login(userDTO.getLogin(), userDTO.getPassword());
+            saveUser();
         }catch(EJBException ex)
         {
             if(ex.getCause() instanceof IllegalArgumentException)
@@ -95,7 +86,7 @@ public class UserActionBean implements ActionBean
             
         }
         
-        return new ForwardResolution("/team/all.jsp");
+        return new ForwardResolution("/index.jsp");
     }
     
     
@@ -107,8 +98,8 @@ public class UserActionBean implements ActionBean
     public Resolution doLogout()
     {
         sf.logout();
-
-        return new ForwardResolution("/team/all.jsp");
+        saveUser();
+        return new ForwardResolution("/index.jsp");
     }
     
 
