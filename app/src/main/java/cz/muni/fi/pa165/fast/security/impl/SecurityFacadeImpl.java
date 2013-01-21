@@ -1,17 +1,15 @@
 package cz.muni.fi.pa165.fast.security.impl;
 
-import java.lang.reflect.Method;
-
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.servlet.http.HttpSession;
-
-import cz.muni.fi.pa165.fast.dao.UserDAO;
-import cz.muni.fi.pa165.fast.model.User;
+import cz.muni.fi.pa165.fast.dto.UserDTO;
 import cz.muni.fi.pa165.fast.security.Acl;
 import cz.muni.fi.pa165.fast.security.Authenticator;
 import cz.muni.fi.pa165.fast.security.Role;
 import cz.muni.fi.pa165.fast.security.SecurityFacade;
+import cz.muni.fi.pa165.fast.service.UserService;
+import java.lang.reflect.Method;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  * High-level security & user login manager
@@ -25,18 +23,20 @@ public class SecurityFacadeImpl implements SecurityFacade
     UserStorage storage;
     
     @EJB
-    UserDAO userDAO;
+    UserService userService;
     
     @EJB
     private Authenticator authenticator;
     
     
-    public void setUser(User user)
+    @Override
+    public void setUser(UserDTO user)
     {
         storage.setUser(user);
     }
     
-    public User getUser()
+    @Override
+    public UserDTO getUser()
     {
         return storage.getUser();
     }
@@ -46,15 +46,15 @@ public class SecurityFacadeImpl implements SecurityFacade
     {
         // create defaut root admin
         // TODO remove in production!
-        if(userDAO.findByLogin("admin") == null)
+        if(userService.getByLogin("admin") == null)
         {
-            User user = new User();
+            UserDTO user = new UserDTO();
             user.setLogin("admin");
-            user.setPassword("password");
-            userDAO.create(user);
+            user.setPassword(DigestUtils.sha256Hex("password"));
+            userService.create(user);
         }
         
-        User user = authenticator.authenticate(login, password);
+        UserDTO user = authenticator.authenticate(login, password);
         if(user == null)
         {
             throw new
@@ -77,7 +77,7 @@ public class SecurityFacadeImpl implements SecurityFacade
     }
 
     @Override
-    public User getCurrentLoggedInUser()
+    public UserDTO getCurrentLoggedInUser()
     {
         return storage
                 .getUser();

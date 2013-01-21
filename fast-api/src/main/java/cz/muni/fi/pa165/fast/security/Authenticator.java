@@ -1,6 +1,6 @@
 package cz.muni.fi.pa165.fast.security;
 
-import cz.muni.fi.pa165.fast.model.User;
+import cz.muni.fi.pa165.fast.dto.UserDTO;
 
 /**
  * 
@@ -14,5 +14,5 @@ public interface Authenticator
      * @param password
      * @return authenticated user or null on failure
      */
-    public User authenticate(String login, String password);
+    public UserDTO authenticate(String login, String password);
 }

@@ -1,19 +1,11 @@
 package cz.muni.fi.pa165.fast.actionbean;
 
 import com.samaxes.stripejb3.EJBBean;
-import cz.muni.fi.pa165.fast.dto.TeamDTO;
 import cz.muni.fi.pa165.fast.dto.UserDTO;
-import cz.muni.fi.pa165.fast.model.User;
 import cz.muni.fi.pa165.fast.security.SecurityFacade;
-import cz.muni.fi.pa165.fast.service.MatchGeneratorFacade;
-import cz.muni.fi.pa165.fast.service.TeamService;
+import cz.muni.fi.pa165.fast.service.UserService;
+import cz.muni.fi.pa165.fast.service.impl.UserServiceImpl;
 import java.util.List;
-
-import javax.inject.Inject;
-import javax.servlet.http.HttpSession;
-
-import org.eclipse.persistence.sessions.Session;
-
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.After;
@@ -26,6 +18,7 @@ import net.sourceforge.stripes.action.UrlBinding;
 import net.sourceforge.stripes.controller.LifecycleStage;
 import net.sourceforge.stripes.validation.Validate;
 import net.sourceforge.stripes.validation.ValidateNestedProperties;
+import org.apache.commons.codec.digest.DigestUtils;
 
 @UrlBinding("/users/{$event}")
 public class UserActionBean implements ActionBean
@@ -34,13 +27,19 @@ public class UserActionBean implements ActionBean
     
     private UserDTO userDTO;
     
+    @ValidateNestedProperties(value = {
+        @Validate(on = {"add"}, field = "login", required = true),
+        @Validate(on = {"add"}, field = "password", required = true)
+    })
     @EJBBean("java:global/myapp/SecurityFacadeImpl!cz.muni.fi.pa165.fast.security.SecurityFacade")
     private SecurityFacade sf;
+    @EJBBean("java:global/myapp/UserServiceImpl!cz.muni.fi.pa165.fast.service.UserService")
+    protected UserService userService;
     
     @Before(stages = LifecycleStage.EventHandling)
     private void loadUser()
     {
-        sf.setUser((User)context.getRequest().getSession().getAttribute("user"));
+        sf.setUser((UserDTO)context.getRequest().getSession().getAttribute("user"));
     }
     
     @After(stages = LifecycleStage.RequestComplete)
@@ -57,8 +56,7 @@ public class UserActionBean implements ActionBean
     @DefaultHandler
     public Resolution all()
     {
-        
-        return new ForwardResolution("/team/all.jsp");
+        return new ForwardResolution("/user/all.jsp");
     }
     
     public Resolution login()
@@ -68,6 +66,7 @@ public class UserActionBean implements ActionBean
 
     public Resolution doLogin()
     {
+        userDTO.setPassword(DigestUtils.sha256Hex(userDTO.getPassword()));
         // TODO catch exceptions and display error message
         sf.login(userDTO.getLogin(), userDTO.getPassword());
 
@@ -107,5 +106,35 @@ public class UserActionBean implements ActionBean
         this.userDTO = userDTO;
     }
     
+    public List<UserDTO> getUsers() {
+        return userService.findAll();
+    }
+    
+    public boolean getCanDelete() throws NoSuchMethodException, SecurityException
+    {
+        return sf.authorize(UserServiceImpl.class
+                .getDeclaredMethod("delete", UserDTO.class));
+    }
+    
+    public boolean getCanCreate() throws NoSuchMethodException, SecurityException
+    {
+        return sf.authorize(UserServiceImpl.class
+                .getDeclaredMethod("create", UserDTO.class));
+    }
+    
+    public Resolution delete() {
+        userService.delete(userDTO);
+        return new RedirectResolution(this.getClass(), "all");
+    }
+    
+    public Resolution add() {
+        userDTO.setPassword(DigestUtils.sha256Hex(userDTO.getPassword()));
+        userService.create(userDTO);
+        return new RedirectResolution(this.getClass(), "all");
+    }
+    
+    public Resolution create() {
+        return new ForwardResolution("/user/create.jsp");
+    }
     
 }

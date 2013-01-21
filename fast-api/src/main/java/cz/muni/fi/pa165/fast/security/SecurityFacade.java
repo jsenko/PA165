@@ -1,8 +1,8 @@
 package cz.muni.fi.pa165.fast.security;
 
-import java.lang.reflect.Method;
-
+import cz.muni.fi.pa165.fast.dto.UserDTO;
 import cz.muni.fi.pa165.fast.model.User;
+import java.lang.reflect.Method;
 
 /**
  * 
@@ -18,13 +18,13 @@ public interface SecurityFacade
      * 
      * @return
      */
-    public User getUser();
+    public UserDTO getUser();
     
     /**
      * set user which was retrieved from httpsession in the presentation layer
      * @param user
      */
-    public void setUser(User user);
+    public void setUser(UserDTO user);
     
     /**
      * 
@@ -44,7 +44,7 @@ public interface SecurityFacade
      * 
      * @return current user or null when no one is logged in
      */
-    public User getCurrentLoggedInUser();
+    public UserDTO getCurrentLoggedInUser();
     
     /**
      * can current user invoke given method?

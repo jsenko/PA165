@@ -10,8 +10,8 @@ public class UserDTO
     private String login;
     private String password;
     
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
     public String getLogin() { return login; }
     public void setLogin(String login) { this.login = login; }
     public String getPassword() { return password; }

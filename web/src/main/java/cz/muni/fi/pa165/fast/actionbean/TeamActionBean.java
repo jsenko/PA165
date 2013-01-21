@@ -2,16 +2,12 @@ package cz.muni.fi.pa165.fast.actionbean;
 
 import com.samaxes.stripejb3.EJBBean;
 import cz.muni.fi.pa165.fast.dto.TeamDTO;
-import cz.muni.fi.pa165.fast.model.User;
+import cz.muni.fi.pa165.fast.dto.UserDTO;
 import cz.muni.fi.pa165.fast.security.SecurityFacade;
 import cz.muni.fi.pa165.fast.service.MatchGeneratorFacade;
 import cz.muni.fi.pa165.fast.service.TeamService;
 import cz.muni.fi.pa165.fast.service.impl.TeamServiceImpl;
-
 import java.util.List;
-
-import javax.inject.Inject;
-
 import net.sourceforge.stripes.action.ActionBean;
 import net.sourceforge.stripes.action.ActionBeanContext;
 import net.sourceforge.stripes.action.After;
@@ -45,7 +41,7 @@ public class TeamActionBean implements ActionBean {
     @Before(stages = LifecycleStage.EventHandling)
     private void loadUser()
     {
-        sf.setUser((User)context.getRequest().getSession().getAttribute("user"));
+        sf.setUser((UserDTO)context.getRequest().getSession().getAttribute("user"));
     }
     
     @After(stages = LifecycleStage.RequestComplete)

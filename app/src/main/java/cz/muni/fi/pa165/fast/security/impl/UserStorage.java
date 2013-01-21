@@ -1,21 +1,21 @@
 package cz.muni.fi.pa165.fast.security.impl;
 
+import cz.muni.fi.pa165.fast.dto.UserDTO;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 
-import cz.muni.fi.pa165.fast.model.User;
 
 @Singleton
 @Startup
 public class UserStorage
 {
-    private final ThreadLocal<User> storage = new ThreadLocal<User>();
+    private final ThreadLocal<UserDTO> storage = new ThreadLocal<UserDTO>();
 
-    public User getUser() {
+    public UserDTO getUser() {
         return storage.get();
     }
     
-    public void setUser(User user)
+    public void setUser(UserDTO user)
     {
         this.storage.set(user);
     }

@@ -24,7 +24,7 @@ import com.samaxes.stripejb3.EJBBean;
 import cz.muni.fi.pa165.fast.dto.GoalDTO;
 import cz.muni.fi.pa165.fast.dto.PlayerDTO;
 import cz.muni.fi.pa165.fast.dto.TeamDTO;
-import cz.muni.fi.pa165.fast.model.User;
+import cz.muni.fi.pa165.fast.dto.UserDTO;
 import cz.muni.fi.pa165.fast.security.SecurityFacade;
 import cz.muni.fi.pa165.fast.service.GoalService;
 import cz.muni.fi.pa165.fast.service.MatchService;
@@ -60,7 +60,7 @@ public class GoalActionBean implements ActionBean {
     @Before(stages = LifecycleStage.EventHandling)
     private void loadUser()
     {
-        sf.setUser((User)context.getRequest().getSession().getAttribute("user"));
+        sf.setUser((UserDTO)context.getRequest().getSession().getAttribute("user"));
     }
     
     @After(stages = LifecycleStage.RequestComplete)

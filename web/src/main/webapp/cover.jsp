@@ -54,6 +54,13 @@
 						</c:otherwise>
 					</c:choose>
 				</li>
+                                <c:if test="${userBean.loggedIn}">
+                                    <li>
+                                        <s:link href="${pageContext.request.contextPath}/users">
+								<s:label name="users" />
+					</s:link>
+                                    </li>
+                                </c:if>
 			</ul>
 		</div>
 
