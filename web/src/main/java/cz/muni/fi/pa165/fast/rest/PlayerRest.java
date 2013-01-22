@@ -35,6 +35,7 @@ public class PlayerRest {
     @Path("teamId/{id}")
     @Produces(MediaType.TEXT_XML)
     public List<PlayerDTO> findPlayersBytTeamId(@PathParam("id") Long id) {
+        sf.setUser(null);
         sf.login("admin", "password"); // to enable full access to services via rest
         return ps.findPlayersByTeam(id, PlayerOrderBy.NAME);
     }
@@ -43,6 +44,7 @@ public class PlayerRest {
     @Path("{id}")
     @Produces(MediaType.TEXT_XML)
     public PlayerDTO findPlayerById(@PathParam("id") Long id) {
+        sf.setUser(null);
         sf.login("admin", "password"); // to enable full access to services via rest
         return ps.getById(id);
     }
@@ -50,6 +52,7 @@ public class PlayerRest {
     @POST
     @Consumes(MediaType.TEXT_XML)
     public Response create(PlayerDTO playerDTO) {
+        sf.setUser(null);
         sf.login("admin", "password"); // to enable full access to services via rest
         ps.create(playerDTO);
         return Response.ok().build();
@@ -58,6 +61,7 @@ public class PlayerRest {
     @PUT
     @Consumes(MediaType.TEXT_XML)
     public Response update(PlayerDTO playerDTO) {
+        sf.setUser(null);
         sf.login("admin", "password"); // to enable full access to services via rest
         ps.update(playerDTO);
         return Response.ok().build();
@@ -67,6 +71,7 @@ public class PlayerRest {
     @Consumes(MediaType.TEXT_XML)
     @Path("{id}")
     public Response delete(@PathParam("id") long id) {
+        sf.setUser(null);
         sf.login("admin", "password"); // to enable full access to services via rest
         ps.delete(ps.getById(id));
         return Response.ok().build();

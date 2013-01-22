@@ -40,10 +40,16 @@ public class SecurityFacadeImpl implements SecurityFacade
     @Override
     public void login(String login, String password)
     {
+        
+        
+        if(storage.getUser() != null)
+        {
+            throw new IllegalStateException("Some user is already logged in.");
+        }
+        
         // create defaut root admin
         // TODO remove in production!
-        if(storage.getUser() == null
-                && userService.getByLogin("admin") == null
+        if( userService.getByLogin("admin") == null
                 && "admin".equals(login)
                 && "password".equals(password))
         {
@@ -71,10 +77,6 @@ public class SecurityFacadeImpl implements SecurityFacade
         }
         // ok
 
-        if(storage.getUser() != null)
-        {
-            throw new IllegalStateException("Some user is already logged in.");
-        }
         storage.setUser(user);   
     }
 
