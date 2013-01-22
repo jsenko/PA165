@@ -21,7 +21,11 @@
                     <td class="name"><c:out value="${user.login}"/></td>
                     <td><c:out value="${user.password}"/></td>
                     <c:if test="${actionBean.canDelete}">
-                    <td class="admin_section"><s:link beanclass="cz.muni.fi.pa165.fast.actionbean.UserActionBean" onclick="return confirm('Delete ${user.login}?');" event="delete"><s:param name="user.id" value="${user.id}"/><i class="icon-remove"></i></s:link></td>
+                    <td class="admin_section">
+                    <s:link beanclass="cz.muni.fi.pa165.fast.actionbean.UserActionBean" 
+                    onclick="return confirm('Delete ${user.login}?');" event="delete">
+                    <s:param name="userDTO.id" value="${user.id}"/>
+                    <i class="icon-remove"></i></s:link></td>
                     </tr>
                     </c:if>
 
