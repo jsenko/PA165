@@ -8,7 +8,7 @@
 			beanclass="cz.muni.fi.pa165.fast.actionbean.UserActionBean"
 			var="actionBean" />
 
-		<s:label class="header1 text-info" name="Login" />
+		<s:label class="header1 text-info" name="login" />
 		<s:form beanclass="cz.muni.fi.pa165.fast.actionbean.UserActionBean" 
 		action="/users/doLogin">
 			<s:errors />
@@ -21,20 +21,21 @@
 			<div class="control-group">
 
 				<div class="control-group">
-					<s:label class="control-label" for="p2" name="Login" />
+					<s:label class="control-label" for="p2" name="user.name" />
 					<div class="controls">
 						<s:text id="p2" name="userDTO.login" />
 					</div>
 				</div>
 
 				<div class="control-group">
-					<s:label class="control-label" for="p3" name="Password" />
+					<s:label class="control-label" for="p3" name="user.password" />
 					<div class="controls">
 						<s:password id="p3" name="userDTO.password" />
 					</div>
 				</div>
 
 				<s:submit  name="doLogin" class="btn btn-info" value="Login" />
+                                <%--<s:submit  name="doLogin" class="btn btn-info" />--%>
 		</s:form>
 
 	</s:layout-component>

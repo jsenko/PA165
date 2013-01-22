@@ -8,13 +8,14 @@
 			beanclass="cz.muni.fi.pa165.fast.actionbean.UserActionBean"
 			var="actionBean" />
 
-		<s:label class="header1 text-info" name="Logout" />
+		<s:label class="header1 text-info" name="logout" />
 		<s:form beanclass="cz.muni.fi.pa165.fast.actionbean.UserActionBean"
 		action="/users/doLogout">
 			<s:errors />
 
 
 			<s:submit name="doLogout" class="btn btn-info" value="Logout"/>
+                        <%--<s:submit name="doLogout" class="btn btn-info" />--%>
 		</s:form>
 
 	</s:layout-component>

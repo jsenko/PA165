@@ -48,7 +48,6 @@ public class SecurityFacadeImpl implements SecurityFacade
         }
         
         // create defaut root admin
-        // TODO remove in production!
         if( userService.getByLogin("admin") == null
                 && "admin".equals(login)
                 && "password".equals(password))

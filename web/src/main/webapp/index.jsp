@@ -11,7 +11,7 @@
         <s:label name="index.matches" class="header1 text-info"/>
         <c:choose>
             <c:when test="${actionBean.rounds eq 0}">
-                <p>There are no matches in database yet.</p>
+                <s:label name="noMatchesInDatabase" />
             </c:when>
 
             <c:otherwise>

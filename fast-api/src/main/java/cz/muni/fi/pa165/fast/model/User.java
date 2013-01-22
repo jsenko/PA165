@@ -4,6 +4,8 @@ import java.io.Serializable;
 import javax.persistence.*;
 
 /**
+ * Entity - User
+ * 
  * @author Jakub Senko
  */
 @Entity

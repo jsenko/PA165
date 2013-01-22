@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.fast.security;
 
 /**
+ * Enum that defines a Role
  * 
  * @author Jakub Senko
  */
