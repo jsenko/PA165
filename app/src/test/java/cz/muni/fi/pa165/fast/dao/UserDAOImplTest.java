@@ -44,6 +44,8 @@ public class UserDAOImplTest {
     public void createUser() {
         User user = new User();
 
+        user.setLogin("administrator");
+        
         udaoi.create(user);
 
         assertNotNull(user.getId());

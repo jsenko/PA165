@@ -40,7 +40,15 @@
 					</s:link></li>
 				<li><s:link href="${pageContext.request.contextPath}/teams/all">
 						<s:label name="teams" />
-					</s:link></li>
+					</s:link>
+                                </li>
+                                <c:if test="${userBean.loggedIn}">
+                                    <li>
+                                        <s:link href="${pageContext.request.contextPath}/users">
+								<s:label name="users" />
+					</s:link>
+                                    </li>
+                                </c:if>
 				<li>
 					<c:choose>
 						<c:when test="${userBean.loggedIn}">
@@ -55,13 +63,7 @@
 						</c:otherwise>
 					</c:choose>
 				</li>
-                                <c:if test="${userBean.loggedIn}">
-                                    <li>
-                                        <s:link href="${pageContext.request.contextPath}/users">
-								<s:label name="users" />
-					</s:link>
-                                    </li>
-                                </c:if>
+                                
 			</ul>
 		</div>
 
