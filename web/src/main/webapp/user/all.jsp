@@ -7,7 +7,7 @@
         <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.UserActionBean" var="actionBean"/>
         <h1><s:label name="user.header"/></h1>
 
-        <table id="user_table">
+        <table class="match_table">
             <tr>
                 <td><s:label name="global.no"/></td>
                 <td class="name"><s:label name="user.name"/></td>

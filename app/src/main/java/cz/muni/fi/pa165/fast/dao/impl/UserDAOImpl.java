@@ -20,6 +20,10 @@ public class UserDAOImpl implements UserDAO {
         if (entity == null) {
             throw new IllegalArgumentException("User is null.");
         }
+        if(findByLogin(entity.getLogin()) == entity)
+        {
+            throw new IllegalStateException("User login already exist.");
+        }
         em.persist(entity);
     }
 

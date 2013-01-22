@@ -27,12 +27,12 @@ public class UserActionBean implements ActionBean
 {
     private ActionBeanContext context;
     
-    private UserDTO userDTO;
-    
     @ValidateNestedProperties(value = {
         @Validate(on = {"add"}, field = "login", required = true),
         @Validate(on = {"add"}, field = "password", required = true)
     })
+    private UserDTO userDTO;
+    
     private boolean invalidLogin;
     
     private boolean loggedUser;
@@ -156,7 +156,16 @@ public class UserActionBean implements ActionBean
     
     public Resolution add() {
         userDTO.setPassword(DigestUtils.sha256Hex(userDTO.getPassword()));
-        userService.create(userDTO);
+        try{
+            userService.create(userDTO);
+        }catch(EJBException ex)
+        {
+            if(ex.getCause() instanceof IllegalStateException)
+            {
+                invalidLogin = true;
+                return new ForwardResolution("/user/create.jsp");
+            }
+        }
         return new RedirectResolution(this.getClass(), "all");
     }
     

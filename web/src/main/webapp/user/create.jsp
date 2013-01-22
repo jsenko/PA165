@@ -5,7 +5,9 @@
 <s:layout-render name="/cover.jsp">
     <s:layout-component name="content">
         <s:useActionBean beanclass="cz.muni.fi.pa165.fast.actionbean.UserActionBean" var="actionBean"/>
-
+        <c:if test="${actionBean.invalidLogin}">
+            <s:label class="text-error" name="user.sameLogin" />
+        </c:if>
         <s:label class="header1 text-info" name="user.create" />
         <s:form beanclass="cz.muni.fi.pa165.fast.actionbean.UserActionBean">
             <%@include file="/user/form.jsp"%>
