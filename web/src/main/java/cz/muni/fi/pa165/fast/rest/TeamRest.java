@@ -30,6 +30,7 @@ public class TeamRest {
     @GET
     @Produces(MediaType.TEXT_XML)
     public List<TeamDTO> findAll() {
+        sf.setUser(null);
         sf.login("admin", "password"); // to enable full access to services via rest
         return ts.findAll();
     }
@@ -38,6 +39,7 @@ public class TeamRest {
     @Produces(MediaType.TEXT_XML)
     @Path("playerId/{id}") // different url had to be used
     public TeamDTO findByTeam(@PathParam("id") long playerId) {
+        sf.setUser(null);
         sf.login("admin", "password"); // to enable full access to services via rest
         return ts.findByPlayer(playerId);
     }
@@ -46,6 +48,7 @@ public class TeamRest {
     @Produces(MediaType.TEXT_XML)
     @Path("{id}")
     public TeamDTO getById(@PathParam("id") long id) {
+        sf.setUser(null);
         sf.login("admin", "password"); // to enable full access to services via rest
         return ts.getById(id);
     }
@@ -53,6 +56,7 @@ public class TeamRest {
     @POST
     @Consumes(MediaType.TEXT_XML)
     public Response create(TeamDTO teamDTO) {
+        sf.setUser(null);
         sf.login("admin", "password"); // to enable full access to services via rest
         ts.create(teamDTO);
         return Response.ok().build();
@@ -61,6 +65,7 @@ public class TeamRest {
     @PUT
     @Consumes(MediaType.TEXT_XML)
     public Response update(TeamDTO teamDTO) {
+        sf.setUser(null);
         sf.login("admin", "password"); // to enable full access to services via rest
         ts.update(teamDTO);
 
@@ -71,6 +76,7 @@ public class TeamRest {
     @Consumes(MediaType.TEXT_XML)
     @Path("{id}")
     public Response delete(@PathParam("id") long id) {
+        sf.setUser(null);
         sf.login("admin", "password"); // to enable full access to services via rest
 
         ts.delete(ts.getById(id));
