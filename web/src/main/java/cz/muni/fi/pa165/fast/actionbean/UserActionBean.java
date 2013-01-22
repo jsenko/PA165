@@ -28,8 +28,8 @@ public class UserActionBean implements ActionBean
     private ActionBeanContext context;
     
     @ValidateNestedProperties(value = {
-        @Validate(on = {"add"}, field = "login", required = true),
-        @Validate(on = {"add"}, field = "password", required = true)
+        @Validate(on = {"add", "doLogin"}, field = "login", required = true),
+        @Validate(on = {"add", "doLogin"}, field = "password", required = true)
     })
     private UserDTO userDTO;
     
