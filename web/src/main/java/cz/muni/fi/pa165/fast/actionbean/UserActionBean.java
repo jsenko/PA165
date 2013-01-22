@@ -155,16 +155,19 @@ public class UserActionBean implements ActionBean
     }
     
     public Resolution add() {
+        //if user already exists
+        if(userService.getByLogin(userDTO.getLogin()) != null)
+        {
+            invalidLogin = true;
+            return new ForwardResolution("/user/create.jsp");
+        }
+        
         userDTO.setPassword(DigestUtils.sha256Hex(userDTO.getPassword()));
         try{
             userService.create(userDTO);
-        }catch(EJBException ex)
+        }catch(Exception ex)
         {
-            if(ex.getCause() instanceof IllegalStateException)
-            {
-                invalidLogin = true;
-                return new ForwardResolution("/user/create.jsp");
-            }
+            // something bad has happened, ignore and log
         }
         return new RedirectResolution(this.getClass(), "all");
     }
