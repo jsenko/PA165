@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService
     private UserConvert userConvert;
 
     @Override
-    @Acl(Role.NONE)//TODO just for testing, shuld be ADMIN
+    @Acl(Role.ADMIN)
     public long create(UserDTO dto)
     {
         try {
@@ -81,7 +81,7 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    @Acl(Role.NONE)//TODO just for testing, shuld be ADMIN
+    @Acl(Role.ADMIN)
     public UserDTO getByLogin(String login)
     {
         try {

@@ -2,7 +2,6 @@ package cz.muni.fi.pa165.fast.security.impl;
 
 import cz.muni.fi.pa165.fast.dto.UserDTO;
 import cz.muni.fi.pa165.fast.security.Acl;
-import cz.muni.fi.pa165.fast.security.Authenticator;
 import cz.muni.fi.pa165.fast.security.Role;
 import cz.muni.fi.pa165.fast.security.SecurityFacade;
 import cz.muni.fi.pa165.fast.service.UserService;
@@ -24,9 +23,6 @@ public class SecurityFacadeImpl implements SecurityFacade
     
     @EJB
     UserService userService;
-    
-    @EJB
-    private Authenticator authenticator;
     
     
     @Override
@@ -55,14 +51,20 @@ public class SecurityFacadeImpl implements SecurityFacade
             userService.create(user);
         }
         
-        UserDTO user = authenticator.authenticate(login, password);
-
-        if(user == null)
+        //authenticate
+        
+        
+        UserDTO user = userService.getByLogin(login);
+        String hashedPassword = DigestUtils.sha256Hex(password);
+        if(user == null || !hashedPassword.equals(user.getPassword()))
         {
+            //failure
             throw new
             IllegalArgumentException("Invalid user login ("+login
                     +") or password.");
         }
+        // ok
+
         if(storage.getUser() != null)
         {
             throw new IllegalStateException("Some user is already logged in.");

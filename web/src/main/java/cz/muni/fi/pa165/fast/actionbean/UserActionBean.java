@@ -74,7 +74,7 @@ public class UserActionBean implements ActionBean
     {
         
         try{
-            userDTO.setPassword(DigestUtils.sha256Hex(userDTO.getPassword()));
+            
             sf.login(userDTO.getLogin(), userDTO.getPassword());
             saveUser();
         }catch(EJBException ex)
