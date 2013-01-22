@@ -81,7 +81,6 @@ public class UserServiceImpl implements UserService
     }
 
     @Override
-    @Acl(Role.ADMIN)
     public UserDTO getByLogin(String login)
     {
         try {

@@ -86,12 +86,13 @@ public class UserActionBean implements ActionBean
                 return new ForwardResolution("/user/login.jsp");
                 
             }
-            
-            if(ex.getCause() instanceof IllegalStateException)
+            else if(ex.getCause() instanceof IllegalStateException)
             {
                 loggedUser = true;
                 return new ForwardResolution("/user/login.jsp");
             }
+            else
+                throw ex;
             
             
         }

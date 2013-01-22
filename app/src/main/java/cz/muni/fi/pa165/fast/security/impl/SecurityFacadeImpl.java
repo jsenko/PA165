@@ -42,18 +42,24 @@ public class SecurityFacadeImpl implements SecurityFacade
     {
         // create defaut root admin
         // TODO remove in production!
-        if(userService.getByLogin("admin") == null)
+        if(storage.getUser() == null
+                && userService.getByLogin("admin") == null
+                && "admin".equals(login)
+                && "password".equals(password))
         {
+            //quick admin authentication
             UserDTO user = new UserDTO();
 
             user.setLogin("admin");
             user.setPassword(DigestUtils.sha256Hex("password"));
+            
+            storage.setUser(user); 
+            // save to DB
             userService.create(user);
+            return;
         }
         
         //authenticate
-        
-        
         UserDTO user = userService.getByLogin(login);
         String hashedPassword = DigestUtils.sha256Hex(password);
         if(user == null || !hashedPassword.equals(user.getPassword()))
